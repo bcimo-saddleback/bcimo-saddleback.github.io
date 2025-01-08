@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Code Runner</title>
+
+    <!-- Google Fonts (Poppins for a clean, modern look) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #9abfff, #cfecfe); /* Soft gradient background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #2d3e50;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* Styling for the textarea */
+        textarea {
+            width: 80%;
+            max-width: 900px;
+            height: 300px;
+            border: 2px solid #ccc;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #4b8b3b;
+            outline: none;
+        }
+
+        /* Styling for the iframe */
+        iframe {
+            width: 80%;
+            max-width: 900px;
+            height: 600px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Styling for the button */
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #4b8b3b;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #3c6a2e;
+        }
+
+        /* Footer styling */
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Learn HTML</h1>
+    
+    <h2>HTML Code</h2>
+    <p>Try running some code here:</p>
+
+    <!-- Textarea for the user to input HTML -->
+    <textarea id="htmlCode" placeholder="Write your HTML here..."></textarea>
+    
+    <!-- Run code button -->
+    <button onclick="runCode()">Run Code</button>
+    
+    <!-- Output iframe where the HTML is rendered -->
+    <iframe id="output" src="about:blank"></iframe>
+
+    Here's some video to explain stuff!
+    <br>
+    <iframe width="420" height="315"
+    src="https://www.youtube.com/embed/tgbNymZ7vqY">
+    </iframe> 
+
+    <footer>
+        <p>Powered by your HTML Code Runner &copy; 2025</p>
+    </footer>
+
+    <script>
+        // Function to run the HTML code
+        function runCode() {
+            var htmlCode = document.getElementById('htmlCode').value;
+            
+            var iframe = document.getElementById('output');
+            var iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+
+            // Write the HTML code to the iframe
+            iframeDoc.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Output</title>
+                </head>
+                <body>
+                    ${htmlCode}
+                </body>
+                </html>
+            `);
+
+            iframeDoc.close();
+        }
+    </script>
+
+</body>
+</html>
