@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Code Runner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        textarea {
+            width: 80%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: monospace;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        iframe {
+            width: 80%;
+            height: 600px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Learn HTML</h1>
+    
+    <h2>HTML Code</h2>
+Try running some code here:
+    <textarea id="htmlCode" placeholder="Write your HTML here..."></textarea>
+    
+    <button onclick="runCode()">Run Code</button>
+    
+    <iframe id="output" src="about:blank"></iframe>
+
+    <script>
+        // Function to run the HTML, CSS, and JS code
+        function runCode() {
+            var htmlCode = document.getElementById('htmlCode').value;
+            
+            var iframe = document.getElementById('output');
+            var iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+
+            // Writing HTML, CSS, and JS into the iframe
+            iframeDoc.write(`
+
+                    ${htmlCode}
+
+            `);
+
+            iframeDoc.close();
+        }
+    </script>
+
+</body>
+</html>
