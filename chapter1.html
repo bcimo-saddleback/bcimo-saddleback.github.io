@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: Introduction to HTML and Web Page Structure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .practice {
+            background-color: #f0f8ff;
+            padding: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #007BFF;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+<p>
+    <strong>
+        Chapter 1: Introduction to the Internet and the World Wide Web
+    </strong>
+</p>
+<p>
+    <strong><em>Active Learning Approach</em></strong> <strong></strong>
+</p>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>Objective of this Lesson:</strong>
+</p>
+<p>
+    By the end of this lesson, you should  be able to:
+</p>
+<ol start="1" type="1">
+    <li>
+        Understand what the Internet is,       how it evolved, and its key
+        components.
+    </li>
+    <li>
+        Explain the relationship between       the Internet and the World Wide
+        Web.
+    </li>
+    <li>
+        Describe how web protocols,       browsers, and domain names work
+        together to deliver content.
+    </li>
+    <li>
+        Understand the client-server       model, the request-response cycle,
+        and URLs.
+    </li>
+</ol>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>Introduction:</strong>
+</p>
+<p>
+    Welcome to the first chapter of your  web development journey! In this
+    lesson, you will explore the foundational  concepts of the Internet and the
+    World Wide Web. We will cover the history of  the Internet, how websites
+    function, and how different components like  browsers, servers, and
+    protocols work together to deliver web content.
+</p>
+<p>
+    <strong>Lesson Content:</strong>
+</p>
+<p>
+    <strong>1. What is the Internet?</strong>
+</p>
+<p>
+    The Internet is a vast network of  computers connected worldwide that
+    communicate with each other. It enables data  exchange, communication, and
+    access to information on a global scale.
+</p>
+<p>
+    <strong>Key Milestones in the History of the  Internet:</strong>
+</p>
+<ul type="disc">
+    <li>
+        <strong>1960s:</strong> The first ideas for the Internet       began
+        with the development of ARPANET, a research project funded by the
+        U.S. government.
+    </li>
+    <li>
+        <strong>1970s:</strong> Email was invented, and the       first
+        protocols for data exchange were established (like TCP/IP).
+    </li>
+    <li>
+        <strong>1990s:</strong> The Internet became accessible       to the
+        public, and the World Wide Web (WWW) was created, revolutionizing
+        how information was shared.
+    </li>
+    <li>
+        <strong>2000s-present:</strong> The rise of social media, mobile
+        access, and high-speed broadband further expanded the Internet’s reach.
+    </li>
+</ul>
+<p>
+    <strong>Key Components of the Internet:</strong>
+</p>
+<ul type="disc">
+    <li>
+        <strong>Servers:</strong> Computers that store data and       serve it
+        to other computers (clients) over the Internet.
+    </li>
+    <li>
+        <strong>Browsers:</strong> Software programs that allow       users to
+        access websites and view content. Examples: Google Chrome,
+        Firefox, Safari.
+    </li>
+    <li>
+        <strong>Routers and Networks:</strong> Hardware and infrastructure that
+        direct data between servers and clients.
+    </li>
+</ul>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>2. The World Wide Web: A Layer Above the Internet</strong>
+</p>
+<p>
+    The World Wide Web (WWW) is a service  that operates on the Internet,
+    providing access to websites and web content.  While the Internet is the
+    infrastructure, the Web is a system of interlinked  documents accessed via
+    browsers.
+</p>
+<p>
+    <strong>Key Concepts:</strong>
+</p>
+<ul type="disc">
+    <li>
+        <strong>Web Protocols (HTTP/HTTPS):</strong>
+    </li>
+    <ul type="circle">
+        <li>
+            <strong>HTTP (Hypertext Transfer        Protocol)</strong> is a
+            protocol for transferring data across the web.        It tells
+            browsers how to request and receive web content.
+        </li>
+        <li>
+            <strong>HTTPS (Hypertext Transfer        Protocol Secure)</strong>
+            is the secure version of HTTP, encrypting data to        protect
+            privacy during transmission.
+        </li>
+    </ul>
+    <li>
+        <strong>Websites, Webpages, and Domains:</strong>
+    </li>
+    <ul type="circle">
+        <li>
+            <strong>Website:</strong> A collection of interconnected        web
+            pages.
+        </li>
+        <li>
+            <strong>Webpage:</strong> A single document within a        website,
+            typically a HTML file.
+        </li>
+        <li>
+            <strong>Domain Name:</strong> A human-readable address used
+            to access websites (e.g., www.example.com).
+        </li>
+    </ul>
+    <li>
+        <strong>Browsers and Their Role in       Rendering Web Content:</strong>
+    </li>
+    <ul type="circle">
+        <li>
+            <strong>Browsers</strong> interpret HTML, CSS, and        JavaScript
+            code to display websites to users. They retrieve files from
+            servers and render them visually on your screen.
+        </li>
+    </ul>
+</ul>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>3. How Websites Work</strong>
+</p>
+<p>
+    A website involves multiple steps and  systems to make sure you can view a
+    page on your device. Let's break down the  process:
+</p>
+<ul type="disc">
+    <li>
+        <strong>Client-Server Model:</strong>
+    </li>
+    <ul type="circle">
+        <li>
+            The <strong>client</strong> is your device        (e.g., a computer
+            or smartphone). The <strong>server</strong> is where the
+            website's data is stored. When you request a webpage, your browser
+            (the        client) asks the server for the page.
+        </li>
+    </ul>
+    <li>
+        <strong>Request-Response Cycle:</strong>
+    </li>
+</ul>
+<ul type="disc">
+    <ol start="1" type="1">
+        <li>
+            <strong>Request:</strong> When you type a URL into the browser, the
+            browser        sends a request to the server hosting the website.
+        </li>
+        <li>
+            <strong>Response:</strong> The server receives the request,
+            processes it, and        sends back the requested data (webpage,
+            images, etc.).
+        </li>
+        <li>
+            <strong>Render:</strong> The browser interprets the received data
+            and renders        the content visually on your screen.
+        </li>
+    </ol>
+</ul>
+<ul type="disc">
+    <li>
+        <strong>URLs and Domain Names:</strong>
+    </li>
+    <ul type="circle">
+        <li>
+            <strong>URL (Uniform Resource Locator):</strong> The web address you
+            type into        the browser's address bar. For example,
+            https://www.example.com.
+        </li>
+        <li>
+            A <strong>Domain Name</strong> is part of        the URL, and it
+            represents the website’s address in a human-readable        form.
+            Behind the scenes, the domain name is translated into an IP address
+            that servers use to communicate.
+        </li>
+    </ul>
+</ul>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>Interactive Exercises:</strong>
+</p>
+<p>
+    <strong>1. Internet &amp; WWW Brainstorming Activity:</strong>
+</p>
+<p>
+    <strong>Objective:</strong> To help students understand the  difference
+    between the Internet and the Web.
+</p>
+<p>
+    <strong>Instructions:</strong>
+</p>
+<ul type="disc">
+    <li>
+        Take a moment to think about the       Internet and the Web. Write down
+        your thoughts on the following questions:
+    </li>
+    <ul type="circle">
+        <li>
+            What do you think the Internet        is?
+        </li>
+        <li>
+            What is the World Wide Web? How        is it different from the
+            Internet?
+        </li>
+        <li>
+            How do you access websites on        the Internet?
+        </li>
+    </ul>
+</ul>
+<p>
+    After a few minutes, discuss your  answers with a partner or in a small
+    group. Compare and contrast your  definitions.
+</p>
+<p>
+    <strong>Reflection:</strong>
+</p>
+<ul type="disc">
+    <li>
+        Discuss as a class the main       differences. Highlight that the
+        Internet is the physical infrastructure,       while the World Wide Web
+        is the system of documents accessible through the       Internet.
+    </li>
+</ul>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>2. URL Dissection Exercise:</strong>
+</p>
+<p>
+    <strong>Objective:</strong> To identify the parts of a URL and  understand
+    how browsers use it to retrieve information.
+</p>
+<p>
+    <strong>Instructions:</strong> <br/>
+    Below are three URLs. Break them down into their components (protocol,
+    domain,  path, etc.):
+</p>
+<ol start="1" type="1">
+    <li>
+        https://www.google.com/search?q=web+development
+    </li>
+    <li>
+        http://www.example.org/contact.html
+    </li>
+    <li>
+        https://en.wikipedia.org/wiki/HTML
+    </li>
+</ol>
+<p>
+    <strong>Task:</strong>
+</p>
+<ul type="disc">
+    <li>
+        Identify the <strong>protocol</strong> (HTTP/HTTPS).
+    </li>
+    <li>
+        Identify the <strong>domain name</strong>.
+    </li>
+    <li>
+        Identify the <strong>path</strong> (the       specific page or resource
+        on the server).
+    </li>
+    <li>
+        Write down how the URL is       structured.
+    </li>
+</ul>
+<p>
+    <strong>Discussion:</strong> <br/>
+    After completing the task, review your findings with the class. Discuss the
+    function of each part of the URL and how the browser uses them to find and
+    display a webpage.
+</p>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>3. Client-Server Model Simulation:</strong>
+</p>
+<p>
+    <strong>Objective:</strong> To visualize how the client-server  model works
+    in real life.
+</p>
+<p>
+    <strong>Instructions:</strong>
+</p>
+<ul type="disc">
+    <li>
+        Pair up with a classmate. One of       you will act as the
+        <strong>
+            client
+        </strong>
+        (the person requesting the web page) and       the other as the <strong>
+        server</strong> (the one delivering the webpage).
+    </li>
+    <li>
+        The client will ask for a page       (e.g., “Please give me the homepage
+        of www.example.com”), and the server       will respond by "sending"
+        back the page (you can print out a       page on paper or simply
+        describe what happens).
+    </li>
+    <li>
+        Switch roles after a few rounds.
+    </li>
+</ul>
+<p>
+    <strong>Reflection:</strong> <br/>
+    After the exercise, discuss the roles of the client and server in this
+    interaction. Talk about how each step (request, response) mirrors what
+    happens  when you access a website.
+</p>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>Quiz: Test Your Understanding</strong>
+</p>
+<ol start="1" type="1">
+    <li>
+        What is the main difference       between the Internet and the World
+        Wide Web?
+    </li>
+    <li>
+        What does HTTP stand for, and why       is HTTPS important?
+    </li>
+    <li>
+        What are the three main       components that make up a URL?
+    </li>
+    <li>
+        In the client-server model, what       is the role of the client and the
+        role of the server?
+    </li>
+    <li>
+        What happens when you type a URL       into a browser?
+    </li>
+</ol>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>Conclusion:</strong>
+</p>
+<p>
+    This chapter laid the groundwork for  understanding the Internet and the
+    World Wide Web, which are fundamental to  building websites. By exploring
+    the evolution of the Internet, key components  like browsers and servers,
+    and understanding how websites work, you've gained  insight into how the web
+    operates behind the scenes.
+</p>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>Next Steps:</strong>
+</p>
+<p>
+    In the next chapter, we'll dive into  the basics of HTML, where you'll begin
+    writing your first web pages!
+</p>
+<div align="center">
+    <hr
+    size="0" width="100%" align="center" />
+</div>
+<p>
+    <strong>Homework:</strong>
+</p>
+<ol start="1" type="1">
+    <li>
+        Write a short paragraph about the       history of the Internet.
+    </li>
+    <li>
+        Create a list of 5 URLs you       frequently visit and break down their
+        structure (protocol, domain, and       path).
+    </li>
+</ol>
+</body>
+</div>
+</body>
+</html>

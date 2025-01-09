@@ -3,67 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Code Runner</title>
+    <title>Table of Contents: Beginning Web Development with HTML</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            background-color: #f9f9f9;
         }
-        textarea {
-            width: 80%;
-            height: 300px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            font-family: monospace;
-            margin-bottom: 10px;
-            font-size: 14px;
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
-        iframe {
-            width: 80%;
-            height: 600px;
-            border: 1px solid #ccc;
+        h1 {
+            text-align: center;
         }
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>Learn HTML</h1>
-    
-    <h2>HTML Code</h2>
-Try running some code here:
-    <textarea id="htmlCode" placeholder="Write your HTML here..."></textarea>
-    
-    <button onclick="runCode()">Run Code</button>
-    
-    <iframe id="output" src="about:blank"></iframe>
-
-    <script>
-        // Function to run the HTML, CSS, and JS code
-        function runCode() {
-            var htmlCode = document.getElementById('htmlCode').value;
-            
-            var iframe = document.getElementById('output');
-            var iframeDoc = iframe.contentWindow.document;
-            iframeDoc.open();
-
-            // Writing HTML, CSS, and JS into the iframe
-            iframeDoc.write(`
-
-                    ${htmlCode}
-
-            `);
-
-            iframeDoc.close();
-        }
-    </script>
-
+    <div class="container">
+        <h1>Beginning Web Development with HTML</h1>
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="chapter1.html">Chapter 1: Introduction to the Internet and the World Wide Web</a></li>
+            <li><a href="chapter2.html">Chapter 2: Introduction to HTML and Web Page Structure</a></li>
+            <li><a href="chapter3.html">Chapter 3: Working with Text and Links</a></li>
+            <li><a href="chapter4.html">Chapter 4: Visual Elements and Graphics</a></li>
+            <li><a href="chapter5.html">Chapter 5: Web Design Basics</a></li>
+            <li><a href="chapter6.html">Chapter 6: Page Layouts and Organizing Content</a></li>
+            <li><a href="chapter7.html">Chapter 7: Publishing Your Website</a></li>
+            <li><a href="chapter8.html">Chapter 8: Best Practices for Web Development</a></li>
+            <li><a href="appendices.html">Appendices</a></li>
+        </ul>
+    </div>
 </body>
 </html>
