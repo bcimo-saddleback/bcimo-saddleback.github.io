@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 2: Introduction to HTML and Web Page Structure</title>
+    <title>Chapter 1: Introduction to the Internet and the World Wide Web</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +12,7 @@
             background-color: #f9f9f9;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: #ffffff;
             padding: 20px;
@@ -22,453 +22,267 @@
         h1, h2 {
             text-align: center;
         }
+        /* Styling for the textarea */
+        textarea {
+            width: 80%;
+            max-width: 800px;
+            height: 300px;
+            border: 2px solid #ccc;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #4b8b3b;
+            outline: none;
+        }
+
+        /* Styling for the iframe */
+        iframe {
+            width: 80%;
+            max-width: 900px;
+            height: 400px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Styling for the button */
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #4b8b3b;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        pre {
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
         .practice {
             background-color: #f0f8ff;
             padding: 10px;
             margin: 20px 0;
             border-left: 4px solid #007BFF;
         }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 4px;
-            overflow-x: auto;
-        }
     </style>
 </head>
 <body>
     <div class="container">
 <p>
-    <strong>
+    <center><h1>
         Chapter 1: Introduction to the Internet and the World Wide Web
-    </strong>
+    </h1></center>
 </p>
-<p>
-    <strong><em>Active Learning Approach</em></strong> <strong></strong>
-</p>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>Objective of this Lesson:</strong>
-</p>
-<p>
-    By the end of this lesson, you should  be able to:
-</p>
-<ol start="1" type="1">
-    <li>
-        Understand what the Internet is,       how it evolved, and its key
-        components.
-    </li>
-    <li>
-        Explain the relationship between       the Internet and the World Wide
-        Web.
-    </li>
-    <li>
-        Describe how web protocols,       browsers, and domain names work
-        together to deliver content.
-    </li>
-    <li>
-        Understand the client-server       model, the request-response cycle,
-        and URLs.
-    </li>
+
+<p>Welcome to the first chapter of our course! In this interactive module, we&apos;ll explore the history, development, and structure of the Internet and the Web. By the end of this chapter, you should be able to:</p>
+<ul>
+    <li>Understand the evolution of the Internet and the Web.</li>
+    <li>Explain the need for web standards.</li>
+    <li>Identify key concepts in web design and development, including universal design, accessibility, and ethical web use.</li>
+    <li>Explore web browsers, servers, protocols, and how they interact.</li>
+    <li>Define key web technologies like HTML, XHTML, and HTML5.</li>
+</ul>
+<p>Let&rsquo;s get started!</p>
+<hr>
+
+
+<h4><strong>1. The Evolution of the Internet and the Web</strong></h4>
+<p>Before we dive deep, let&rsquo;s review the history of the Internet and the Web. These two terms are often used interchangeably, but they refer to different things.</p>
+<p><strong>Activity 1.1: Watch the Video</strong><br>Watch the short video on the history of the Internet. Pay special attention to the differences between the <strong>Internet</strong> and the <strong>Web</strong>, as well as their origins.</p>
+
+<iframe width="600" height="350" src="https://www.youtube.com/embed/Cut3D2JkcrQ" title="Did the U.S. Government Invent the Internet? | History" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<p><strong>Reflection Question</strong>:<br>After watching the video, explain in your own words the difference between the Internet and the Web.</p>
+<hr>
+
+<h4><strong>2. The Need for Web Standards</strong></h4>
+<p>As the Web grew rapidly, it became clear that a consistent set of guidelines was necessary to ensure that web pages worked seamlessly across different browsers and devices. These guidelines are known as <strong>web standards</strong>.</p>
+<p><strong>Activity 2.1: Read and Reflect</strong><br>Read the article and watch the video from W3C <a href="https://www.w3.org/standards/">Web Standards</a> (https://www.w3.org/standards/) Focus on how they contribute to <strong>accessibility</strong>, <strong>usability</strong>, and <strong>security</strong>.</p>
+<p><strong>Quiz 2.1: Web Standards</strong><br>Answer the following multiple-choice questions based on the reading:</p>
+<ol>
+    <li>Why are web standards important?<br>a) To make websites more visually appealing<br>b) To ensure websites work consistently across devices<br>c) To increase website traffic</li>
 </ol>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>Introduction:</strong>
-</p>
-<p>
-    Welcome to the first chapter of your  web development journey! In this
-    lesson, you will explore the foundational  concepts of the Internet and the
-    World Wide Web. We will cover the history of  the Internet, how websites
-    function, and how different components like  browsers, servers, and
-    protocols work together to deliver web content.
-</p>
-<p>
-    <strong>Lesson Content:</strong>
-</p>
-<p>
-    <strong>1. What is the Internet?</strong>
-</p>
-<p>
-    The Internet is a vast network of  computers connected worldwide that
-    communicate with each other. It enables data  exchange, communication, and
-    access to information on a global scale.
-</p>
-<p>
-    <strong>Key Milestones in the History of the  Internet:</strong>
-</p>
-<ul type="disc">
-    <li>
-        <strong>1960s:</strong> The first ideas for the Internet       began
-        with the development of ARPANET, a research project funded by the
-        U.S. government.
-    </li>
-    <li>
-        <strong>1970s:</strong> Email was invented, and the       first
-        protocols for data exchange were established (like TCP/IP).
-    </li>
-    <li>
-        <strong>1990s:</strong> The Internet became accessible       to the
-        public, and the World Wide Web (WWW) was created, revolutionizing
-        how information was shared.
-    </li>
-    <li>
-        <strong>2000s-present:</strong> The rise of social media, mobile
-        access, and high-speed broadband further expanded the Internet’s reach.
-    </li>
-</ul>
-<p>
-    <strong>Key Components of the Internet:</strong>
-</p>
-<ul type="disc">
-    <li>
-        <strong>Servers:</strong> Computers that store data and       serve it
-        to other computers (clients) over the Internet.
-    </li>
-    <li>
-        <strong>Browsers:</strong> Software programs that allow       users to
-        access websites and view content. Examples: Google Chrome,
-        Firefox, Safari.
-    </li>
-    <li>
-        <strong>Routers and Networks:</strong> Hardware and infrastructure that
-        direct data between servers and clients.
-    </li>
-</ul>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>2. The World Wide Web: A Layer Above the Internet</strong>
-</p>
-<p>
-    The World Wide Web (WWW) is a service  that operates on the Internet,
-    providing access to websites and web content.  While the Internet is the
-    infrastructure, the Web is a system of interlinked  documents accessed via
-    browsers.
-</p>
-<p>
-    <strong>Key Concepts:</strong>
-</p>
-<ul type="disc">
-    <li>
-        <strong>Web Protocols (HTTP/HTTPS):</strong>
-    </li>
-    <ul type="circle">
-        <li>
-            <strong>HTTP (Hypertext Transfer        Protocol)</strong> is a
-            protocol for transferring data across the web.        It tells
-            browsers how to request and receive web content.
-        </li>
-        <li>
-            <strong>HTTPS (Hypertext Transfer        Protocol Secure)</strong>
-            is the secure version of HTTP, encrypting data to        protect
-            privacy during transmission.
-        </li>
-    </ul>
-    <li>
-        <strong>Websites, Webpages, and Domains:</strong>
-    </li>
-    <ul type="circle">
-        <li>
-            <strong>Website:</strong> A collection of interconnected        web
-            pages.
-        </li>
-        <li>
-            <strong>Webpage:</strong> A single document within a        website,
-            typically a HTML file.
-        </li>
-        <li>
-            <strong>Domain Name:</strong> A human-readable address used
-            to access websites (e.g., www.example.com).
-        </li>
-    </ul>
-    <li>
-        <strong>Browsers and Their Role in       Rendering Web Content:</strong>
-    </li>
-    <ul type="circle">
-        <li>
-            <strong>Browsers</strong> interpret HTML, CSS, and        JavaScript
-            code to display websites to users. They retrieve files from
-            servers and render them visually on your screen.
-        </li>
-    </ul>
-</ul>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>3. How Websites Work</strong>
-</p>
-<p>
-    A website involves multiple steps and  systems to make sure you can view a
-    page on your device. Let's break down the  process:
-</p>
-<ul type="disc">
-    <li>
-        <strong>Client-Server Model:</strong>
-    </li>
-    <ul type="circle">
-        <li>
-            The <strong>client</strong> is your device        (e.g., a computer
-            or smartphone). The <strong>server</strong> is where the
-            website's data is stored. When you request a webpage, your browser
-            (the        client) asks the server for the page.
-        </li>
-    </ul>
-    <li>
-        <strong>Request-Response Cycle:</strong>
-    </li>
-</ul>
-<ul type="disc">
-    <ol start="1" type="1">
-        <li>
-            <strong>Request:</strong> When you type a URL into the browser, the
-            browser        sends a request to the server hosting the website.
-        </li>
-        <li>
-            <strong>Response:</strong> The server receives the request,
-            processes it, and        sends back the requested data (webpage,
-            images, etc.).
-        </li>
-        <li>
-            <strong>Render:</strong> The browser interprets the received data
-            and renders        the content visually on your screen.
-        </li>
-    </ol>
-</ul>
-<ul type="disc">
-    <li>
-        <strong>URLs and Domain Names:</strong>
-    </li>
-    <ul type="circle">
-        <li>
-            <strong>URL (Uniform Resource Locator):</strong> The web address you
-            type into        the browser's address bar. For example,
-            https://www.example.com.
-        </li>
-        <li>
-            A <strong>Domain Name</strong> is part of        the URL, and it
-            represents the website’s address in a human-readable        form.
-            Behind the scenes, the domain name is translated into an IP address
-            that servers use to communicate.
-        </li>
-    </ul>
-</ul>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>Interactive Exercises:</strong>
-</p>
-<p>
-    <strong>1. Internet &amp; WWW Brainstorming Activity:</strong>
-</p>
-<p>
-    <strong>Objective:</strong> To help students understand the  difference
-    between the Internet and the Web.
-</p>
-<p>
-    <strong>Instructions:</strong>
-</p>
-<ul type="disc">
-    <li>
-        Take a moment to think about the       Internet and the Web. Write down
-        your thoughts on the following questions:
-    </li>
-    <ul type="circle">
-        <li>
-            What do you think the Internet        is?
-        </li>
-        <li>
-            What is the World Wide Web? How        is it different from the
-            Internet?
-        </li>
-        <li>
-            How do you access websites on        the Internet?
-        </li>
-    </ul>
-</ul>
-<p>
-    After a few minutes, discuss your  answers with a partner or in a small
-    group. Compare and contrast your  definitions.
-</p>
-<p>
-    <strong>Reflection:</strong>
-</p>
-<ul type="disc">
-    <li>
-        Discuss as a class the main       differences. Highlight that the
-        Internet is the physical infrastructure,       while the World Wide Web
-        is the system of documents accessible through the       Internet.
-    </li>
-</ul>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>2. URL Dissection Exercise:</strong>
-</p>
-<p>
-    <strong>Objective:</strong> To identify the parts of a URL and  understand
-    how browsers use it to retrieve information.
-</p>
-<p>
-    <strong>Instructions:</strong> <br/>
-    Below are three URLs. Break them down into their components (protocol,
-    domain,  path, etc.):
-</p>
-<ol start="1" type="1">
-    <li>
-        https://www.google.com/search?q=web+development
-    </li>
-    <li>
-        http://www.example.org/contact.html
-    </li>
-    <li>
-        https://en.wikipedia.org/wiki/HTML
-    </li>
+<hr>
+
+
+<h4><strong>3. Universal Design and Accessible Web Design</strong></h4>
+<p>The <strong>Web Accessibility Initiative (WAI)</strong>, launched by the <strong>World Wide Web Consortium (W3C)</strong> in 1997, aims to improve the Web&rsquo;s accessibility for people with disabilities. Its mission is to make the Web accessible to all users by developing guidelines, standards, tools, and resources.</p>
+<p>Key components of WAI include:</p>
+<ol>
+    <li><strong>Web Content Accessibility Guidelines (WCAG)</strong>: Provides standards for creating accessible content, covering text alternatives, navigability, and adaptability for different devices.</li>
+    <li><strong>Authoring Tool Accessibility Guidelines (ATAG)</strong>: Ensures authoring tools are accessible and help create accessible web content.</li>
+    <li><strong>User Agent Accessibility Guidelines (UAAG)</strong>: Focuses on making web browsers and media players accessible.</li>
+    <li><strong>WAI-ARIA (Accessible Rich Internet Applications)</strong>: Enhances accessibility for dynamic content and web applications by adding roles and properties to HTML elements.</li>
+    <li><strong>Educational Resources</strong>: WAI offers tutorials, best practices, and policy guides for developers and policymakers.</li>
 </ol>
-<p>
-    <strong>Task:</strong>
-</p>
-<ul type="disc">
-    <li>
-        Identify the <strong>protocol</strong> (HTTP/HTTPS).
-    </li>
-    <li>
-        Identify the <strong>domain name</strong>.
-    </li>
-    <li>
-        Identify the <strong>path</strong> (the       specific page or resource
-        on the server).
-    </li>
-    <li>
-        Write down how the URL is       structured.
-    </li>
+<p>Web accessibility provides numerous benefits, including inclusive access, legal compliance, better usability, and improved SEO. WAI&rsquo;s efforts ensure that the Web is universally accessible, supporting legal, functional, and inclusive web design worldwide.</p>
+<hr>
+
+
+<h4><strong>4. Reliable Resources on the Web</strong></h4>
+<p>Not all information on the Web is trustworthy. It&apos;s essential to evaluate sources for credibility, reliability, and authority.</p>
+<p><strong>Activity 4.1: Resource Evaluation Exercise</strong><br>Read two articles on a similar topic&mdash;one from a <strong>.edu</strong> domain and the other from a <strong>.com</strong> domain. Compare the reliability of both based on the following criteria:</p>
+<ul>
+    <li>Authority of the source</li>
+    <li>Use of citations</li>
+    <li>Quality of writing and evidence</li>
 </ul>
-<p>
-    <strong>Discussion:</strong> <br/>
-    After completing the task, review your findings with the class. Discuss the
-    function of each part of the URL and how the browser uses them to find and
-    display a webpage.
-</p>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>3. Client-Server Model Simulation:</strong>
-</p>
-<p>
-    <strong>Objective:</strong> To visualize how the client-server  model works
-    in real life.
-</p>
-<p>
-    <strong>Instructions:</strong>
-</p>
-<ul type="disc">
-    <li>
-        Pair up with a classmate. One of       you will act as the
-        <strong>
-            client
-        </strong>
-        (the person requesting the web page) and       the other as the <strong>
-        server</strong> (the one delivering the webpage).
-    </li>
-    <li>
-        The client will ask for a page       (e.g., “Please give me the homepage
-        of www.example.com”), and the server       will respond by "sending"
-        back the page (you can print out a       page on paper or simply
-        describe what happens).
-    </li>
-    <li>
-        Switch roles after a few rounds.
-    </li>
+<p><strong>Quiz 4.1: Evaluating Sources</strong><br>Answer these true/false questions:</p>
+<ol>
+    <li>A website ending in <strong>.edu</strong> is more likely to provide reliable information than one ending in <strong>.com</strong>.</li>
+    <li>It is unnecessary to cross-reference information from multiple sources.</li>
+</ol>
+<hr>
+
+
+<h4><strong>5. Ethical Use of the Web</strong></h4>
+<p>Many websites rely on user-generated content (UGC), such as reviews, comments, or shared media. Ethical management of UGC is important to ensure that contributors&rsquo; rights are respected and that the content remains respectful and safe for all users.</p>
+<h4>Best Practices:</h4>
+<ul>
+    <li><strong>Moderate Content</strong>: Implement clear content guidelines and actively moderate user-generated content to prevent hate speech, harassment, or misinformation.</li>
+    <li><strong>Respect User Ownership</strong>: Give credit to users for the content they post and allow them to delete or edit their contributions as needed.</li>
+    <li><strong>Protect Minors</strong>: Websites that allow user-generated content must implement safeguards to protect vulnerable users, such as minors, from exploitation or harmful interactions.</li>
 </ul>
-<p>
-    <strong>Reflection:</strong> <br/>
-    After the exercise, discuss the roles of the client and server in this
-    interaction. Talk about how each step (request, response) mirrors what
-    happens  when you access a website.
-</p>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>Quiz: Test Your Understanding</strong>
-</p>
-<ol start="1" type="1">
-    <li>
-        What is the main difference       between the Internet and the World
-        Wide Web?
-    </li>
-    <li>
-        What does HTTP stand for, and why       is HTTPS important?
-    </li>
-    <li>
-        What are the three main       components that make up a URL?
-    </li>
-    <li>
-        In the client-server model, what       is the role of the client and the
-        role of the server?
-    </li>
-    <li>
-        What happens when you type a URL       into a browser?
-    </li>
+<p><strong>Discussion 5.1: Ethical Choices</strong><br>In your own words, explain why ethical use of the Web is important. Share a situation where you had to make an ethical decision about using online resources (or how you would handle such a situation).</p>
+<hr>
+
+
+<h4><strong>6. Web Browsers and Web Servers</strong></h4>
+<p>Web browsers and web servers are two fundamental components of how the Web functions. The <strong>web browser</strong> is what you use to view content, and the <strong>web server</strong> stores and delivers that content.</p>
+<p><strong>Activity 6.1: Browser Exploration</strong><br>Open your preferred web browser and explore its settings. Check out the <strong>developer tools</strong> (you can access these by pressing <strong>F12</strong> or right-clicking on a webpage and selecting &quot;Inspect&quot;). Explore how you can view the <strong>HTML</strong> and <strong>network activity</strong> of a page.</p>
+<p><strong>Reflection Question</strong>:<br>What did you learn about your browser&rsquo;s developer tools? How can they help you as a web developer?</p>
+<hr>
+
+
+<h4><strong>7. Networking Protocols</strong></h4>
+<p><strong>HTTP (Hypertext Transfer Protocol)</strong> is the foundation of data communication on the web. When you visit a website, your browser sends an HTTP request to a web server, which responds with the requested data (like a webpage). HTTP operates over TCP/IP to ensure data is transferred reliably.</p>
+<p><strong>Email Protocols</strong> govern how emails are sent, received, and stored. Common protocols include:</p>
+<ul>
+    <li><strong>SMTP (Simple Mail Transfer Protocol)</strong>: Used for sending emails from one server to another.</li>
+    <li><strong>IMAP (Internet Message Access Protocol)</strong>: Allows you to access and manage your emails on a server, keeping them synchronized across devices.</li>
+    <li><strong>POP3 (Post Office Protocol version 3)</strong>: Downloads emails from a server to your local device, often removing them from the server.</li>
+</ul>
+<p>These email protocols also work over <strong>TCP/IP</strong>, which is a suite of protocols that manage data transmission across the internet. <strong>TCP (Transmission Control Protocol)</strong> breaks data into packets, ensures they arrive in order, and requests retransmission if packets are lost. <strong>IP (Internet Protocol)</strong> assigns unique addresses to each device (IP addresses) and routes packets between them.</p>
+<p>In summary, <strong>HTTP</strong> handles web page requests, email protocols manage email flow, and <strong>TCP/IP</strong> provides the fundamental communication layer for both, ensuring reliable and ordered data transfer across networks.</p>
+<p><strong>DNS (Domain Name System)</strong> is like the phonebook of the internet. It translates human-readable domain names (like <em><a rel="noopener" target="_new">www.example.com</a></em>) into IP addresses (like <em>192.0.2.1</em>) that computers use to identify each other on the network.</p>
+<p>When you type a website address into your browser, a DNS query is sent to a DNS server. This server looks up the corresponding IP address for that domain name. If the server doesn&rsquo;t know the IP, it queries other DNS servers until it finds the correct one, allowing your browser to connect to the right web server.</p>
+<p>DNS is essential for making the internet user-friendly, as it replaces the need to remember complex numerical IP addresses.</p>
+<p><strong>Quiz 7.1: Networking Protocols</strong><br>Answer the following questions:</p>
+<ol>
+    <li>What does the <strong>DNS</strong> protocol do?</li>
+    <li>Which protocol is primarily used to view websites?</li>
 </ol>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>Conclusion:</strong>
-</p>
-<p>
-    This chapter laid the groundwork for  understanding the Internet and the
-    World Wide Web, which are fundamental to  building websites. By exploring
-    the evolution of the Internet, key components  like browsers and servers,
-    and understanding how websites work, you've gained  insight into how the web
-    operates behind the scenes.
-</p>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>Next Steps:</strong>
-</p>
-<p>
-    In the next chapter, we'll dive into  the basics of HTML, where you'll begin
-    writing your first web pages!
-</p>
-<div align="center">
-    <hr
-    size="0" width="100%" align="center" />
-</div>
-<p>
-    <strong>Homework:</strong>
-</p>
-<ol start="1" type="1">
-    <li>
-        Write a short paragraph about the       history of the Internet.
-    </li>
-    <li>
-        Create a list of 5 URLs you       frequently visit and break down their
-        structure (protocol, domain, and       path).
-    </li>
+<hr>
+
+
+<h4><strong>8. URIs and URLs</strong></h4>
+<p>A <strong>URI (Uniform Resource Identifier)</strong> is a string of characters used to identify a resource on the internet or within a network. It provides a way to locate or reference a resource, such as a web page, an image, or a file, using a consistent format.</p>
+<p>A URI typically consists of two main parts:</p>
+<ol>
+    <li><strong>Scheme</strong>: Specifies the protocol or method used to access the resource (e.g., <em>http</em>, <em>ftp</em>, <em>mailto</em>).</li>
+    <li><strong>Path</strong>: Defines the location of the resource on the server or within the system (e.g., <em>/images/logo.png</em>).</li>
 </ol>
+<p>A <strong>URL (Uniform Resource Locator)</strong> is a type of URI that provides both the identifier and the means to locate the resource (e.g., <em><a rel="noopener" target="_new">https://www.example.com/page</a></em>). All URLs are URIs, but not all URIs are URLs.</p>
+<p>For example:</p>
+<ul>
+    <li><strong>URI</strong>: <em>ftp://example.com/file.txt</em> (an FTP resource)</li>
+    <li><strong>URL</strong>: <em><a rel="noopener" target="_new">https://www.example.com/index.html</a></em> (a web page)</li>
+</ul>
+<p>In short, a URI uniquely identifies a resource, while a URL specifies its location and how to access it.</p>
+<hr>
+
+
+<h4><strong>9. HTML</strong></h4>
+<p>Watch the following video about HTML and how it works.</p>
+
+<iframe width="600" height="350" src="https://www.youtube.com/embed/xKuJrmlCdig" title="What is HTML?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<p><strong>HTML</strong>&nbsp;(HyperText Markup Language) is the standard language for creating web pages. Below is a simple example of HTML.</p>
+<p><strong>HTML Code Example</strong></p>
+<pre>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My First Web Page&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;This is a paragraph of text on my first web page!&lt;/p&gt;
+        &lt;a href="https://www.saddleback.edu/"&gt;Visit Saddleback College&lt;/a&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Explanation:</strong></p>
+<ul type="disc">
+<li><strong>&lt;html&gt;</strong>: The root element of the page.</li>
+<li><strong>&lt;head&gt;</strong>: Contains metadata, like the title.</li>
+<li><strong>&lt;title&gt;</strong>: Sets the page title (appears in the browser tab).</li>
+<li><strong>&lt;body&gt;</strong>: Contains the visible content of the page.</li>
+<li><strong>&lt;p&gt;</strong>: Defines a paragraph of text.</li>
+<li><strong>&lt;a&gt;</strong>: Defines a hyperlink (with the&nbsp;href&nbsp;attribute to specify the link's destination).</li>
+</ul>
+
+<p>Try running this code! Copy the HTML Ccde example above into the text box below, then click on run.</p>
+
+    <!-- Textarea for the user to input HTML -->
+    <textarea id="htmlCode" placeholder="Write your HTML here..."></textarea>
+    
+    <!-- Run code button -->
+    <button onclick="runCode()">Run Code</button>
+    
+    <!-- Output iframe where the HTML is rendered -->
+    <iframe id="output" src="about:blank"></iframe>
+<hr>
+
+<h3><strong>Conclusion</strong></h3>
+<p>Congratulations on completing Chapter 1! You&rsquo;ve learned about the evolution of the Web, the importance of web standards, and the technical aspects of web design and development. These concepts are foundational for anyone looking to understand or create for the Web.</p>
+<p>As you move forward in this course, keep exploring these topics and participate in the activities to deepen your understanding. The Web continues to evolve, and understanding its history, structure, and trends will help you navigate and contribute to the digital world.</p>
+<hr>
+
 </body>
 </div>
+
+<script>
+    // Function to run the HTML code
+    function runCode() {
+        var htmlCode = document.getElementById('htmlCode').value;
+        
+        var iframe = document.getElementById('output');
+        var iframeDoc = iframe.contentWindow.document;
+        iframeDoc.open();
+
+        // Write the HTML code to the iframe
+        iframeDoc.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Output</title>
+            </head>
+            <body>
+                ${htmlCode}
+            </body>
+            </html>
+        `);
+
+        iframeDoc.close();
+    }
+</script>
+
 </body>
 </html>
