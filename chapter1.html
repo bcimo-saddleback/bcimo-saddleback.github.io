@@ -80,6 +80,33 @@
             border-left: 4px solid #007BFF;
         }
     </style>
+    <script>
+        // Function to run the HTML code
+        function runCode() {
+            var htmlCode = document.getElementById('htmlCode').value;
+            
+            var iframe = document.getElementById('output');
+            var iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+    
+            // Write the HTML code to the iframe
+            iframeDoc.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Output</title>
+                </head>
+                <body>
+                    ${htmlCode}
+                </body>
+                </html>
+            `);
+    
+            iframeDoc.close();
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -247,33 +274,7 @@
 </body>
 </div>
 
-<script>
-    // Function to run the HTML code
-    function runCode() {
-        var htmlCode = document.getElementById('htmlCode').value;
-        
-        var iframe = document.getElementById('output');
-        var iframeDoc = iframe.contentWindow.document;
-        iframeDoc.open();
 
-        // Write the HTML code to the iframe
-        iframeDoc.write(`
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Output</title>
-            </head>
-            <body>
-                ${htmlCode}
-            </body>
-            </html>
-        `);
-
-        iframeDoc.close();
-    }
-</script>
 <footer>
     <center>Next: <a href="chapter2.html">Chapter 2: Introduction to HTML and Web Page Structure</a></center>
     

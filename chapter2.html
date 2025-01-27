@@ -79,7 +79,46 @@
             margin: 20px 0;
             border-left: 4px solid #007BFF;
         }
+
+        /* Style Definitions */
+        p.MsoNormal, li.MsoNormal, div.MsoNormal
+            {margin:0in;
+            text-indent:.25in;
+            font-size:11.0pt;
+            font-family:"Aptos",sans-serif;}
+        .MsoChpDefault
+            {font-size:11.0pt;}
+        .MsoPapDefault
+            {text-indent:.25in;}
+        /* Page Definitions */
+        @page WordSection1
+            {size:8.5in 11.0in;
+            margin:1.0in 1.0in 1.0in 1.0in;}
+        div.WordSection1
+            {page:WordSection1;}
+        /* List Definitions */
+        ol
+            {margin-bottom:0in;}
+        ul
+            {margin-bottom:0in;}
     </style>
+    <script>
+    // Function to run the HTML code
+    function runCode() {
+        var htmlCode = document.getElementById('htmlCode').value;
+        
+        var iframe = document.getElementById('output');
+        var iframeDoc = iframe.contentWindow.document;
+        iframeDoc.open();
+
+        // Write the HTML code to the iframe
+        iframeDoc.write(`
+            ${htmlCode}
+        `);
+
+        iframeDoc.close();
+    }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -514,7 +553,7 @@ Copy the code above into the <a href="#coderunner">code runner</a> at the bottom
     size="0" width="100%" align="center" />
 </div>
 
-<sectionid id="coderunner">
+<section id="coderunner">
     <h4>Code Runner</h4>
     <p>
     <!-- Textarea for the user to input HTML -->
@@ -547,8 +586,8 @@ Copy the code above into the <a href="#coderunner">code runner</a> at the bottom
         organize and display       content.
     </li>
     <li>
-        Practice is essential to becoming       proficient in HTML. Start by
-        creating simple pages and experimenting with       different tags.
+        Practice is essential to becoming proficient in HTML. Start by
+        creating simple pages and experimenting with different tags.
     </li>
 </ul>
 
@@ -569,21 +608,5 @@ Watch this video that explains some HTML Elements.
     <center>Back: <a href="chapter1.html">Chapter 1: Introduction to the Internet and the World Wide Web</a></center>
 </footer>
 
-<script>
-    // Function to run the HTML code
-    function runCode() {
-        var htmlCode = document.getElementById('htmlCode').value;
-        
-        var iframe = document.getElementById('output');
-        var iframeDoc = iframe.contentWindow.document;
-        iframeDoc.open();
 
-        // Write the HTML code to the iframe
-        iframeDoc.write(`
-            ${htmlCode}
-        `);
-
-        iframeDoc.close();
-    }
-</script>
 </html>
