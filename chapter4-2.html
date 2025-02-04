@@ -1,0 +1,267 @@
+<html>
+
+<head>
+	<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+	<title>Chapter 4: Visual Elements and Graphics - Section 1</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			line-height: 1.6;
+			margin: 20px;
+			background-color: #ffffff;
+			color: #000000;
+			/* Improved readability */
+		}
+
+		.container {
+			max-width: 900px;
+			margin: 0 auto;
+			background: #ffffff;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		h1,
+		h2 {
+			text-align: center;
+		}
+
+		textarea {
+			width: 80%;
+			max-width: 800px;
+			height: 300px;
+			border: 2px solid #ccc;
+			padding: 15px;
+			font-family: monospace;
+			font-size: 16px;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			margin-bottom: 20px;
+			transition: border-color 0.3s ease;
+		}
+
+		textarea:focus {
+			border-color: #4b8b3b;
+			outline: none;
+		}
+
+		iframe {
+			width: 80%;
+			max-width: 900px;
+			height: 400px;
+			border: 2px solid #ccc;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			margin-top: 20px;
+		}
+
+		button {
+			padding: 12px 25px;
+			font-size: 18px;
+			background-color: #074f07;
+			/* Improved contrast */
+			color: #ffffff;
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			margin-top: 20px;
+		}
+
+		button:hover {
+			background-color: #062000;
+		}
+
+		pre {
+			font-family: monospace;
+			font-size: 16px;
+			background-color: #f4f4f4;
+			padding: 15px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+
+		.practice {
+			background-color: #ffffff;
+			padding: 10px;
+			margin: 20px 0;
+			border-left: 4px solid #007BFF;
+		}
+
+		/* Style Definitions */
+		p.MsoNormal,
+		li.MsoNormal,
+		div.MsoNormal {
+			margin: 0in;
+			text-indent: .25in;
+			font-size: 11.0pt;
+			font-family: "Aptos", sans-serif;
+		}
+
+		.MsoChpDefault {
+			font-size: 11.0pt;
+		}
+
+		.MsoPapDefault {
+			text-indent: .25in;
+		}
+
+		/* Page Definitions */
+		@page WordSection1 {
+			size: 8.5in 11.0in;
+			margin: 1.0in 1.0in 1.0in 1.0in;
+		}
+
+		div.WordSection1 {
+			page: WordSection1;
+		}
+
+		/* List Definitions */
+		ol {
+			margin-bottom: 0in;
+		}
+
+		ul {
+			margin-bottom: 0in;
+		}
+	</style>
+	<script>
+		// Function to run the HTML code
+		function runCode() {
+			var htmlCode = document.getElementById('htmlCode').value;
+
+			var iframe = document.getElementById('output');
+			var iframeDoc = iframe.contentWindow.document;
+			iframeDoc.open();
+
+			// Write the HTML code to the iframe
+			iframeDoc.write(`
+				${htmlCode}
+			`);
+
+			iframeDoc.close();
+		}
+	</script>
+</head>
+
+<body lang=EN-US link=blue vlink="#96607D" style='word-wrap:break-word'>
+
+	<div class="container">
+
+		<h1>Chapter 4: Visual Elements and Graphics</h1>
+			
+		<h2>Section 2: Introduction to Multimedia: Embedding Videos and Audio</h2>
+		<p>While images enhance the visual appeal of a website, videos and audio are essential for creating more
+			interactive and engaging experiences. HTML provides simple tags to embed video and audio files directly into
+			a webpage.</p>
+		<h3>Embedding Videos with the &lt;video&gt; Tag</h3>
+		<p>The &lt;video&gt; tag allows you to embed video files. You can specify multiple video sources for better
+			compatibility across browsers, and add controls to allow users to play, pause, or adjust the volume.</p>
+		<pre><code>&lt;video src="video.mp4" controls&gt;&nbsp; Your browser does not support the video tag.&lt;/video&gt;</code></pre>
+		<p>In this example, the video file will be displayed. The controls attribute adds the standard video controls,
+			such as play, pause, and volume.</p>
+		<ul>
+			<li>src: This attribute specifies the video file you want to embed. You can use relative paths (if the video
+				is hosted on the same server) or absolute URLs (if the video is hosted externally).</li>
+			<li>controls: This optional attribute adds built-in controls such as play, pause, volume, and full-screen
+				options to the video player.</li>
+			<li><strong>Fallback Text</strong>: The content inside the &lt;video&gt; tag (like "Your browser does not
+				support the video tag") is displayed if the user's browser doesn&rsquo;t support the video element.</li>
+		</ul>
+		<h4>Interactive Activity:</h4>
+		<p>Try embedding a video in your HTML. Copy the code below into the code editor:</p>
+		<pre><code>&lt;video width="640" height="360" controls&gt;<br />&nbsp; &lt;source src="video/Apollo11_clip.mp4" type="video/mp4"&gt;<br />&nbsp; Your browser does not support the video tag.<br />&lt;/video&gt;</code></pre></p>
+		<ul>
+			<li>Try changing the height and width.</li>
+			<li>Try changing the name of the video.</li>
+			<li>Add or remove the controls attribute to see how it impacts the user interface for both video and audio.
+			</li>
+		</ul>
+		<section id="coderunner">
+			<p>
+				<!-- Textarea for the user to input HTML -->
+				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+
+				<!-- Run code button -->
+				<button onclick="runCode()">Run Code</button>
+
+				<!-- Output iframe where the HTML is rendered -->
+				<iframe id="output" src="about:blank"></iframe>
+			</p>
+		</section>
+
+		<iframe width="600" height="350" src="https://www.youtube.com/embed/h51jaPt5A5s" title="How To Insert A Video Using HTML #shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+		<h3>Embedding Audio with the &lt;audio&gt; Tag</h3>
+		<p>The &lt;audio&gt; tag is similar to the &lt;video&gt; tag but for audio files, see the example below.</p>
+		<pre><code>&lt;audio src="audio.mp3" controls&gt;<br />&nbsp; Your browser does not support the audio tag.<br />&lt;/audio&gt;</code></pre>
+		<p>This will embed an audio player that allows users to play the file.</p>
+		<ul>
+			<li><strong><code>src</code></strong>: Specifies the path to the audio file. It can be a relative or absolute URL.</li>
+			<li><strong><code>controls</code></strong>: Displays the default audio controls (play, pause, volume, etc.).</li>
+			<li><strong>Fallback text</strong>: The text between the <code>&lt;audio&gt;</code> tags will appear if the browser doesn&rsquo;t support the audio element.</li>
+			</ul>
+		<br>
+		<div class=MsoNormal align=center style='margin-bottom:0in;text-align:center'>
+
+			<hr size=0 width="100%" align=center>
+
+		</div>
+		<h2>Image File Types and When to Use Them</h2>
+		<p>Choosing the right image file type is important for both performance and image quality. Let&rsquo;s explore
+			the most common image file formats used in web development.</p>
+		<h3>JPEG (Joint Photographic Experts Group)</h3>
+		<p>JPEG is the most widely used image format for photographs and complex images. It supports millions of colors
+			and provides high compression rates, making it ideal for images with subtle color variations.</p>
+		<ul>
+			<li><strong>When to use</strong>: Photographs, images with gradients, or detailed artwork.</li>
+			<li><strong>Pros</strong>: Smaller file sizes with high-quality images.</li>
+			<li><strong>Cons</strong>: Lossy compression (some quality is lost when saving).</li>
+		</ul>
+		<h3>PNG (Portable Network Graphics)</h3>
+		<p>PNG is a lossless image format, meaning no data is lost during compression. It supports transparency, which
+			is useful for images that need to blend seamlessly with the background.</p>
+		<ul>
+			<li><strong>When to use</strong>: Logos, icons, images with transparency, or sharp-edged graphics.</li>
+			<li><strong>Pros</strong>: Lossless quality, supports transparency.</li>
+			<li><strong>Cons</strong>: Larger file sizes compared to JPEG.</li>
+		</ul>
+		<h3>GIF (Graphics Interchange Format)</h3>
+		<p>GIF is often used for simple animations and images with few colors. It supports transparency but only allows
+			one color to be fully transparent.</p>
+		<ul>
+			<li><strong>When to use</strong>: Simple animations, low-resolution images, or pixel art.</li>
+			<li><strong>Pros</strong>: Supports animation, supports transparency.</li>
+			<li><strong>Cons</strong>: Limited to 256 colors, not suitable for high-quality images.</li>
+		</ul>
+		<h3>SVG (Scalable Vector Graphics)</h3>
+		<p>SVG is a vector-based image format, meaning it uses mathematical equations to draw images. This makes SVG
+			images infinitely scalable without losing quality.</p>
+		<ul>
+			<li><strong>When to use</strong>: Logos, icons, and illustrations that need to scale across devices.</li>
+			<li><strong>Pros</strong>: Scalable, smaller file sizes for simple graphics, and supports animation and
+				interactivity.</li>
+			<li><strong>Cons</strong>: Not suitable for complex images like photographs.</li>
+		</ul>
+		<h2>Review and Summary</h2>
+		<p>In this chapter, you have learned how to:</p>
+		<ul>
+			<li>Insert images using the &lt;img&gt; tag and understand the essential attributes like src, alt, and
+				title.</li>
+			<li>Embed videos and audio using the &lt;video&gt; and &lt;audio&gt; tags, making your website more
+				interactive and engaging.</li>
+			<li>Understand the different image file formats (JPEG, PNG, GIF, SVG) and when to use each based on the type
+				of content you are displaying.</li>
+		</ul>
+		<p>Images, videos, and audio are powerful tools for improving the user experience and making websites more
+			dynamic. Experiment with these elements and be mindful of accessibility considerations, such as providing
+			alternative text for images and ensuring media is easily accessible to all users.</p>
+		
+	</div>
+
+</body>
+
+</html>
