@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <title>Chapter 6: Web Design Basics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            /* Improved readability */
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        textarea {
+            width: 80%;
+            max-width: 800px;
+            height: 300px;
+            border: 2px solid #ccc;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #4b8b3b;
+            outline: none;
+        }
+
+        iframe {
+            width: 80%;
+            max-width: 900px;
+            height: 400px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #074f07;
+            /* Improved contrast */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #062000;
+        }
+
+        pre {
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .practice {
+            background-color: #ffffff;
+            padding: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #007BFF;
+        }
+
+        /* Style Definitions */
+        p.MsoNormal,
+        li.MsoNormal,
+        div.MsoNormal {
+            margin: 0in;
+            text-indent: .25in;
+            font-size: 11.0pt;
+            font-family: "Aptos", sans-serif;
+        }
+
+        .MsoChpDefault {
+            font-size: 11.0pt;
+        }
+
+        .MsoPapDefault {
+            text-indent: .25in;
+        }
+
+        /* Page Definitions */
+        @page WordSection1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in 1.0in 1.0in 1.0in;
+        }
+
+        div.WordSection1 {
+            page: WordSection1;
+        }
+
+        /* List Definitions */
+        ol {
+            margin-bottom: 0in;
+        }
+
+        ul {
+            margin-bottom: 0in;
+        }
+    </style>
+    <script>
+        // Function to run the HTML code
+        function runCode() {
+            var htmlCode = document.getElementById('htmlCode').value;
+
+            var iframe = document.getElementById('output');
+            var iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+
+            // Write the HTML code to the iframe
+            iframeDoc.write(`
+                    ${htmlCode}
+                `);
+
+            iframeDoc.close();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1 data-pm-slice="1 1 []">Chapter6: Web Design Basics</h1>
+        <h2>Introduction</h2>
+        <p>Web design involves creating visually appealing and functional web pages. A fundamental part of web design
+            includes structuring elements, styling them, and ensuring a cohesive layout. In this chapter, you
+            will gain a basic understanding of CSS (Cascading Style Sheets).
+        </p>
+        <h2>Understanding HTML and CSS</h2>
+        <p>HTML (HyperText Markup Language) is used to structure web pages, while CSS (Cascading Style Sheets) is used
+            to style them. CSS allows for adding colors, spacing, and positioning elements to create an engaging user
+            experience.</p>
+        <h3>Basic CSS Syntax</h3>
+        <p>CSS consists of <strong>selectors</strong> and <strong>declarations</strong>. Here's an example:</p>
+        <pre><code>h1 {
+ color: blue; /* Property: color, Value: blue */
+ font-size: 24px; /* Property: font-size, Value: 24px */
+}
+</code></pre>
+        <ul>
+            <li><strong>Selector</strong>: <code>h1</code>
+                <ul>
+                    <li>This targets all <code>&lt;h1&gt;</code> elements on the page.</li>
+                </ul>
+            </li>
+            <li><strong>Declarations</strong>:
+                <ul>
+                    <li><code>color: blue;</code> &mdash; This changes the text color of <code>&lt;h1&gt;</code>
+                        elements to blue.</li>
+                    <li><code>font-size: 24px;</code> &mdash; This changes the font size of <code>&lt;h1&gt;</code>
+                        elements to 24 pixels.</li>
+                </ul>
+            </li>
+        </ul>
+        <h3>Summary:</h3>
+        <ul>
+            <li>The <strong>selector</strong> identifies which HTML element to style.</li>
+            <li>The <strong>declaration</strong> defines what style to apply, with each declaration made up of a
+                <strong>property</strong> and its <strong>value</strong>.
+            </li>
+        </ul>
+        <hr>
+        <h2>Adding CSS to HTML</h2>
+        <p>To add CSS directly to an HTML document, you can use the <code>&lt;style&gt;</code> tag within the
+            <code>&lt;head&gt;</code> section of the document. Here's how you do it:
+        </p>
+        <p>You need to place the <code>&lt;style&gt;</code> tag inside the <code>&lt;head&gt;</code> element of your
+            HTML document. Anything you write inside the <code>&lt;style&gt;</code> tag will be applied as CSS styles to
+            the HTML content on that page.</p>
+        <h3>Example:</h3>
+        <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+
+    &lt;style&gt;
+        /* CSS styles go here */
+        h1 {
+            color: blue;
+            font-size: 24px;
+        }
+
+        p {
+            color: green;
+            font-size: 16px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to My Page&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph of text.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <h3>Key Points:</h3>
+        <ol>
+            <li>
+                <p><strong><code>&lt;style&gt;</code> tag</strong>:</p>
+                <ul>
+                    <li>It's used to contain CSS code.</li>
+                    <li>It's placed inside the <code>&lt;head&gt;</code> section of the HTML document.</li>
+                    <li>CSS code inside the <code>&lt;style&gt;</code> tag applies to the entire HTML document.</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>Inside the <code>&lt;style&gt;</code> tag</strong>:</p>
+                <ul>
+                    <li>You write your regular CSS rules (selectors and declarations) like you normally would in an
+                        external stylesheet.</li>
+                </ul>
+            </li>
+        </ol>
+        <h3>Why use the <code>&lt;style&gt;</code> tag?</h3>
+        <ul>
+            <li>It&rsquo;s a good way to include CSS when working on a small project or when you want to quickly test
+                styles.</li>
+            <li>For larger projects or when you want to keep the CSS separate, it&rsquo;s better to use an external CSS
+                file linked with the <code>&lt;link&gt;</code> tag.</li>
+        </ul>
+        <h3>Example with a <code>&lt;style&gt;</code> tag:</h3>
+        <p>The above code will apply the following styles:</p>
+        <ul>
+            <li>The <code>&lt;h1&gt;</code> will be blue and have a font size of 24px.</li>
+            <li>The <code>&lt;p&gt;</code> will be green and have a font size of 16px.</li>
+        </ul>
+
+        <h2>External CSS</h2>
+
+        <p>External CSS involves linking an HTML document to an external .css file. This method is the most efficient
+            for larger projects, as it allows for a clean separation of content and design. It also makes it easier to
+            maintain and update styles across multiple web pages by editing a single CSS file.
+        </p>
+        <p>To use external CSS, you create a separate CSS file (e.g., styles.css) and link it to your HTML document
+            using the &lt;link&gt; tag in the &lt;head&gt; section.</p>
+
+        <p>Example of an HTML file linking to an external CSS file:</p>
+
+        <pre><code class="language-html"&lt;html lang="en"&gt;<br />&lt;head&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;meta http-equiv=Content-Type content="text/html; charset=utf-8"&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;title&gt;Web Design Basics&lt;/title&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;link rel="stylesheet" href="style.css"&gt;<br /> &lt;/head&gt;<br /> &lt;body&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;header&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h1&gt;Welcome to Web Design Basics&lt;/h1&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;/header&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;button class="basic-button"&gt;Click Me&lt;/button&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;div class="container"&gt;&lt;/div&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;div class="circle"&gt;&lt;/div&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;div class="square"&gt;&lt;/div&gt;<br /> &lt;/body&gt;<br /> &lt;/html&gt;</pre>
+        </code>
+
+        <h3 data-slate-node="element"><span data-slate-node="text"><span data-slate-leaf="true"><span
+                        data-slate-string="true">Advantages of Using External CSS</span></span></span></h3>
+        <ul>
+            <li data-slate-node="element">
+                <p data-slate-node="element"><span data-slate-node="text"><span data-slate-leaf="true"><strong><span
+                                    data-slate-string="true">Consistency</span></strong></span></span><span
+                        data-slate-node="text"><span data-slate-leaf="true"><span data-slate-string="true">: External
+                                CSS allows for consistent styling across multiple web pages. By linking all pages to a
+                                single CSS file, you ensure that changes to the design are applied
+                                universally.</span></span></span></p>
+            </li>
+            <li data-slate-node="element">
+                <p data-slate-node="element"><span data-slate-node="text"><span data-slate-leaf="true"><strong><span
+                                    data-slate-string="true">Efficiency</span></strong></span></span><span
+                        data-slate-node="text"><span data-slate-leaf="true"><span data-slate-string="true">: External
+                                CSS reduces redundancy and file size in HTML documents, as styles are defined once in a
+                                separate file rather than repeated within each HTML document.</span></span></span></p>
+            </li>
+        </ul>
+
+        <h3>You Try It!</h3>
+        <ol start="1" data-spread="false">
+            <li>
+                <p>Run the external CSS sample html from above in the code runner.</p>
+            </li>
+            <li>
+                <p>What does the page look like? Why do you think it looks like that?</p>
+            </li>
+            <li>
+                <p>Copy the HTML with the inline CSS and run it in the code runner.</p>
+            </li>
+        </ol>
+        <section id="coderunner">
+            <p>
+                <!-- Textarea for the user to input HTML -->
+                <label for="htmlCode">Write HTML in this text area.</label>
+                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+
+                <!-- Run code button -->
+                <button onclick="runCode()">Run Code</button>
+
+                <!-- Output iframe where the HTML is rendered -->
+                <iframe id="output" src="about:blank"></iframe>
+            </p>
+        </section>
+<hr>
+        <p>Here's a quick video about CSS:
+            <iframe width="600" height="350" src="https://www.youtube.com/embed/OEV8gMkCHXQ" title="CSS in 100 Seconds"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </p>
+
+        <p>One of the most fascinating ways to see the power of CSS in action is through a site called <a href="https://csszengarden.com/" target="_blank">CSS Zen Garden</a>. This site serves as a demonstration of what can be accomplished visually through CSS-based design. The HTML of the page remains the same, but the CSS can be changed to produce dramatically different results. This showcases the separation of content (HTML) from presentation (CSS), a core principle in modern web design.</p>
+<p><strong>Introduction to CSS Zen Garden</strong></p>
+<p>CSS Zen Garden is an online resource that allows designers to submit their own CSS designs to transform a single HTML file. The purpose of this site is to highlight the capabilities of CSS in creating visually appealing web pages without altering the HTML structure. By visiting <a href="https://csszengarden.com/" target="_blank">CSS Zen Garden</a>, you can explore a variety of designs, each demonstrating unique styles and layouts, all applied to the same HTML content.</p>
+<p><strong>How to Use CSS Zen Garden</strong></p>
+<ol>
+<li><strong>Visit the Site:</strong></li>
+<p>Start by navigating to the CSS Zen Garden website. Here, you will find a default design along with a menu of other designs created by various designers.</p>
+<li><strong>Explore Designs:</strong></li>
+<p>On the homepage, you can browse through different designs by clicking on their titles or thumbnails. Each design applies a unique CSS file to the same HTML structure, allowing you to see how different styles can completely change the look and feel of a webpage.</p>
+<li><strong>View the HTML:</strong></li>
+<p>To understand the foundation of these designs, you can view the HTML file used. This file remains constant across all designs, emphasizing the role of CSS in altering the presentation.</p>
+<li><strong>Examine the CSS:</strong></li>
+<p>For each design, you can also view the CSS file. This is where all the styling magic happens. By examining these files, you can learn how different CSS properties and techniques are used to achieve various visual effects.</p>
+</ol>
+<hr>
+<p><strong>Conclusion</strong></p>
+<p>In this chapter, we&rsquo;ve explored the fundamentals of web design, focusing on the essential roles of HTML and CSS. HTML is the backbone of web structure, allowing us to define the content and layout of web pages. CSS, on the other hand, is the tool that allows us to style and enhance these elements, ensuring that they are visually appealing and user-friendly.</p>
+<p>We&rsquo;ve learned how to structure and apply CSS in different ways, whether through internal styles within a &lt;style&gt; tag or by linking to external CSS files. Each method offers its own benefits, with external CSS being ideal for larger projects due to its ability to maintain consistency and efficiency across multiple pages.</p>
+<p>The chapter also introduced the concept of CSS Zen Garden, demonstrating the power of CSS in transforming the visual presentation of the same HTML structure. This exemplifies the core principle of web design: separating content (HTML) from presentation (CSS).</p>
+<p>By understanding and applying the basic principles and techniques covered in this chapter, you are now equipped to create well-structured, stylish, and functional web pages. As you continue to experiment with CSS, you&rsquo;ll be able to refine your skills and explore more advanced design techniques to enhance your web design projects.</p>
+
+</div>
+</body>
+
+</html>
