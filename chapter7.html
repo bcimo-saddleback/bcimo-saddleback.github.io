@@ -1,0 +1,475 @@
+<html>
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <title>Chapter 7: CSS Techniques</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            /* Improved readability */
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        textarea {
+            width: 80%;
+            max-width: 800px;
+            height: 300px;
+            border: 2px solid #ccc;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #4b8b3b;
+            outline: none;
+        }
+
+        iframe {
+            width: 80%;
+            max-width: 900px;
+            height: 400px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #074f07;
+            /* Improved contrast */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #062000;
+        }
+
+        pre {
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .practice {
+            background-color: #ffffff;
+            padding: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #007BFF;
+        }
+
+        /* Style Definitions */
+        p.MsoNormal,
+        li.MsoNormal,
+        div.MsoNormal {
+            margin: 0in;
+            text-indent: .25in;
+            font-size: 11.0pt;
+            font-family: "Aptos", sans-serif;
+        }
+
+        .MsoChpDefault {
+            font-size: 11.0pt;
+        }
+
+        .MsoPapDefault {
+            text-indent: .25in;
+        }
+
+        /* Page Definitions */
+        @page WordSection1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in 1.0in 1.0in 1.0in;
+        }
+
+        div.WordSection1 {
+            page: WordSection1;
+        }
+
+        /* List Definitions */
+        ol {
+            margin-bottom: 0in;
+        }
+
+        ul {
+            margin-bottom: 0in;
+        }
+    </style>
+    <script>
+        // Function to run the HTML code
+        function runCode() {
+            var htmlCode = document.getElementById('htmlCode').value;
+
+            var iframe = document.getElementById('output');
+            var iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+
+            // Write the HTML code to the iframe
+            iframeDoc.write(`
+                    ${htmlCode}
+                `);
+
+            iframeDoc.close();
+        }
+    </script>
+</head>
+
+<body lang=EN-US style='word-wrap:break-word'>
+
+<div class="container">
+
+    <p><strong>Chapter 7: CSS Techniques</strong></p>
+    <p>In web design, CSS (Cascading Style Sheets) is the key tool for styling and enhancing the presentation of a webpage. While the basics of CSS allow you to control simple styling such as colors, fonts, and spacing, advanced CSS techniques take your designs to the next level. These techniques allow you to create complex layouts, animations, and responsive designs that can adapt to different devices. In this chapter, you&rsquo;ll explore advanced CSS concepts and methods, including Flexbox, Grid Layout, CSS animations, and responsive design principles.</p>
+    <div><hr /></div>
+    <p><strong>Part 1 - Flexbox For Layout</strong></p>
+    <p>A crucial aspect of CSS is its ability to manage the layout of web pages. Among the various layout techniques available, Flexbox (Flexible Box Layout) stands out as a modern and efficient method for designing responsive web layouts. Flexbox provides a more streamlined and intuitive approach to arranging elements within a container, offering flexibility and control over the alignment, direction, and order of items.</p>
+    <p><strong>Flexbox Basics</strong></p>
+    <p>The main concept behind Flexbox is that it works by defining a container as a flex container and then arranging the items inside the container with various properties. Here's how Flexbox works in action.</p>
+    <p><strong>Example: A Simple Flexbox Layout</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+        &lt;meta charset="UTF-8"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+        &lt;title&gt;Flexbox Layout&lt;/title&gt;
+        &lt;style&gt;
+        .container {
+            /* Define the container as a flex container */
+            display: flex; 
+            /* Distribute items with space between */
+            justify-content: space-between; 
+            /* Align items vertically */
+            align-items: center; 
+            /* Set to 100% viewport height */
+            height: 100vh;
+        }
+        .item {
+            width: 30%;
+            padding: 20px;
+            background-color: #f3f3f3;
+            text-align: center;
+        }
+        &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+        &lt;div class="container"&gt;
+        &lt;div class="item"&gt;Item 1&lt;/div&gt;
+        &lt;div class="item"&gt;Item 2&lt;/div&gt;
+        &lt;div class="item"&gt;Item 3&lt;/div&gt;
+        &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <p><strong>Key Properties in Flexbox:</strong></p>
+    <ul>
+    <li>display: flex; turns the container into a flex container.</li>
+    <li>justify-content: space-between; distributes the items with equal space between them.</li>
+    <li>align-items: center; aligns the items vertically along the center of the container.</li>
+    <li>width: 30%; controls the width of each item inside the flex container.</li>
+    </ul>
+    <p>Flexbox allows for dynamic adjustments to the layout depending on the size of the content and the screen size. This makes it ideal for responsive design.</p>
+    <p><strong>Flexbox: Sample CSS and Detailed Explanation</strong></p>
+    <p>Flexbox is a layout model in CSS that allows you to create complex layouts with ease. It enables you to align, distribute, and resize elements dynamically within a container, even if the sizes of the items are unknown or change over time. Unlike traditional layout techniques (like floats or positioning), Flexbox simplifies aligning and distributing items both horizontally and vertically.</p>
+    <div><hr /></div>
+    <p><strong>Flexbox Sample CSS</strong></p>
+    <p>Here&rsquo;s a sample of Flexbox CSS in action. It demonstrates how to create a responsive container with evenly spaced items.</p>
+    <p><strong>HTML Code:</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Flexbox Layout Example&lt;/title&gt;
+    &lt;style&gt;
+
+    /* Flexbox container */
+    .container {
+        /* Set the container to be a flex container */
+        display: flex;
+        /* Distribute items with space between */
+        justify-content: space-between;
+        /* Align items vertically in the center */
+        align-items: center;
+        /* Optional: add space between items */
+        gap: 20px;
+        /* Full height */
+        height: 100vh;
+        /* Light gray background */
+        background-color: #f0f0f0;
+        /* 20 pixel padding */
+        padding: 20px;
+    }
+
+    /* Flex items */
+    .item {
+        /* Green background */
+        background-color: #4CAF50;
+        /* White text */
+        color: white;
+        /* 20 pixel padding */
+        padding: 20px;
+        /* Set a fixed width */
+        width: 100px;
+        /* Set a fixed height */
+        height: 100px;
+        /* Center text */
+        text-align: center;
+        /* Rounded corners */
+        border-radius: 8px;
+    }
+
+    /* Add hover effect */
+    .item:hover {
+        /* Darker green on hover */
+        background-color: #0e6e25;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+    &lt;div class="item"&gt;Item 1&lt;/div&gt;
+    &lt;div class="item"&gt;Item 2&lt;/div&gt;
+    &lt;div class="item"&gt;Item 3&lt;/div&gt;
+    &lt;div class="item"&gt;Item 4&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <p><strong>Key Flexbox Properties:</strong></p>
+    <ol>
+    <li><strong>display: flex;</strong></li>
+    <ul>
+    <li>This property is used on the container to define it as a flex container. Flex items within this container will now be aligned using the flexbox layout model.</li>
+    </ul>
+    <li><strong>justify-content: space-between;</strong></li>
+    <ul>
+    <li>This property aligns the flex items along the main axis (usually the horizontal axis). In this case, space-between distributes the items evenly, with the first item at the start of the container, the last item at the end, and equal space between each item.</li>
+    </ul>
+    <li><strong>align-items: center;</strong></li>
+    <ul>
+    <li>This property aligns the flex items along the cross-axis (usually the vertical axis). center vertically aligns the items in the middle of the container.</li>
+    </ul>
+    <li><strong>gap: 20px;</strong></li>
+    <ul>
+    <li>This property adds space between each item within the container. It&rsquo;s a shorthand for row-gap and column-gap (in case of multi-line flex containers).</li>
+    </ul>
+    <li><strong>height: 100vh;</strong></li>
+    <ul>
+    <li>This sets the height of the container to 100% of the viewport height, ensuring that the container takes up the entire vertical space of the screen.</li>
+    </ul>
+    <li><strong>padding: 20px;</strong></li>
+    <ul>
+    <li>This adds space around the content within the container.</li>
+    </ul>
+    </ol>
+    <div><hr /></div>
+    <p><strong>How Flexbox Works</strong></p>
+    <p><strong>Step-by-Step Breakdown:</strong></p>
+    <ol>
+    <li><strong>The Container (display: flex)</strong>:</li>
+    <ul>
+    <li>When you apply display: flex to a parent container, it activates the Flexbox model. All of the direct children of the container become flex items. In this case, the .container is a flex container, and the .item divs are flex items.</li>
+    </ul>
+    <li><strong>Main Axis and Cross Axis</strong>:</li>
+    <ul>
+    <li>Flexbox works based on two axes:</li>
+    <ul>
+    <li>The <strong>main axis</strong> is the axis along which the flex items are laid out. By default, this is the horizontal axis.</li>
+    <li>The <strong>cross axis</strong> is perpendicular to the main axis. For a row-based layout (the default), the cross axis is vertical.</li>
+    </ul>
+    </ul>
+    <li><strong>justify-content Property</strong>:</li>
+    <ul>
+    <li>This controls the alignment of the flex items along the main axis. We used justify-content: space-between;, which means:</li>
+    <ul>
+    <li>The first item is aligned at the start of the container.</li>
+    <li>The last item is aligned at the end of the container.</li>
+    <li>The remaining items are spaced evenly between the first and last items.</li>
+    </ul>
+    </ul>
+    <li><strong>align-items Property</strong>:</li>
+    <ul>
+    <li>This controls the alignment of the flex items along the cross axis (vertical axis). We set align-items: center;, which centers all the items vertically within the container.</li>
+    </ul>
+    <li><strong>Responsive Design</strong>:</li>
+    <ul>
+    <li>Flexbox is inherently responsive. If the container is resized, the flex items will adjust accordingly. For example, if the window size is reduced, the items will still align properly due to Flexbox&rsquo;s ability to adapt to different screen sizes.</li>
+    </ul>
+    </ol>
+    <div><hr /></div>
+    <p><strong>Flexbox Layout Examples and Variations</strong></p>
+    <p><strong>Example 1: Align Items Vertically in a Column</strong></p>
+<pre><code>.container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items along the main axis */
+    align-items: center; /* Center items along the cross axis */
+    height: 100vh;
+}</code></pre>
+    <p>In this case, we use flex-direction: column; to stack the items vertically (from top to bottom). Both justify-content: center and align-items: center are used to center the items both vertically and horizontally.</p>
+    <p><strong>Example 2: Flex Items with Different Sizes</strong></p>
+<pre><code>.container {
+    display: flex;
+    justify-content: space-around; /* Items with equal space around them */
+}
+.item {
+    flex-grow: 1; /* Allow items to grow and take up available space */
+    flex-basis: 100px; /* Base width of items */
+    margin: 10px;
+}</code></pre>
+    <ul>
+    <li><strong>flex-grow: 1</strong>: This allows the items to grow and take up any extra space available in the container. So, if the container has space left after the items are sized, they will expand to fill it.</li>
+    <li><strong>flex-basis: 100px</strong>: This sets the base size of the items to 100px. This is essentially the width of the item before any growth is applied.</li>
+    </ul>
+<pre><code>.container {
+    display: flex;
+    flex-direction: row-reverse; /* Reverses the order of items */
+}</code></pre>
+    <ul>
+    <li><strong>flex-direction: row-reverse</strong>: This reverses the order in which the items are displayed. Items are still laid out in a row, but they appear in the reverse order.</li>
+    </ul>
+<pre><code>.container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+}</code></pre>
+    <ul>
+    <li><strong>flex-wrap: wrap;</strong>: This allows items to wrap onto multiple lines when there isn&rsquo;t enough space in the container to fit them all in one row. This is especially useful for responsive designs.</li>
+    </ul>
+    </ol>
+    <p>You can experiment with Flexbox by adjusting the properties and observing how the items inside the container behave.</p>
+    <h3>You Try It!</h3>
+        <ol start="1" data-spread="false">
+            <li>
+                <p>Copy the HTML above into the code runner.</p>
+            </li>
+            <li>
+                <p>Change .container to reverse the rows (flex-direction: row-reverse;)</p>
+            </li>
+            <li>
+                <p>Change .container to flex-wrap: wrap; and the gap to 40px.</p>
+            </li>
+        </ol>
+        <section id="coderunner">
+            <p>
+                <!-- Textarea for the user to input HTML -->
+                <label for="htmlCode">Write HTML in this text area.</label>
+                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+
+                <!-- Run code button -->
+                <button onclick="runCode()">Run Code</button>
+
+                <!-- Output iframe where the HTML is rendered -->
+                <iframe id="output" src="about:blank"></iframe>
+            </p>
+        </section>
+    <div><hr/></div>
+
+    <p><strong><span>CSS Animations and Transitions</span></strong></p>
+	<p><strong><span>Animations: Bringing Your Page to Life</span></strong></p>
+	<p><span>CSS animations allow you to animate changes in your web page elements over time. You can animate properties like colors, sizes, and positions, creating engaging and interactive user experiences.</span></p>
+	<p><strong><span>Basic Animation Syntax</span></strong></p>
+	<p><span>Animations in CSS involve two parts:</span></p>
+	<ol start="1" type="1">
+	<li><span>The </span><span>@keyframes</span><span> rule to define the animation.</span></li>
+	<li><span>The </span><span>animation</span><span> property to apply the animation to an element.</span></li>
+	</ol>
+<pre><code>&lt;!DOCTYPE html&gt;<br />&lt;html lang="en"&gt;<br />&lt;head&gt;<br />  &lt;meta charset="UTF-8"&gt;<br />  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br />  &lt;title&gt;CSS Animation&lt;/title&gt;<br />  &lt;style&gt;<br />    .animate-me {<br />      width: 100px;<br />      height: 100px;<br />      background-color: #ff6347;<br />      animation: move 3s infinite; /* Apply animation */<br />    }<br /><br />    @keyframes move {<br />      0% { transform: translateX(0); }<br />      50% { transform: translateX(200px); }<br />      100% { transform: translateX(0); }<br />    }<br />  &lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br />  &lt;div class="animate-me"&gt;&lt;/div&gt;<br />&lt;/body&gt;<br />&lt;/html&gt;</code></pre>
+	<p><strong><span>Key Properties for Animations:</span></strong></p>
+	<ul type="disc">
+	<li><span>@keyframes move {}</span><span> defines the stages of the animation. In this case, it moves the element horizontally.</span></li>
+	<li><span>animation: move 3s infinite;</span><span> applies the animation to the </span><span>.animate-me</span><span> element, making it move back and forth every 3 seconds.</span></li>
+	</ul>
+	<p><strong><span>Transitions: Smooth Changes on Hover</span></strong></p>
+	<p><span>CSS transitions allow you to smoothly change properties over a specified duration. They are often used for hover effects, such as changing colors or resizing elements when the user interacts with them.</span></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8"&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+	&lt;title&gt;CSS Transition&lt;/title&gt;
+	&lt;style&gt;
+	.box {
+		width: 200px;
+		height: 200px;
+		background-color: #4CAF50;
+		transition: transform 0.5s ease-in-out; /* Apply transition */
+	}
+&nbsp;
+	.box:hover {
+		transform: scale(1.2); /* Scale the box on hover */
+	}
+	&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;div class="box"&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+	<p><strong><span>Key Properties for Transitions:</span></strong></p>
+	<ul type="disc">
+	<li><span>transition: transform 0.5s ease-in-out;</span><span> makes the transformation (like scaling) smooth over 0.5 seconds.</span></li>
+	<li><span>transform: scale(1.2);</span><span> enlarges the box when hovered.</span></li>
+	</ul>
+	<div><hr  size="0" width="100%" /></div>
+
+    <h3>You Try It!</h3>
+        <ol start="1" data-spread="false">
+            <li>
+                <p>Copy the HTML above into the code runner.</p>
+            </li>
+            <li>
+                <p>Change .container to reverse the rows (flex-direction: row-reverse;)</p>
+            </li>
+            <li>
+                <p>Change .container to flex-wrap: wrap; and the gap to 40px.</p>
+            </li>
+        </ol>
+        <section id="coderunner">
+            <p>
+                <!-- Textarea for the user to input HTML -->
+                <label for="htmlCode">Write HTML in this text area.</label>
+                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+
+                <!-- Run code button -->
+                <button onclick="runCode()">Run Code</button>
+
+                <!-- Output iframe where the HTML is rendered -->
+                <iframe id="output" src="about:blank"></iframe>
+            </p>
+        </section>
+    <div><hr/></div>
+</div>
+
+</body>
+
+</html>
