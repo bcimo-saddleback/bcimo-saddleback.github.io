@@ -1,194 +1,284 @@
-/* css Zen Garden default style v1.02 */
-/* css released under Creative Commons License - http://creativecommons.org/licenses/by-nc-sa/1.0/  */
+/* Modern & Sleek Stylesheet for Beginning Web Development Course */
+/* Created for HTML Chapter Pages */
 
-/* This file based on 'Tranquille' by Dave Shea */
-/* You may use this file as a foundation for any new work, but you may find it easier to start from scratch. */
-/* Not all elements are defined in this file, so you'll most likely want to refer to the xhtml as well. */
-
-/* Your images should be linked as if the CSS file sits in the same folder as the images. ie. no paths. */
-
-
-/* basic elements */
-html {
-	margin: 0;
-	padding: 0;
-	}
-body { 
-	font: 75% georgia, sans-serif;
-	line-height: 1.88889;
-	color: #555753; 
-	background: #fff url(http://csszengarden.com/001/blossoms.jpg) no-repeat bottom right; 
-	margin: 0; 
-	padding: 0;
-	}
-p { 
-	margin-top: 0; 
-	text-align: justify;
-	}
-h3 { 
-	font: italic normal 1.4em georgia, sans-serif;
-	letter-spacing: 1px; 
-	margin-bottom: 0; 
-	color: #7D775C;
-	}
-a:link { 
-	font-weight: bold; 
-	text-decoration: none; 
-	color: #B7A5DF;
-	}
-a:visited { 
-	font-weight: bold; 
-	text-decoration: none; 
-	color: #D4CDDC;
-	}
-a:hover, a:focus, a:active { 
-	text-decoration: underline; 
-	color: #9685BA;
-	}
-abbr {
-	border-bottom: none;
-	}
-
-
-/* specific divs */
-.page-wrapper { 
-	background: url(http://csszengarden.com/001/zen-bg.jpg) no-repeat top left; 
-	padding: 0 175px 0 110px;  
-	margin: 0; 
-	position: relative;
-	}
-
-.intro { 
-	min-width: 470px;
-	width: 100%;
-	}
-
-header h1 { 
-	background: transparent url(http://csszengarden.com/001/h1.gif) no-repeat top left;
-	margin-top: 10px;
-	display: block;
-	width: 219px;
-	height: 87px;
-	float: left;
-
-	text-indent: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-	}
-header h2 { 
-	background: transparent url(http://csszengarden.com/001/h2.gif) no-repeat top left; 
-	margin-top: 58px; 
-	margin-bottom: 40px; 
-	width: 200px; 
-	height: 18px; 
-	float: right;
-
-	text-indent: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-	}
-header {
-	padding-top: 20px;
-	height: 87px;
+/* ================== ROOT & BASIC ELEMENTS ================== */
+* {
+	box-sizing: border-box;
 }
 
-.summary {
-	clear: both; 
-	margin: 20px 20px 20px 10px; 
-	width: 160px; 
-	float: left;
-	}
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	line-height: 1.6;
+	color: #2c3e50;
+	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+}
+
+p {
+	margin: 1em 0;
+	text-align: left;
+}
+
+/* ================== HEADINGS ================== */
+h1, h2, h3, h4, h5, h6 {
+	color: #1a5f7a;
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
+	font-weight: 600;
+}
+
+h1 {
+	font-size: 2.2em;
+	text-align: center;
+	margin-bottom: 1.5em;
+	text-transform: none;
+}
+
+h2 {
+	font-size: 1.8em;
+	text-align: center;
+	border-bottom: 3px solid #3498db;
+	padding-bottom: 0.5em;
+}
+
+h3 {
+	font-size: 1.4em;
+	color: #2980b9;
+}
+
+h4 {
+	font-size: 1.1em;
+	color: #2980b9;
+}
+
+/* ================== LINKS ================== */
+a {
+	color: #3498db;
+	text-decoration: none;
+	transition: all 0.3s ease;
+	font-weight: 500;
+}
+
+a:hover {
+	color: #2980b9;
+	text-decoration: underline;
+}
+
+a:visited {
+	color: #8e44ad;
+}
+
+/* ================== CONTAINER & LAYOUT ================== */
+.container {
+	max-width: 900px;
+	margin: 2em auto;
+	padding: 2.5em;
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+	transition: box-shadow 0.3s ease;
+}
+
+.container:hover {
+	box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* ================== FORMS & INPUT ELEMENTS ================== */
+textarea {
+	width: 100%;
+	max-width: 800px;
+	height: 300px;
+	border: 2px solid #bdc3c7;
+	padding: 15px;
+	font-family: 'Courier New', monospace;
+	font-size: 14px;
+	border-radius: 8px;
+	background: #f8f9fa;
+	margin: 20px auto;
+	display: block;
+	transition: all 0.3s ease;
+	resize: vertical;
+}
+
+textarea:focus {
+	outline: none;
+	border-color: #3498db;
+	background: #ffffff;
+	box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+}
+
+/* ================== BUTTONS ================== */
+button {
+	padding: 12px 30px;
+	font-size: 16px;
+	font-weight: 600;
+	background: linear-gradient(135deg, #3498db, #2980b9);
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	display: block;
+	margin: 20px auto;
+	box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+}
+
+button:hover {
+	background: linear-gradient(135deg, #2980b9, #1a5f7a);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+button:active {
+	transform: translateY(0);
+}
+
+/* ================== IFRAMES ================== */
+iframe {
+	width: 100%;
+	max-width: 900px;
+	height: 400px;
+	border: 2px solid #ecf0f1;
+	border-radius: 8px;
+	margin: 20px auto;
+	display: block;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+	transition: box-shadow 0.3s ease;
+}
+
+iframe:hover {
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ================== CODE & PREFORMATTED TEXT ================== */
+pre {
+	font-family: 'Courier New', monospace;
+	font-size: 14px;
+	background: linear-gradient(135deg, #f5f7fa, #ecf0f1);
+	padding: 20px;
+	border-left: 5px solid #3498db;
+	border-radius: 8px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	line-height: 1.5;
+	margin: 20px 0;
+	box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+code {
+	font-family: 'Courier New', monospace;
+	background: #f8f9fa;
+	padding: 2px 6px;
+	border-radius: 4px;
+	color: #e84c3d;
+	font-size: 0.9em;
+}
+
+pre code {
+	background: transparent;
+	padding: 0;
+	color: #2c3e50;
+}
+
+/* ================== LISTS ================== */
+ul, ol {
+	margin: 20px 0;
+	padding-left: 2em;
+}
+
+li {
+	margin: 10px 0;
+	line-height: 1.8;
+}
+
+/* ================== PRACTICE BOXES & CALLOUTS ================== */
+.practice {
+	background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+	padding: 20px;
+	margin: 20px 0;
+	border-left: 5px solid #3498db;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(52, 152, 219, 0.1);
+}
+
+.practice strong {
+	color: #2980b9;
+}
+
+/* ================== HORIZONTAL RULE ================== */
+hr {
+	border: none;
+	height: 2px;
+	background: linear-gradient(to right, transparent, #3498db, transparent);
+	margin: 2em 0;
+}
+
+/* ================== FOOTER & NAVIGATION ================== */
+footer {
+	background: linear-gradient(135deg, #2c3e50, #34495e);
+	color: #ecf0f1;
+	padding: 30px 20px;
+	margin-top: 3em;
+	border-radius: 0 0 12px 12px;
+}
+
+footer .nav-container {
+	max-width: 900px;
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 20px;
+	text-align: center;
+}
+
+footer .nav-link {
+	padding: 15px;
+}
+
+footer a {
+	color: #3498db;
+	text-decoration: none;
+	font-weight: 600;
+	transition: all 0.3s ease;
+	display: inline-block;
+	padding: 10px 15px;
+	border-radius: 6px;
+}
+
+footer a:hover {
+	color: #ffffff;
+	background: rgba(52, 152, 219, 0.2);
+	text-decoration: none;
+}
+
+footer .nav-link strong {
+	display: block;
+	color: #bdc3c7;
+	font-size: 0.85em;
+	margin-bottom: 8px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+/* ================== SPECIAL STYLES & UTILITIES ================== */
 .summary p {
 	font: italic 1.1em/2.2 georgia; 
 	text-align: center;
-	}
+}
 
 .preamble {
 	clear: right; 
 	padding: 0px 10px 0 10px;
-	}
+}
+
 .supporting {	
 	padding-left: 10px; 
 	margin-bottom: 40px;
-	}
-
-footer { 
-	text-align: center; 
-	}
-footer a:link, footer a:visited { 
-	margin-right: 20px; 
-	}
-
-.sidebar {
-	margin-left: 600px; 
-	position: absolute; 
-	top: 0; 
-	right: 0;
-	}
-.sidebar .wrapper { 
-	font: 10px verdana, sans-serif; 
-	background: transparent url(http://csszengarden.com/001/paper-bg.jpg) top left repeat-y; 
-	padding: 10px; 
-	margin-top: 150px; 
-	width: 130px; 
-	}
-.sidebar h3.select { 
-	background: transparent url(http://csszengarden.com/001/h3.gif) no-repeat top left; 
-	margin: 10px 0 5px 0; 
-	width: 97px; 
-	height: 16px; 
-
-	text-indent: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-	}
-.sidebar h3.archives { 
-	background: transparent url(http://csszengarden.com/001/h5.gif) no-repeat top left; 
-	margin: 25px 0 5px 0; 
-	width:57px; 
-	height: 14px; 
-
-	text-indent: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-	}
-.sidebar h3.resources { 
-	background: transparent url(http://csszengarden.com/001/h6.gif) no-repeat top left; 
-	margin: 25px 0 5px 0; 
-	width:63px; 
-	height: 10px; 
-
-	text-indent: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-	}
-
-
-.sidebar ul {
-	margin: 0;
-	padding: 0;
-	}
-.sidebar li {
-	line-height: 1.3em; 
-	background: transparent url(http://csszengarden.com/001/cr1.gif) no-repeat top center; 
-	display: block; 
-	padding-top: 5px; 
-	margin-bottom: 5px;
-	list-style-type: none;
-	}
-.sidebar li a:link {
-	color: #988F5E;
-	}
-.sidebar li a:visited {
-	color: #B3AE94;
-	}
-
-
-.extra1 {
-	background: transparent url(http://csszengarden.com/001/cr2.gif) top left no-repeat; 
-	position: absolute; 
-	top: 40px; 
-	right: 0; 
-	width: 148px; 
-	height: 110px;
-	}
+}

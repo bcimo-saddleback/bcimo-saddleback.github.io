@@ -1,0 +1,253 @@
+<html>
+
+<head>
+	<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+	<title>Chapter 4: Visual Elements and Graphics - Section 1</title>
+	<link rel="stylesheet" href="style.css">
+	<script>
+		// Function to run the HTML code
+		function runCode() {
+			var htmlCode = document.getElementById('htmlCode').value;
+
+			var iframe = document.getElementById('output');
+			var iframeDoc = iframe.contentWindow.document;
+			iframeDoc.open();
+
+			// Write the HTML code to the iframe
+			iframeDoc.write(`
+				${htmlCode}
+			`);
+
+			iframeDoc.close();
+		}
+	</script>
+</head>
+
+<body lang=EN-US link=blue vlink="#96607D" style='word-wrap:break-word'>
+
+	<div class="container">
+
+		<h1>Chapter 4: Visual Elements and Graphics</h1>
+		<h2>Overview</h2>
+		<p>In this chapter, we&rsquo;ll dive into how to integrate visual elements, such as images, videos, and audio,
+			into your website. Visual content is crucial for enhancing the user experience and making your web pages
+			more engaging. We'll also cover essential attributes that help make your images accessible and usable across
+			different devices. Lastly, we will explore different file types for images and when to use each.</p>
+		<h3>Key Topics:</h3>
+		<ul>
+			<li>Inserting images using the &lt;img&gt; tag.</li>
+			<li>Understanding essential attributes: src, alt, and title.</li>
+			<li>Introduction to multimedia: Embedding videos and audio.</li>
+			<li>File types (JPEG, PNG, GIF, SVG) and when to use them.</li>
+		</ul>
+		<h2>Section 1: Inserting Images Using the &lt;img&gt; Tag</h2>
+		<p>In HTML, images are an essential part of web content, making sites more engaging and visually appealing. One
+			of the most fundamental methods for inserting images into a webpage is by using the &lt;img&gt; tag. This
+			tag allows you to display various types of images, including photographs, illustrations, icons, and logos,
+			directly in your HTML document. Let&rsquo;s explore how you can use this tag and understand its key
+			attributes, as well as how to incorporate images efficiently into your web pages.</p>
+		<h4>Basic Syntax</h4>
+		<p>The &lt;img&gt; tag itself is an empty or self-closing tag, which means it doesn't require an end tag. The
+			basic syntax for using the &lt;img&gt; tag is:</p>
+		<pre><code>&lt;img src="image-source.jpg" alt="description of image"&gt;</code></pre>
+		<ul>
+			<li>src: The src (source) attribute is used to specify the path to the image you want to display. This path
+				can either be relative (pointing to a location on your server) or absolute (an external URL).</li>
+			<li>alt: The alt (alternative text) attribute is a crucial part of the &lt;img&gt; It provides a description
+				of the image in case the image is not loaded or for users with visual impairments who use screen
+				readers. For example, if you were displaying a photo of a dog, your alt text might be &ldquo;A cute dog
+				playing in the park.&rdquo;</li>
+		</ul>
+		<p>Here&rsquo;s a simple example:</p>
+		<pre><code>&lt;img src="dog.jpg" alt="A cute dog playing in the park"&gt;&nbsp;</code></pre>
+		<h4>Sizing Images</h4>
+		<p>Sometimes images may need resizing to fit into your webpage&rsquo;s layout. While you can resize an image
+			using CSS or HTML attributes, it&rsquo;s always best practice to ensure images are optimized for both
+			appearance and performance. You can specify the width and height of an image directly within the HTML tag:
+		</p>
+		<pre><code>&lt;img src="cat.jpg" alt="A playful cat" width="300" height="200"&gt;</code></pre>
+		<p>This will display the image with a width of 300 pixels and a height of 200 pixels. Be careful not to distort
+			the image by forcing a non-proportional size.</p>
+		<h4>Image Formats</h4>
+		<p>Common image formats supported by web browsers include:</p>
+		<ul>
+			<li><strong>JPEG/JPG</strong>: Best for photographs, with high compression and small file sizes.</li>
+			<li><strong>PNG</strong>: Supports transparency and is great for graphics like logos and icons.</li>
+			<li><strong>GIF</strong>: Best for animations and simple graphics.</li>
+			<li><strong>SVG</strong>: Scalable vector graphics that are resolution-independent and ideal for logos and
+				icons.</li>
+		</ul>
+		<p>To insert an image, simply use the correct file format in the src attribute:</p>
+		<pre><code>&lt;img src="logo.svg" alt="Company Logo"&gt;&nbsp;</code></pre>
+		<h4>The title Attribute</h4>
+		<p>The title attribute can be added to the &lt;img&gt; tag to provide additional information about the image.
+			This will appear when the user hovers over the image. Although it's not essential for functionality, it can
+			improve the user experience.</p>
+		<pre><code>&lt;img src="images/photo.jpg" alt="A beautiful sunset over the ocean" title="Sunset at the beach"&gt;</code></pre>
+		<p>This will show a tooltip with the text "Sunset at the beach" when the user hovers over the image.</p>
+
+		<h4>Use the Interactive HTML Editor</h4>
+		<p>Now that you&rsquo;ve learned the basics, it's time to practice! Below is an interactive HTML code runner to
+			help you apply your knowledge of inserting images into a webpage.</p>
+		<p><strong>Instructions</strong>: Modify the code below by adding your own image source or adjusting the
+			attributes like size or alt text.</p>
+			<pre><code>&lt;html lang="en"&gt;&lt;body&gt;<br />&nbsp; &lt;h1&gt;Insert an Image!&lt;/h1&gt;<br />&nbsp; &lt;p&gt;Try changing the image's `src`, `alt`, or `width` attributes below:&lt;/p&gt;<br />&nbsp; &lt;img src="images/image2.png" alt="My Image" width="200", height=&rdquo;200&rdquo;&gt;<br />&lt;/body&gt;<br />&lt;/html&gt;</code></pre>
+		<p>Feel free to experiment by modifying the src to link to different images or adjusting the width and height
+			attributes to see how the image scales.</p>
+		<ul>
+			<li>What happens if you src to something that doesn&rsquo;t exist?</li>
+			<li>What happens if you change the width or height?</li>
+			<li>Try changing alt and add a title.</li>
+			<li>For 5 points of extra credit: change src to &ldquo;images/image1.png&rdquo; and enter the answer in the
+				extra credit quiz.</li>
+		</ul>
+		<section id="coderunner">
+			<p>
+				<!-- Textarea for the user to input HTML -->
+				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+
+				<!-- Run code button -->
+				<button onclick="runCode()">Run Code</button>
+
+				<!-- Output iframe where the HTML is rendered -->
+				<iframe id="output" src="about:blank"></iframe>
+			</p>
+		</section>
+
+		<h4>Best Practices for Images</h4>
+		<p>When inserting images into your webpage, remember to:</p>
+		<ul>
+			<li><strong>Use descriptive alt text</strong> for accessibility and SEO.</li>
+			<li><strong>Optimize image file sizes</strong> to reduce loading times.</li>
+			<li><strong>Use responsive design</strong> principles, ensuring images adapt to various screen sizes.</li>
+		</ul>
+		<p>By mastering the use of the &lt;img&gt; tag and incorporating these best practices, you&rsquo;ll enhance the
+			user experience of your website while ensuring your content is both visually engaging and accessible. </p>
+		<p>&nbsp;</p>
+		
+		<h2>Section 2: Introduction to Multimedia: Embedding Videos and Audio</h2>
+		<p>While images enhance the visual appeal of a website, videos and audio are essential for creating more
+			interactive and engaging experiences. HTML provides simple tags to embed video and audio files directly into
+			a webpage.</p>
+		<h3>Embedding Videos with the &lt;video&gt; Tag</h3>
+		<p>The &lt;video&gt; tag allows you to embed video files. You can specify multiple video sources for better
+			compatibility across browsers, and add controls to allow users to play, pause, or adjust the volume.</p>
+		<pre><code>&lt;video src="video.mp4" controls&gt;&nbsp; Your browser does not support the video tag.&lt;/video&gt;</code></pre>
+		<p>In this example, the video file will be displayed. The controls attribute adds the standard video controls,
+			such as play, pause, and volume.</p>
+		<ul>
+			<li>src: This attribute specifies the video file you want to embed. You can use relative paths (if the video
+				is hosted on the same server) or absolute URLs (if the video is hosted externally).</li>
+			<li>controls: This optional attribute adds built-in controls such as play, pause, volume, and full-screen
+				options to the video player.</li>
+			<li><strong>Fallback Text</strong>: The content inside the &lt;video&gt; tag (like "Your browser does not
+				support the video tag") is displayed if the user's browser doesn&rsquo;t support the video element.</li>
+		</ul>
+		<h4>Interactive Activity:</h4>
+		<p>Try embedding a video in your HTML. Copy the code below into the code editor:</p>
+		<p>&lt;video width="640" height="360" controls&gt;</p>
+		<p>&nbsp; &lt;source src="video/Apollo11_clip.mp4" type="video/mp4"&gt;</p>
+		<p>&nbsp; Your browser does not support the video tag.</p>
+		<p>&lt;/video&gt;</p>
+		<ul>
+			<li>Try changing the height and width.</li>
+			<li>Try changing the name of the video.</li>
+			<li>Add or remove the controls attribute to see how it impacts the user interface for both video and audio.
+			</li>
+		</ul>
+		<p>Click here to open the interactive code runner and experiment with video embedding.</p>
+		<h3>Embedding Audio with the &lt;audio&gt; Tag</h3>
+		<p>The &lt;audio&gt; tag is similar to the &lt;video&gt; tag but for audio files. You can also include multiple
+			sources for better cross-browser support and use the controls attribute for play/pause functionality.</p>
+		<pre><code>&lt;audio controls&gt;&nbsp; &lt;source src="audio/song.mp3" type="audio/mp3"&gt;&nbsp; &lt;source src="audio/song.ogg" type="audio/ogg"&gt;&nbsp; Your browser does not support the audio element.&lt;/audio&gt;</code></pre>
+		<p>This will embed an audio player that allows users to play the file.</p>
+		<h2>Section 3: Image File Types and When to Use Them</h2>
+		<p>Choosing the right image file type is important for both performance and image quality. Let&rsquo;s explore
+			the most common image file formats used in web development.</p>
+		<h3>JPEG (Joint Photographic Experts Group)</h3>
+		<p>JPEG is the most widely used image format for photographs and complex images. It supports millions of colors
+			and provides high compression rates, making it ideal for images with subtle color variations.</p>
+		<ul>
+			<li><strong>When to use</strong>: Photographs, images with gradients, or detailed artwork.</li>
+			<li><strong>Pros</strong>: Smaller file sizes with high-quality images.</li>
+			<li><strong>Cons</strong>: Lossy compression (some quality is lost when saving).</li>
+		</ul>
+		<h3>PNG (Portable Network Graphics)</h3>
+		<p>PNG is a lossless image format, meaning no data is lost during compression. It supports transparency, which
+			is useful for images that need to blend seamlessly with the background.</p>
+		<ul>
+			<li><strong>When to use</strong>: Logos, icons, images with transparency, or sharp-edged graphics.</li>
+			<li><strong>Pros</strong>: Lossless quality, supports transparency.</li>
+			<li><strong>Cons</strong>: Larger file sizes compared to JPEG.</li>
+		</ul>
+		<h3>GIF (Graphics Interchange Format)</h3>
+		<p>GIF is often used for simple animations and images with few colors. It supports transparency but only allows
+			one color to be fully transparent.</p>
+		<ul>
+			<li><strong>When to use</strong>: Simple animations, low-resolution images, or pixel art.</li>
+			<li><strong>Pros</strong>: Supports animation, supports transparency.</li>
+			<li><strong>Cons</strong>: Limited to 256 colors, not suitable for high-quality images.</li>
+		</ul>
+		<h3>SVG (Scalable Vector Graphics)</h3>
+		<p>SVG is a vector-based image format, meaning it uses mathematical equations to draw images. This makes SVG
+			images infinitely scalable without losing quality.</p>
+		<ul>
+			<li><strong>When to use</strong>: Logos, icons, and illustrations that need to scale across devices.</li>
+			<li><strong>Pros</strong>: Scalable, smaller file sizes for simple graphics, and supports animation and
+				interactivity.</li>
+			<li><strong>Cons</strong>: Not suitable for complex images like photographs.</li>
+		</ul>
+		<h2>Review and Summary</h2>
+		<p>In this chapter, you have learned how to:</p>
+		<ul>
+			<li>Insert images using the &lt;img&gt; tag and understand the essential attributes like src, alt, and
+				title.</li>
+			<li>Embed videos and audio using the &lt;video&gt; and &lt;audio&gt; tags, making your website more
+				interactive and engaging.</li>
+			<li>Understand the different image file formats (JPEG, PNG, GIF, SVG) and when to use each based on the type
+				of content you are displaying.</li>
+		</ul>
+		<p>Images, videos, and audio are powerful tools for improving the user experience and making websites more
+			dynamic. Experiment with these elements and be mindful of accessibility considerations, such as providing
+			alternative text for images and ensuring media is easily accessible to all users.</p>
+		<h3>Interactive Code Runner</h3>
+		<p>Now it&rsquo;s your turn to try out what you&rsquo;ve learned! Use the code editor below to insert images,
+			embed videos, and experiment with multimedia elements. </p>
+		<section id="coderunner">
+			<p>
+				<!-- Textarea for the user to input HTML -->
+				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+
+				<!-- Run code button -->
+				<button onclick="runCode()">Run Code</button>
+
+				<!-- Output iframe where the HTML is rendered -->
+				<iframe id="output" src="about:blank"></iframe>
+			</p>
+		</section>
+		<h3>Video Lesson</h3>
+		<p>For a deeper understanding of working with visual elements and multimedia, check out this video tutorial:</p>
+		<p>Watch Video on Inserting Images, Video, and Audio in HTML</p>
+		<pre><code>&nbsp;</code></pre>
+
+	</div>
+
+</body>
+
+<footer>
+	<div class="nav-container">
+		<div class="nav-link">
+			<strong>← Previous</strong>
+			<a href="chapter3-3.html">Chapter 3</a>
+		</div>
+		<div class="nav-link">
+			<strong>📖 Current Chapter</strong>
+			<a href="index.html">Chapter 4</a>
+		</div>
+		<div class="nav-link">
+			<strong>Next →</strong>
+			<a href="chapter5.html">Chapter 5</a>
+		</div>
+	</div>
+</footer>
+</html>
