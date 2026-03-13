@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3: Content Creation &amp; Management — CMS: WordPress</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="topnav-brand"><div class="wp-logo">W</div>CMS: WordPress</a>
+  <div class="topnav-chapters">
+    <a href="overview.html" class="ch-pill">Overview</a>
+    <a href="chapter-1.html" class="ch-pill">1. Hosting</a>
+    <a href="chapter-2.html" class="ch-pill">2. Users</a>
+    <a href="chapter-3.html" class="ch-pill active">3. Content</a>
+    <a href="chapter-4.html" class="ch-pill">4. Themes</a>
+    <a href="chapter-5.html" class="ch-pill">5. Feeds &amp; Social</a>
+    <a href="chapter-6.html" class="ch-pill">6. Posts &amp; Pages</a>
+    <a href="chapter-7.html" class="ch-pill">7. Scheduling</a>
+    <a href="chapter-8.html" class="ch-pill">8. Settings</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main class="chapter-page">
+  <div class="chapter-header">
+    <div class="chapter-num-big">03</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Three</div>
+      <h2>Content Creation &amp; Management</h2>
+      <p>Master the WordPress Block Editor and manage your media library.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>The Block Editor (Gutenberg)</h3>
+    <p>Since WordPress 5.0, the default editor is the <span class="term">Gutenberg Block Editor<span class="term-tooltip">A visual page builder built into WordPress where content is created using individual "blocks" — each block is a discrete piece of content like a paragraph, image, or button.</span></span>. Everything you create is made of <strong>blocks</strong>.</p>
+
+    <div class="callout note">
+      <div class="callout-icon">ℹ️</div>
+      <div class="callout-body">
+        <strong>What is a Block?</strong>
+        <p>A block is a self-contained content element. Common blocks include: Paragraph, Heading, Image, Gallery, Video, Quote, List, Button, Columns, and hundreds more via plugins.</p>
+      </div>
+    </div>
+
+    <h4>Essential Block Types</h4>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">📝 Text Blocks <span class="arrow">▼</span></button>
+        <div class="acc-body"><p><strong>Paragraph</strong> — Basic text. <strong>Heading</strong> (H1–H6) — Section titles. <strong>List</strong> — Bullet or numbered. <strong>Quote</strong> — Styled blockquotes. <strong>Code</strong> — Monospace formatted code. <strong>Table</strong> — Data tables with rows and columns.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🖼️ Media Blocks <span class="arrow">▼</span></button>
+        <div class="acc-body"><p><strong>Image</strong> — Single photos with alt text, captions, and links. <strong>Gallery</strong> — Multiple images in a grid. <strong>Video</strong> — Self-hosted or YouTube embeds. <strong>Audio</strong> — MP3 and other audio files. <strong>Cover</strong> — Image with text overlay.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🏗️ Layout Blocks <span class="arrow">▼</span></button>
+        <div class="acc-body"><p><strong>Columns</strong> — Side-by-side content. <strong>Group</strong> — Wrap blocks together with shared styling. <strong>Spacer</strong> — Add whitespace. <strong>Separator</strong> — Horizontal dividers. <strong>Row</strong> — Horizontal block layouts.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔗 Embed Blocks <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>WordPress auto-embeds content from YouTube, Twitter/X, Instagram, Spotify, TikTok, and many more. Just paste the URL on its own line, or use the dedicated Embed block.</p></div>
+      </div>
+    </div>
+
+    <h3>Managing the Media Library</h3>
+    <p>The <strong>Media Library</strong> (found under Media in the left sidebar) is where all uploaded files live — images, PDFs, videos, audio, and documents.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Uploading Media</strong>
+          <p>Go to Media → Add New. Drag and drop files or click "Select Files." WordPress accepts JPEG, PNG, GIF, WebP, MP4, MP3, PDF, and more.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Adding Alt Text</strong>
+          <p>Always add descriptive alt text to images for accessibility and SEO. Click any image in the library to edit its details.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Organizing with Folders (Plugin Required)</strong>
+          <p>By default WordPress doesn't have media folders, but plugins like Filester or Enhanced Media Library add this functionality.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress Block Editor Complete Guide</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/2Mvl-pMOXoU" allowfullscreen loading="lazy" title="WordPress Block Editor Guide"></iframe>
+      </div>
+      <div class="video-caption">▲ Complete beginner's guide to the WordPress Gutenberg Block Editor</div>
+    </div>
+
+    <h3>Try It: HTML Formatting in WordPress</h3>
+    <p>WordPress uses HTML formatting tags under the hood. Click the tags below to see how they work:</p>
+    <div class="demo-box">
+      <h4>🔧 Interactive HTML Tag Explorer</h4>
+      <div class="tag-builder" id="tagBuilder">
+        <button class="tag-chip" onclick="selectTag(this,'&lt;strong&gt;Bold Text&lt;/strong&gt;','Makes text bold — use for important keywords')">Bold</button>
+        <button class="tag-chip" onclick="selectTag(this,'&lt;em&gt;Italic Text&lt;/em&gt;','Italicizes text — use for titles, emphasis, or foreign words')">Italic</button>
+        <button class="tag-chip" onclick="selectTag(this,'&lt;h2&gt;Section Heading&lt;/h2&gt;','Creates a level-2 heading — main section titles')">Heading</button>
+        <button class="tag-chip" onclick="selectTag(this,'&lt;a href=&quot;url&quot;&gt;Link Text&lt;/a&gt;','Creates a hyperlink to another page or URL')">Link</button>
+        <button class="tag-chip" onclick="selectTag(this,'&lt;blockquote&gt;Quote here&lt;/blockquote&gt;','Styles a block quotation — often displayed with a visual indent')">Blockquote</button>
+        <button class="tag-chip" onclick="selectTag(this,'&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;','Creates an unordered (bulleted) list')">List</button>
+        <button class="tag-chip" onclick="selectTag(this,'&lt;img src=&quot;image.jpg&quot; alt=&quot;Description&quot;&gt;','Embeds an image. Alt text is required for accessibility')">Image</button>
+      </div>
+      <div class="tag-output" id="tagOutput">← Click a tag above to see its HTML and explanation</div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 3 Quiz</h4>
+      <div class="quiz-question" id="q3">
+        <p>Why is it important to always add alt text to images in WordPress?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q3')"><span class="opt-letter">A</span>It makes images load faster</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q3')"><span class="opt-letter">B</span>It changes the image format to WebP</button>
+          <button class="quiz-option" onclick="checkAnswer(this,true,'q3')"><span class="opt-letter">C</span>It improves accessibility for screen readers and helps with SEO</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q3')"><span class="opt-letter">D</span>It is required by WordPress to save an image</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q3"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="chapter-2.html">← Chapter 2</a>
+    <a href="chapter-4.html">Chapter 4 →</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wp-logo-footer">W</div>
+  <p class="footer-title">Introduction to Content Management Systems: WordPress</p>
+  <p>Reference: <a href="https://learn.wordpress.org" target="_blank">learn.wordpress.org</a> · <a href="https://wordpress.org/documentation/" target="_blank">WordPress Docs</a></p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

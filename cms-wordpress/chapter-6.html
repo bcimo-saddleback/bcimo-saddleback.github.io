@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 6: Posts, Pages &amp; Formatting — CMS: WordPress</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="topnav-brand"><div class="wp-logo">W</div>CMS: WordPress</a>
+  <div class="topnav-chapters">
+    <a href="overview.html" class="ch-pill">Overview</a>
+    <a href="chapter-1.html" class="ch-pill">1. Hosting</a>
+    <a href="chapter-2.html" class="ch-pill">2. Users</a>
+    <a href="chapter-3.html" class="ch-pill">3. Content</a>
+    <a href="chapter-4.html" class="ch-pill">4. Themes</a>
+    <a href="chapter-5.html" class="ch-pill">5. Feeds &amp; Social</a>
+    <a href="chapter-6.html" class="ch-pill active">6. Posts &amp; Pages</a>
+    <a href="chapter-7.html" class="ch-pill">7. Scheduling</a>
+    <a href="chapter-8.html" class="ch-pill">8. Settings</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main class="chapter-page">
+  <div class="chapter-header">
+    <div class="chapter-num-big">06</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Six</div>
+      <h2>Using &amp; Formatting Posts and Pages</h2>
+      <p>Understand the core content types and master advanced formatting.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>Posts vs. Pages</h3>
+    <p>WordPress has two primary content types. Understanding the difference is fundamental:</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr><th>Feature</th><th>Posts</th><th>Pages</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Purpose</td><td>Dynamic, time-based content (blogs, news)</td><td>Static, evergreen content (About, Contact)</td></tr>
+        <tr><td>Dated</td><td><span class="check">✓</span> Yes</td><td><span class="cross">✗</span> No date displayed</td></tr>
+        <tr><td>Categories &amp; Tags</td><td><span class="check">✓</span> Yes</td><td><span class="cross">✗</span> No (by default)</td></tr>
+        <tr><td>Appears in RSS Feed</td><td><span class="check">✓</span> Yes</td><td><span class="cross">✗</span> No</td></tr>
+        <tr><td>Author Displayed</td><td><span class="check">✓</span> Usually yes</td><td><span class="cross">✗</span> Usually no</td></tr>
+        <tr><td>Hierarchical</td><td><span class="cross">✗</span> No</td><td><span class="check">✓</span> Yes (parent/child pages)</td></tr>
+        <tr><td>Custom Templates</td><td>Limited</td><td><span class="check">✓</span> Full template support</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Formatting Posts &amp; Pages</h3>
+    <h4>Block Editor Formatting Tips</h4>
+    <ul>
+      <li><strong>Heading hierarchy</strong> — Use H2 for main sections, H3 for sub-sections. Never skip levels.</li>
+      <li><strong>Featured Images</strong> — Set a featured image for every post; it appears in listings and social shares.</li>
+      <li><strong>Excerpt</strong> — Write a custom excerpt (150–160 characters) for better SEO and RSS display.</li>
+      <li><strong>Columns block</strong> — Create magazine-style layouts with the Columns block.</li>
+      <li><strong>Pull quotes</strong> — Use the Pull Quote block to highlight key statements.</li>
+    </ul>
+
+    <h4>Adding Images to Content</h4>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Insert the Image Block</strong>
+          <p>Click the + icon, search for "Image," and insert it. Upload a new image or select from the Media Library.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Set Image Size &amp; Alignment</strong>
+          <p>In the right sidebar, choose from Thumbnail, Medium, Large, or Full Size. Set alignment to left, right, center, or wide/full-width.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Add Alt Text &amp; Caption</strong>
+          <p>Required for accessibility: add descriptive alt text. Add an optional caption below the image for context.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress Posts vs Pages Explained</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/Nv_UXABq8CA" allowfullscreen loading="lazy" title="Posts vs Pages WordPress"></iframe>
+      </div>
+      <div class="video-caption">▲ The difference between Posts and Pages in WordPress, with real examples</div>
+    </div>
+
+    <h3>Post Formats</h3>
+    <p>Some themes support <strong>Post Formats</strong> — a way to style posts differently based on their content type. Common post formats include:</p>
+    <ul>
+      <li><strong>Standard</strong> — Default format</li>
+      <li><strong>Image</strong> — Photo-focused posts</li>
+      <li><strong>Video</strong> — Video-centric posts</li>
+      <li><strong>Quote</strong> — Short quotation posts</li>
+      <li><strong>Link</strong> — Posts that link to external content</li>
+      <li><strong>Gallery</strong> — Image gallery posts</li>
+      <li><strong>Audio</strong> — Music or podcast posts</li>
+    </ul>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 6 Quiz</h4>
+      <div class="quiz-question" id="q6">
+        <p>You want to create an "About Us" page for your company website that will rarely change and has no publish date. Which content type should you use?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q6')"><span class="opt-letter">A</span>Post with the "Standard" post format</button>
+          <button class="quiz-option" onclick="checkAnswer(this,true,'q6')"><span class="opt-letter">B</span>Page</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q6')"><span class="opt-letter">C</span>Post with no category</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q6')"><span class="opt-letter">D</span>A sticky post</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q6"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="chapter-5.html">← Chapter 5</a>
+    <a href="chapter-7.html">Chapter 7 →</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wp-logo-footer">W</div>
+  <p class="footer-title">Introduction to Content Management Systems: WordPress</p>
+  <p>Reference: <a href="https://learn.wordpress.org" target="_blank">learn.wordpress.org</a> · <a href="https://wordpress.org/documentation/" target="_blank">WordPress Docs</a></p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

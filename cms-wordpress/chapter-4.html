@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4: Themes, Widgets &amp; Plugins — CMS: WordPress</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="topnav-brand"><div class="wp-logo">W</div>CMS: WordPress</a>
+  <div class="topnav-chapters">
+    <a href="overview.html" class="ch-pill">Overview</a>
+    <a href="chapter-1.html" class="ch-pill">1. Hosting</a>
+    <a href="chapter-2.html" class="ch-pill">2. Users</a>
+    <a href="chapter-3.html" class="ch-pill">3. Content</a>
+    <a href="chapter-4.html" class="ch-pill active">4. Themes</a>
+    <a href="chapter-5.html" class="ch-pill">5. Feeds &amp; Social</a>
+    <a href="chapter-6.html" class="ch-pill">6. Posts &amp; Pages</a>
+    <a href="chapter-7.html" class="ch-pill">7. Scheduling</a>
+    <a href="chapter-8.html" class="ch-pill">8. Settings</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main class="chapter-page">
+  <div class="chapter-header">
+    <div class="chapter-num-big">04</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Four</div>
+      <h2>Themes, Widgets &amp; Plugins</h2>
+      <p>Customize the look of your site and extend its functionality.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>WordPress Themes</h3>
+    <p>A <span class="term">theme<span class="term-tooltip">A WordPress theme controls the visual presentation of your website — colors, fonts, layouts, and page structure — without affecting your content.</span></span> controls the visual design of your website. WordPress has two modern theme types:</p>
+
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" onclick="switchTab(this,'classic')">Classic Themes</button>
+        <button class="tab-btn" onclick="switchTab(this,'block')">Block Themes (FSE)</button>
+      </div>
+      <div class="tab-content active" id="tab-classic">
+        <p><strong>Classic Themes</strong> use PHP template files, a traditional Customizer, and widget areas.</p>
+        <ul>
+          <li>Customized via Appearance → Customize</li>
+          <li>Use widget areas (sidebar, footer)</li>
+          <li>Thousands available at WordPress.org</li>
+          <li>Examples: Astra, OceanWP, GeneratePress</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-block">
+        <p><strong>Block Themes (Full Site Editing)</strong> allow you to edit every part of your site with the block editor.</p>
+        <ul>
+          <li>Edit headers, footers, and templates visually</li>
+          <li>Customized via Appearance → Editor</li>
+          <li>Use Global Styles for site-wide design tokens</li>
+          <li>Examples: Twenty Twenty-Four, Kadence, Blocksy</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>Installing a Theme</h4>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Go to Appearance → Themes</strong>
+          <p>In your admin dashboard, navigate to Appearance → Themes to see installed themes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Click "Add New Theme"</strong>
+          <p>Browse thousands of free themes from the official WordPress.org repository. Filter by Popular, Latest, or use the Feature Filter.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Preview, Install &amp; Activate</strong>
+          <p>Hover over a theme and click "Preview" to see it live, then "Install" to download it. Click "Activate" to make it your active theme.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Widgets</h3>
+    <p><span class="term">Widgets<span class="term-tooltip">Widgets are small, self-contained modules that add specific functionality to widget-ready areas of your WordPress site, like sidebars and footers.</span></span> are modular content blocks placed in widget-ready areas (sidebars, footers, headers). In classic themes, go to <strong>Appearance → Widgets</strong>.</p>
+    <p>Common widgets include: Recent Posts, Search Bar, Categories, Archives, Tag Cloud, Calendar, Custom HTML, and Text.</p>
+
+    <div class="callout note">
+      <div class="callout-icon">ℹ️</div>
+      <div class="callout-body">
+        <strong>Widgets in Block Themes</strong>
+        <p>Block themes don't use traditional widgets. Instead, you add blocks directly to your template parts (header, footer, sidebar) using the Site Editor. All blocks function as "widgets" in this context.</p>
+      </div>
+    </div>
+
+    <h3>Plugins</h3>
+    <p><span class="term">Plugins<span class="term-tooltip">Plugins are packages of code that extend WordPress functionality. There are over 59,000 free plugins in the official WordPress plugin directory.</span></span> add features to WordPress without editing any code. They range from contact forms to e-commerce to SEO tools.</p>
+
+    <table class="comp-table">
+      <thead><tr><th>Category</th><th>Popular Plugins</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>SEO</td><td>Yoast SEO, All in One SEO</td><td>Optimize for search engines</td></tr>
+        <tr><td>Security</td><td>Wordfence, Sucuri Security</td><td>Firewalls, malware scanning</td></tr>
+        <tr><td>Performance</td><td>WP Rocket, W3 Total Cache</td><td>Speed up page load times</td></tr>
+        <tr><td>Backup</td><td>UpdraftPlus, Jetpack</td><td>Automated site backups</td></tr>
+        <tr><td>Forms</td><td>Contact Form 7, WPForms</td><td>Create contact &amp; lead forms</td></tr>
+        <tr><td>eCommerce</td><td>WooCommerce</td><td>Full online store</td></tr>
+        <tr><td>Page Builder</td><td>Elementor, Divi</td><td>Visual drag-and-drop building</td></tr>
+        <tr><td>Social Media</td><td>Social Snap, Monarch</td><td>Sharing buttons, feeds</td></tr>
+      </tbody>
+    </table>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — Installing &amp; Customizing WordPress Themes</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/KRmA8Fw5P7o" allowfullscreen loading="lazy" title="WordPress Themes Tutorial"></iframe>
+      </div>
+      <div class="video-caption">▲ How to choose, install, and customize a WordPress theme from scratch</div>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <strong>Plugin Best Practices</strong>
+        <p>Only install plugins from trusted sources. Too many plugins slow your site down and increase security risk. Deactivate AND delete plugins you no longer use — deactivating alone leaves files on the server.</p>
+      </div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 4 Quiz</h4>
+      <div class="quiz-question" id="q4">
+        <p>What is the difference between deactivating and deleting a plugin?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q4')"><span class="opt-letter">A</span>There is no difference — they both remove the plugin completely</button>
+          <button class="quiz-option" onclick="checkAnswer(this,true,'q4')"><span class="opt-letter">B</span>Deactivating turns it off but keeps files; deleting removes it entirely from the server</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q4')"><span class="opt-letter">C</span>Deactivating removes the plugin from the database only</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q4')"><span class="opt-letter">D</span>You can only delete a plugin by accessing the server via FTP</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q4"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="chapter-3.html">← Chapter 3</a>
+    <a href="chapter-5.html">Chapter 5 →</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wp-logo-footer">W</div>
+  <p class="footer-title">Introduction to Content Management Systems: WordPress</p>
+  <p>Reference: <a href="https://learn.wordpress.org" target="_blank">learn.wordpress.org</a> · <a href="https://wordpress.org/documentation/" target="_blank">WordPress Docs</a></p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

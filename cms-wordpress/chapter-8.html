@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 8: Settings, Security &amp; Maintenance — CMS: WordPress</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="topnav-brand"><div class="wp-logo">W</div>CMS: WordPress</a>
+  <div class="topnav-chapters">
+    <a href="overview.html" class="ch-pill">Overview</a>
+    <a href="chapter-1.html" class="ch-pill">1. Hosting</a>
+    <a href="chapter-2.html" class="ch-pill">2. Users</a>
+    <a href="chapter-3.html" class="ch-pill">3. Content</a>
+    <a href="chapter-4.html" class="ch-pill">4. Themes</a>
+    <a href="chapter-5.html" class="ch-pill">5. Feeds &amp; Social</a>
+    <a href="chapter-6.html" class="ch-pill">6. Posts &amp; Pages</a>
+    <a href="chapter-7.html" class="ch-pill">7. Scheduling</a>
+    <a href="chapter-8.html" class="ch-pill active">8. Settings</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main class="chapter-page">
+  <div class="chapter-header">
+    <div class="chapter-num-big">08</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Eight</div>
+      <h2>WordPress Settings, Security &amp; Maintenance</h2>
+      <p>Configure your site for performance, protect it from threats, and maintain it long-term.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>Essential WordPress Settings</h3>
+    <p>After installation, these settings panels should be reviewed immediately:</p>
+
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" onclick="switchTab(this,'s-general')">General</button>
+        <button class="tab-btn" onclick="switchTab(this,'s-reading')">Reading</button>
+        <button class="tab-btn" onclick="switchTab(this,'s-writing')">Writing</button>
+        <button class="tab-btn" onclick="switchTab(this,'s-permalinks')">Permalinks</button>
+        <button class="tab-btn" onclick="switchTab(this,'s-media')">Media</button>
+      </div>
+      <div class="tab-content active" id="tab-s-general">
+        <ul>
+          <li><strong>Site Title &amp; Tagline</strong> — Used in your browser tab and SEO</li>
+          <li><strong>WordPress Address / Site Address</strong> — Your domain URLs (rarely need changing)</li>
+          <li><strong>Admin Email</strong> — Where WordPress notifications are sent</li>
+          <li><strong>Timezone</strong> — Critical for correct scheduled post publishing</li>
+          <li><strong>Date &amp; Time Format</strong> — How dates display on your site</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-s-reading">
+        <ul>
+          <li><strong>Your homepage displays</strong> — Choose between latest posts (blog) or a static page (website)</li>
+          <li><strong>Blog pages show at most</strong> — Number of posts per page (10 default)</li>
+          <li><strong>For each article in a feed, include</strong> — Full text or summary in RSS</li>
+          <li><strong>Search Engine Visibility</strong> — Discourage search engine indexing (useful during development)</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-s-writing">
+        <ul>
+          <li><strong>Default post category</strong> — What category is pre-selected when creating posts</li>
+          <li><strong>Default post format</strong> — Standard, Image, Video, etc.</li>
+          <li><strong>Post via email</strong> — Publish posts by sending an email (legacy feature)</li>
+          <li><strong>Update Services</strong> — Ping services like Ping-O-Matic when you publish</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-s-permalinks">
+        <p>Permalinks control your URL structure. <strong>Always set this immediately after installation!</strong></p>
+        <ul>
+          <li><strong>Plain</strong> — <code class="inline">/?p=123</code> — Bad for SEO</li>
+          <li><strong>Day and name</strong> — <code class="inline">/2024/01/01/post-name/</code></li>
+          <li><strong>Month and name</strong> — <code class="inline">/2024/01/post-name/</code></li>
+          <li><strong>Post name ✅</strong> — <code class="inline">/post-name/</code> — Best for SEO!</li>
+          <li><strong>Custom structure</strong> — Define your own pattern</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-s-media">
+        <ul>
+          <li><strong>Thumbnail size</strong> — Default: 150×150px</li>
+          <li><strong>Medium size</strong> — Default: 300×300px max</li>
+          <li><strong>Large size</strong> — Default: 1024×1024px max</li>
+          <li>WordPress creates multiple sizes automatically when you upload an image</li>
+          <li>Enable <strong>Organize uploads into month- and year-based folders</strong> for cleaner media library</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>WordPress Security</h3>
+    <p>Security is non-negotiable. WordPress sites are frequent targets because of their popularity. Follow this security checklist:</p>
+
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔐 Strong Credentials <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Use a unique admin username (never "admin"). Use a password with 20+ characters including symbols. Enable <strong>Two-Factor Authentication (2FA)</strong> with a plugin like WP 2FA or Google Authenticator. Use a password manager.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔄 Keep Everything Updated <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Update WordPress core, themes, and plugins regularly. 80%+ of WordPress hacks exploit outdated software. Enable automatic minor updates in Settings → Updates or via wp-config.php. Test major updates on a staging site first.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🛡️ Security Plugin <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Install <strong>Wordfence Security</strong> (free) or <strong>Sucuri Security</strong>. These provide: a web application firewall (WAF), malware scanning, login attempt limiting (brute force protection), and email alerts for suspicious activity.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔒 Force HTTPS/SSL <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Your site should use HTTPS (the padlock in the browser). Most hosts provide free SSL via Let's Encrypt. After enabling SSL, update your WordPress Address to https:// in Settings → General. Use the <strong>Really Simple SSL</strong> plugin to fix mixed content issues.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">💾 Regular Backups <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>A backup is your safety net. Use <strong>UpdraftPlus</strong> (free) to automatically backup your files and database to Google Drive, Dropbox, or Amazon S3. Schedule daily database backups and weekly full-site backups. Test your restores!</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🚫 Limit Login Attempts <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>By default, WordPress allows unlimited login attempts, making brute-force attacks easy. Use <strong>Limit Login Attempts Reloaded</strong> or Wordfence to limit failed login tries and temporarily block IPs after X failures.</p></div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">wp-config.php — Security Additions</div>
+      <code>
+<span class="cm">// Disable file editing in the dashboard</span><br>
+<span class="kw">define</span>( <span class="str">'DISALLOW_FILE_EDIT'</span>, <span class="kw">true</span> );<br><br>
+<span class="cm">// Force SSL for admin and logins</span><br>
+<span class="kw">define</span>( <span class="str">'FORCE_SSL_ADMIN'</span>, <span class="kw">true</span> );<br><br>
+<span class="cm">// Limit post revisions to save database space</span><br>
+<span class="kw">define</span>( <span class="str">'WP_POST_REVISIONS'</span>, <span class="fn">3</span> );<br><br>
+<span class="cm">// Enable automatic core updates</span><br>
+<span class="kw">define</span>( <span class="str">'WP_AUTO_UPDATE_CORE'</span>, <span class="kw">true</span> );
+      </code>
+    </div>
+
+    <h3>Site Maintenance Routine</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">📅</div>
+        <div class="step-body">
+          <strong>Daily</strong>
+          <p>Check for new comments to moderate. Monitor for security alerts from your security plugin. Review site analytics.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📅</div>
+        <div class="step-body">
+          <strong>Weekly</strong>
+          <p>Update WordPress core, themes, and plugins. Check that backups are completing successfully. Review uptime monitoring.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📅</div>
+        <div class="step-body">
+          <strong>Monthly</strong>
+          <p>Optimize the database (WP-Optimize plugin). Delete unused themes and plugins. Test form submissions. Audit user accounts and remove inactive ones.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📅</div>
+        <div class="step-body">
+          <strong>Quarterly</strong>
+          <p>Test your backup restore process. Review and update outdated content. Check all external links for broken URLs (Broken Link Checker plugin). Review page speed scores.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress Security &amp; Hardening</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/8KHaMDz3_mQ" allowfullscreen loading="lazy" title="WordPress Security Guide"></iframe>
+      </div>
+      <div class="video-caption">▲ Complete WordPress security hardening tutorial — protect your site from hackers</div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 8 Quiz</h4>
+      <div class="quiz-question" id="q8">
+        <p>Which permalink structure is considered best for SEO?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q8')"><span class="opt-letter">A</span>Plain (/?p=123)</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q8')"><span class="opt-letter">B</span>Day and name (/2024/01/01/post-name/)</button>
+          <button class="quiz-option" onclick="checkAnswer(this,true,'q8')"><span class="opt-letter">C</span>Post name (/post-name/)</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q8')"><span class="opt-letter">D</span>Numeric (/archives/123)</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q8"></div>
+      </div>
+    </div>
+
+    <div class="resources">
+      <a href="https://learn.wordpress.org/course/beginner-wordpress-user/" target="_blank" class="resource-card">
+        <div class="res-icon">🎓</div>
+        <div><div class="res-title">Beginner WordPress User Course</div><div class="res-type">Free Course · learn.wordpress.org</div></div>
+      </a>
+      <a href="https://learn.wordpress.org/course/intermediate-wordpress-user/" target="_blank" class="resource-card">
+        <div class="res-icon">📈</div>
+        <div><div class="res-title">Intermediate WordPress User</div><div class="res-type">Free Course · learn.wordpress.org</div></div>
+      </a>
+      <a href="https://wordpress.org/documentation/" target="_blank" class="resource-card">
+        <div class="res-icon">📖</div>
+        <div><div class="res-title">WordPress Documentation</div><div class="res-type">Official Docs · wordpress.org</div></div>
+      </a>
+      <a href="https://wordpress.tv/" target="_blank" class="resource-card">
+        <div class="res-icon">📺</div>
+        <div><div class="res-title">WordPress.tv</div><div class="res-type">Video Library · wordpress.tv</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="chapter-7.html">← Chapter 7</a>
+    <a href="overview.html">↑ Course Overview</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wp-logo-footer">W</div>
+  <p class="footer-title">Introduction to Content Management Systems: WordPress</p>
+  <p>Reference: <a href="https://learn.wordpress.org" target="_blank">learn.wordpress.org</a> · <a href="https://wordpress.org/documentation/" target="_blank">WordPress Docs</a></p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

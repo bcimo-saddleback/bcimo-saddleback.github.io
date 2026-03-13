@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1: Hosting &amp; Installation — CMS: WordPress</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="topnav-brand"><div class="wp-logo">W</div>CMS: WordPress</a>
+  <div class="topnav-chapters">
+    <a href="overview.html" class="ch-pill">Overview</a>
+    <a href="chapter-1.html" class="ch-pill active">1. Hosting</a>
+    <a href="chapter-2.html" class="ch-pill">2. Users</a>
+    <a href="chapter-3.html" class="ch-pill">3. Content</a>
+    <a href="chapter-4.html" class="ch-pill">4. Themes</a>
+    <a href="chapter-5.html" class="ch-pill">5. Feeds &amp; Social</a>
+    <a href="chapter-6.html" class="ch-pill">6. Posts &amp; Pages</a>
+    <a href="chapter-7.html" class="ch-pill">7. Scheduling</a>
+    <a href="chapter-8.html" class="ch-pill">8. Settings</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main class="chapter-page">
+  <div class="chapter-header">
+    <div class="chapter-num-big">01</div>
+    <div class="chapter-info">
+      <div class="label">Chapter One</div>
+      <h2>Hosting Options &amp; Installing WordPress</h2>
+      <p>Understand the hosting landscape and get WordPress running on your own server.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>What is WordPress?</h3>
+    <p><strong>WordPress</strong> is the world's most popular <span class="term">Content Management System (CMS)<span class="term-tooltip">A CMS is software that allows you to create, manage, and publish digital content without requiring advanced technical knowledge.</span></span>, powering over 43% of all websites on the internet. It began as a blogging platform in 2003 and has evolved into a flexible full-featured web publishing platform.</p>
+    <p>There are two distinct flavors you should know:</p>
+
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" onclick="switchTab(this,'wpcom')">WordPress.com</button>
+        <button class="tab-btn" onclick="switchTab(this,'wporg')">WordPress.org</button>
+      </div>
+      <div class="tab-content active" id="tab-wpcom">
+        <p><strong>WordPress.com</strong> is a hosted platform — Automattic hosts everything for you.</p>
+        <ul>
+          <li>✅ No server management required</li>
+          <li>✅ Free plan available</li>
+          <li>⚠️ Limited plugin access on lower tiers</li>
+          <li>⚠️ Less customization control</li>
+          <li>Best for: personal blogs, simple sites, beginners</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-wporg">
+        <p><strong>WordPress.org</strong> is self-hosted — you download the software and run it on your own hosting.</p>
+        <ul>
+          <li>✅ Full control over everything</li>
+          <li>✅ Install any theme or plugin</li>
+          <li>⚠️ Requires web hosting &amp; domain</li>
+          <li>⚠️ You manage backups and updates</li>
+          <li>Best for: businesses, developers, serious bloggers</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Types of Web Hosting</h3>
+    <table class="comp-table">
+      <thead>
+        <tr><th>Hosting Type</th><th>Description</th><th>Performance</th><th>Cost</th><th>Best For</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Shared Hosting</strong></td><td>Multiple sites share one server</td><td>⭐⭐</td><td>$3–$10/mo</td><td>Beginners, low traffic</td></tr>
+        <tr><td><strong>VPS Hosting</strong></td><td>Virtual private server with dedicated resources</td><td>⭐⭐⭐⭐</td><td>$20–$80/mo</td><td>Growing sites</td></tr>
+        <tr><td><strong>Managed WP Hosting</strong></td><td>Optimized specifically for WordPress</td><td>⭐⭐⭐⭐⭐</td><td>$25–$150/mo</td><td>Professional sites</td></tr>
+        <tr><td><strong>Dedicated Server</strong></td><td>Your own physical server</td><td>⭐⭐⭐⭐⭐</td><td>$80–$500+/mo</td><td>High-traffic sites</td></tr>
+        <tr><td><strong>Cloud Hosting</strong></td><td>Scalable resources across multiple servers</td><td>⭐⭐⭐⭐⭐</td><td>Pay-as-you-go</td><td>Variable traffic</td></tr>
+        <tr><td><strong>Local Dev (XAMPP/LocalWP)</strong></td><td>WordPress on your own computer</td><td>N/A</td><td>Free</td><td>Development &amp; learning</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>Recommended for This Course</strong>
+        <p>For learning purposes, use <strong>LocalWP</strong> (free) to install WordPress on your local machine, or sign up for a free account at <a href="https://wordpress.com" target="_blank">WordPress.com</a>. Both give you a sandbox to practice without worrying about server costs.</p>
+      </div>
+    </div>
+
+    <h3>Installing WordPress — The Famous 5-Minute Install</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Purchase Hosting &amp; Domain</strong>
+          <p>Choose a hosting provider (Bluehost, SiteGround, DreamHost). Register a domain name (yoursitename.com).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Create a MySQL Database</strong>
+          <p>In your hosting control panel (cPanel), create a new database, username, and password. Note these down.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Download &amp; Upload WordPress</strong>
+          <p>Download from <a href="https://wordpress.org/download" target="_blank">wordpress.org/download</a>, then upload via FTP or your host's file manager to the public_html folder.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Run the Installer</strong>
+          <p>Navigate to your domain in a browser. The WordPress setup wizard will guide you through connecting to your database.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Set Up Your Admin Account</strong>
+          <p>Create a strong username, password, and enter your site title and email. Click "Install WordPress."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — Installing WordPress with LocalWP</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/8AZ8GqW5iak" allowfullscreen loading="lazy" title="Installing WordPress Locally"></iframe>
+      </div>
+      <div class="video-caption">▲ Official WordPress tutorial: Setting up a local development environment using LocalWP</div>
+    </div>
+
+    <h3>The wp-config.php File</h3>
+    <p>During installation, WordPress creates a critical configuration file. Understanding it is essential:</p>
+    <div class="code-block">
+      <div class="code-label">wp-config.php</div>
+      <code>
+<span class="cm">// Database configuration</span><br>
+<span class="kw">define</span>( <span class="str">'DB_NAME'</span>, <span class="str">'your_database_name'</span> );<br>
+<span class="kw">define</span>( <span class="str">'DB_USER'</span>, <span class="str">'your_db_username'</span> );<br>
+<span class="kw">define</span>( <span class="str">'DB_PASSWORD'</span>, <span class="str">'your_db_password'</span> );<br>
+<span class="kw">define</span>( <span class="str">'DB_HOST'</span>, <span class="str">'localhost'</span> );<br><br>
+<span class="cm">// Security Keys (generated automatically)</span><br>
+<span class="kw">define</span>( <span class="str">'AUTH_KEY'</span>, <span class="str">'put your unique phrase here'</span> );<br>
+<span class="kw">define</span>( <span class="str">'SECURE_AUTH_KEY'</span>, <span class="str">'put your unique phrase here'</span> );
+      </code>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 1 Quiz</h4>
+      <div class="quiz-question" id="q1">
+        <p>1. What percentage of websites on the internet use WordPress?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q1')"><span class="opt-letter">A</span>About 10%</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q1')"><span class="opt-letter">B</span>About 25%</button>
+          <button class="quiz-option" onclick="checkAnswer(this,true,'q1')"><span class="opt-letter">C</span>Over 43%</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q1')"><span class="opt-letter">D</span>Over 70%</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q1"></div>
+      </div>
+      <div class="quiz-question" id="q1b">
+        <p>2. Which hosting option is best for a beginner who wants to learn WordPress without spending money?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q1b')"><span class="opt-letter">A</span>Dedicated Server</button>
+          <button class="quiz-option" onclick="checkAnswer(this,true,'q1b')"><span class="opt-letter">B</span>Local installation (LocalWP) or WordPress.com free plan</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q1b')"><span class="opt-letter">C</span>Managed WordPress Hosting</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q1b')"><span class="opt-letter">D</span>VPS Hosting</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q1b"></div>
+      </div>
+    </div>
+
+    <div class="resources">
+      <a href="https://learn.wordpress.org/lesson/introduction-to-wordpress-2/" target="_blank" class="resource-card">
+        <div class="res-icon">📘</div>
+        <div><div class="res-title">Introduction to WordPress</div><div class="res-type">Official Lesson · learn.wordpress.org</div></div>
+      </a>
+      <a href="https://wordpress.org/download/" target="_blank" class="resource-card">
+        <div class="res-icon">⬇️</div>
+        <div><div class="res-title">Download WordPress</div><div class="res-type">Official Download · wordpress.org</div></div>
+      </a>
+      <a href="https://localwp.com/" target="_blank" class="resource-card">
+        <div class="res-icon">💻</div>
+        <div><div class="res-title">LocalWP</div><div class="res-type">Free Local Dev Tool · localwp.com</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="overview.html">← Overview</a>
+    <a href="chapter-2.html">Chapter 2: Users →</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wp-logo-footer">W</div>
+  <p class="footer-title">Introduction to Content Management Systems: WordPress</p>
+  <p>Reference: <a href="https://learn.wordpress.org" target="_blank">learn.wordpress.org</a> · <a href="https://wordpress.org/documentation/" target="_blank">WordPress Docs</a></p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

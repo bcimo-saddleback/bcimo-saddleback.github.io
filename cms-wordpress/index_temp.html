@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to CMS: WordPress — College Textbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wp-blue: #0073aa;
+    --wp-dark: #1d2327;
+    --wp-mid: #2c3338;
+    --wp-accent: #00b9eb;
+    --wp-orange: #f0821e;
+    --wp-green: #00a32a;
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2230;
+    --surface: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .topnav-brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem; color: var(--text);
+    text-decoration: none;
+  }
+  .topnav-brand .wp-logo {
+    width: 32px; height: 32px; background: var(--wp-blue);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; color: white; flex-shrink: 0;
+  }
+  .topnav-chapters {
+    display: flex; gap: 0.25rem; align-items: center;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .topnav-chapters::-webkit-scrollbar { display: none; }
+  .ch-pill {
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 500; cursor: pointer;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-muted); white-space: nowrap; transition: all 0.2s;
+    text-decoration: none;
+  }
+  .ch-pill:hover, .ch-pill.active {
+    background: var(--wp-blue); border-color: var(--wp-blue); color: white;
+  }
+  .progress-bar {
+    position: fixed; top: 60px; left: 0; right: 0; height: 3px;
+    background: var(--border); z-index: 99;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--wp-blue), var(--wp-accent));
+    width: 0%; transition: width 0.1s;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center; padding: 8rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--wp-blue) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--wp-blue) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-glow {
+    position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,115,170,0.18) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 16px; border-radius: 20px;
+    border: 1px solid rgba(0,115,170,0.4);
+    background: rgba(0,115,170,0.1);
+    font-size: 0.8rem; font-weight: 500; color: var(--wp-accent);
+    letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 1.5rem; position: relative;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.1; position: relative;
+    max-width: 900px;
+  }
+  .hero h1 em { font-style: italic; color: var(--wp-blue); }
+  .hero-sub {
+    font-size: 1.15rem; color: var(--text-muted); max-width: 600px;
+    margin: 1.5rem auto 0; position: relative;
+  }
+  .hero-meta {
+    display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 2.5rem; position: relative;
+  }
+  .hero-stat {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .hero-stat strong { font-size: 1.6rem; color: var(--wp-accent); font-weight: 600; }
+  .hero-stat span { font-size: 0.8rem; color: var(--text-dim); }
+  .hero-cta {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 3rem; position: relative;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px; border-radius: var(--radius-sm); font-weight: 500;
+    font-size: 0.95rem; cursor: pointer; text-decoration: none; transition: all 0.2s;
+    border: none; font-family: inherit;
+  }
+  .btn-primary { background: var(--wp-blue); color: white; }
+  .btn-primary:hover { background: #005a87; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,115,170,0.35); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--wp-blue); color: var(--wp-accent); }
+
+  /* ── CHAPTER OVERVIEW CARDS ── */
+  .overview {
+    padding: 5rem 2rem; max-width: 1200px; margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--wp-accent); font-weight: 600; margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif; font-size: 2.5rem;
+    line-height: 1.2; margin-bottom: 3rem;
+  }
+  .chapters-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .chapter-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem; cursor: pointer;
+    transition: all 0.25s; text-decoration: none; color: inherit;
+    position: relative; overflow: hidden;
+  }
+  .chapter-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--wp-blue); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .chapter-card:hover { border-color: var(--wp-blue); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+  .chapter-card:hover::before { transform: scaleX(1); }
+  .ch-num {
+    font-size: 0.72rem; color: var(--text-dim); font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .ch-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
+  .ch-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+  .ch-icon {
+    font-size: 1.8rem; margin-bottom: 0.75rem;
+  }
+
+  /* ── CHAPTER SECTIONS ── */
+  .chapter {
+    padding: 5rem 2rem; max-width: 900px; margin: 0 auto;
+    border-top: 1px solid var(--border);
+  }
+  .chapter-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem;
+    padding: 2rem; background: var(--bg2); border-radius: var(--radius);
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .chapter-header::after {
+    content: ''; position: absolute; right: -30px; top: -30px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(0,115,170,0.08);
+  }
+  .chapter-num-big {
+    font-family: 'DM Serif Display', serif; font-size: 4rem; line-height: 1;
+    color: rgba(0,115,170,0.25); flex-shrink: 0; font-weight: 400;
+  }
+  .chapter-info { flex: 1; }
+  .chapter-info .label { font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+  .chapter-info h2 {
+    font-family: 'DM Serif Display', serif; font-size: 2rem;
+    margin: 0.25rem 0 0.5rem;
+  }
+  .chapter-info p { font-size: 0.9rem; color: var(--text-muted); }
+
+  /* ── CONTENT BODY ── */
+  .content-body h3 {
+    font-family: 'DM Serif Display', serif; font-size: 1.5rem;
+    margin: 2.5rem 0 1rem; color: var(--text);
+  }
+  .content-body h4 {
+    font-size: 1rem; font-weight: 600; margin: 1.75rem 0 0.5rem;
+    color: var(--wp-accent);
+  }
+  .content-body p { margin-bottom: 1rem; color: var(--text-muted); }
+  .content-body ul, .content-body ol {
+    margin: 0.75rem 0 1rem 1.5rem; color: var(--text-muted);
+  }
+  .content-body li { margin-bottom: 0.4rem; }
+  .content-body strong { color: var(--text); }
+  .content-body a { color: var(--wp-accent); text-decoration: none; }
+  .content-body a:hover { text-decoration: underline; }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 1.25rem 1.5rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    line-height: 1.6; overflow-x: auto; margin: 1rem 0;
+    position: relative;
+  }
+  .code-block .code-label {
+    position: absolute; top: 0.6rem; right: 0.75rem;
+    font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .code-block code { color: #79c0ff; }
+  .code-block .cm { color: #8b949e; }
+  .code-block .kw { color: #ff7b72; }
+  .code-block .str { color: #a5d6ff; }
+  .code-block .fn { color: #d2a8ff; }
+
+  /* ── VIDEO EMBEDS ── */
+  .video-wrapper {
+    margin: 1.5rem 0; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--border); background: var(--bg2);
+  }
+  .video-header {
+    padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem; color: var(--text-muted);
+  }
+  .video-header .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .video-header .dot.red { background: #ff5f57; }
+  .video-header .dot.yellow { background: #febc2e; }
+  .video-header .dot.green { background: #28c840; }
+  .video-iframe-container {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+  }
+  .video-iframe-container iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+  }
+  .video-caption {
+    padding: 0.75rem 1.25rem; font-size: 0.8rem; color: var(--text-dim);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    padding: 1.25rem 1.5rem; border-radius: var(--radius-sm);
+    margin: 1.25rem 0; display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .callout-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+  .callout-body {}
+  .callout-body strong { display: block; margin-bottom: 0.3rem; font-size: 0.9rem; }
+  .callout-body p { font-size: 0.88rem; margin: 0; }
+  .callout.tip { background: rgba(0,163,42,0.08); border: 1px solid rgba(0,163,42,0.25); }
+  .callout.tip .callout-icon { color: var(--wp-green); }
+  .callout.tip .callout-body strong { color: var(--wp-green); }
+  .callout.note { background: rgba(0,115,170,0.08); border: 1px solid rgba(0,115,170,0.25); }
+  .callout.note .callout-icon { color: var(--wp-blue); }
+  .callout.note .callout-body strong { color: var(--wp-accent); }
+  .callout.warning { background: rgba(240,130,30,0.08); border: 1px solid rgba(240,130,30,0.25); }
+  .callout.warning .callout-icon { color: var(--wp-orange); }
+  .callout.warning .callout-body strong { color: var(--wp-orange); }
+
+  /* ── QUIZ ── */
+  .quiz-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem; margin: 2rem 0;
+  }
+  .quiz-box h4 {
+    font-family: 'DM Serif Display', serif; font-size: 1.2rem;
+    color: var(--text); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .quiz-question { margin-bottom: 1.5rem; }
+  .quiz-question p { color: var(--text); font-weight: 500; margin-bottom: 0.75rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+  .quiz-option {
+    display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm); border: 1px solid var(--border);
+    cursor: pointer; transition: all 0.2s; color: var(--text-muted);
+    background: transparent; font-family: inherit; font-size: 0.9rem; text-align: left;
+    width: 100%;
+  }
+  .quiz-option:hover { border-color: var(--wp-blue); color: var(--text); background: rgba(0,115,170,0.05); }
+  .quiz-option.correct { border-color: var(--wp-green); background: rgba(0,163,42,0.1); color: var(--text); }
+  .quiz-option.wrong { border-color: #f85149; background: rgba(248,81,73,0.1); color: var(--text); }
+  .quiz-option .opt-letter {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 600; flex-shrink: 0; font-family: 'JetBrains Mono', monospace;
+  }
+  .quiz-feedback {
+    margin-top: 0.75rem; padding: 0.75rem 1rem; border-radius: var(--radius-sm);
+    font-size: 0.88rem; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: rgba(0,163,42,0.1); color: #7ee787; border: 1px solid rgba(0,163,42,0.3); }
+  .quiz-feedback.wrong-fb { background: rgba(248,81,73,0.1); color: #ff7b72; border: 1px solid rgba(248,81,73,0.3); }
+  .quiz-submit {
+    margin-top: 1.25rem; padding: 10px 24px;
+    background: var(--wp-blue); color: white; border: none;
+    border-radius: var(--radius-sm); cursor: pointer; font-family: inherit;
+    font-size: 0.9rem; font-weight: 500; transition: all 0.2s;
+  }
+  .quiz-submit:hover { background: #005a87; }
+
+  /* ── STEP CARDS ── */
+  .steps { display: flex; flex-direction: column; gap: 1rem; margin: 1.25rem 0; }
+  .step {
+    display: flex; gap: 1rem; background: var(--bg2);
+    border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.25rem;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: rgba(0,115,170,0.4); }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--wp-blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; flex-shrink: 0; color: white;
+  }
+  .step-body strong { display: block; font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .step-body p { font-size: 0.88rem; color: var(--text-muted); margin: 0; }
+
+  /* ── COMPARISON TABLE ── */
+  .comp-table {
+    width: 100%; border-collapse: collapse; margin: 1.25rem 0;
+    font-size: 0.88rem;
+  }
+  .comp-table th {
+    background: var(--surface); padding: 0.75rem 1rem; text-align: left;
+    border: 1px solid var(--border); font-weight: 600; color: var(--text);
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .comp-table td {
+    padding: 0.75rem 1rem; border: 1px solid var(--border); color: var(--text-muted);
+  }
+  .comp-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .check { color: var(--wp-green); }
+  .cross { color: #f85149; }
+
+  /* ── GLOSSARY TERM ── */
+  .term {
+    border-bottom: 1px dashed var(--wp-blue); cursor: help;
+    color: var(--wp-accent); position: relative;
+  }
+  .term-tooltip {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.6rem 0.9rem; border-radius: var(--radius-sm);
+    font-size: 0.8rem; color: var(--text); white-space: nowrap; z-index: 50;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5); max-width: 280px; white-space: normal;
+  }
+  .term:hover .term-tooltip { display: block; }
+
+  /* ── TABS ── */
+  .tabs { margin: 1.5rem 0; }
+  .tab-list {
+    display: flex; border-bottom: 1px solid var(--border); gap: 0; margin-bottom: 0;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tab-list::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 0.65rem 1.25rem; background: none; border: none;
+    border-bottom: 2px solid transparent; color: var(--text-muted);
+    cursor: pointer; font-family: inherit; font-size: 0.88rem; font-weight: 500;
+    white-space: nowrap; transition: all 0.2s; margin-bottom: -1px;
+  }
+  .tab-btn.active { border-bottom-color: var(--wp-blue); color: var(--wp-accent); }
+  .tab-btn:hover:not(.active) { color: var(--text); }
+  .tab-content { display: none; padding: 1.5rem 0; }
+  .tab-content.active { display: block; }
+
+  /* ── ACCORDION ── */
+  .accordion { margin: 1rem 0; }
+  .acc-item {
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    margin-bottom: 0.5rem; overflow: hidden;
+  }
+  .acc-header {
+    width: 100%; background: var(--bg2); border: none; padding: 1rem 1.25rem;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; font-family: inherit; font-size: 0.9rem; color: var(--text);
+    font-weight: 500; text-align: left; transition: background 0.2s;
+  }
+  .acc-header:hover { background: var(--surface); }
+  .acc-header .arrow { transition: transform 0.2s; font-size: 0.8rem; color: var(--text-muted); }
+  .acc-header.open .arrow { transform: rotate(180deg); }
+  .acc-body { display: none; padding: 1.25rem; background: var(--bg); border-top: 1px solid var(--border); }
+  .acc-body.open { display: block; }
+  .acc-body p { font-size: 0.88rem; color: var(--text-muted); margin: 0; }
+
+  /* ── RESOURCE LINKS ── */
+  .resources {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.75rem; margin: 1.25rem 0;
+  }
+  .resource-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 1rem;
+    text-decoration: none; color: inherit; transition: all 0.2s;
+    display: flex; gap: 0.75rem; align-items: flex-start;
+  }
+  .resource-card:hover { border-color: var(--wp-blue); transform: translateY(-2px); }
+  .resource-card .res-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .resource-card .res-title { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+  .resource-card .res-type { font-size: 0.75rem; color: var(--text-dim); }
+
+  /* ── CHAPTER FOOTER NAV ── */
+  .chapter-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 2rem 0; margin-top: 3rem; border-top: 1px solid var(--border);
+  }
+  .chapter-nav a {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.25rem; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); text-decoration: none; color: var(--text-muted);
+    font-size: 0.88rem; transition: all 0.2s;
+  }
+  .chapter-nav a:hover { border-color: var(--wp-blue); color: var(--wp-accent); }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 3rem 2rem; text-align: center; margin-top: 4rem;
+  }
+  .site-footer p { font-size: 0.85rem; color: var(--text-dim); }
+  .site-footer a { color: var(--wp-accent); text-decoration: none; }
+
+  /* ── SIDEBAR TOC ── */
+  .toc-sidebar {
+    position: fixed; right: 2rem; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 6px; z-index: 50;
+  }
+  .toc-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+    cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .toc-dot:hover, .toc-dot.active { background: var(--wp-blue); transform: scale(1.5); }
+  .toc-dot .toc-label {
+    position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; color: var(--text);
+    white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .toc-dot:hover .toc-label { opacity: 1; }
+
+  @media (max-width: 768px) {
+    .toc-sidebar { display: none; }
+    .topnav-chapters { display: none; }
+    .chapter-header { flex-direction: column; }
+    .hero h1 { font-size: 2.5rem; }
+    .chapter-num-big { font-size: 2.5rem; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+  .fade-up-2 { animation-delay: 0.2s; opacity: 0; }
+  .fade-up-3 { animation-delay: 0.3s; opacity: 0; }
+  .fade-up-4 { animation-delay: 0.4s; opacity: 0; }
+
+  /* ── INTERACTIVE DEMO BOX ── */
+  .demo-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem; margin: 1.5rem 0;
+  }
+  .demo-box h4 {
+    color: var(--wp-orange); font-size: 0.8rem; text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 1rem;
+  }
+  .tag-builder {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;
+  }
+  .tag-chip {
+    padding: 4px 12px; border-radius: 20px; background: var(--surface);
+    border: 1px solid var(--border); font-size: 0.82rem; cursor: pointer;
+    color: var(--text-muted); transition: all 0.2s;
+  }
+  .tag-chip:hover, .tag-chip.selected {
+    background: rgba(0,115,170,0.15); border-color: var(--wp-blue); color: var(--wp-accent);
+  }
+  .tag-output {
+    padding: 0.75rem 1rem; background: var(--bg); border-radius: var(--radius-sm);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-dim);
+    min-height: 40px;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="#hero" class="topnav-brand">
+    <div class="wp-logo">W</div>
+    CMS: WordPress
+  </a>
+  <div class="topnav-chapters">
+    <a href="#overview" class="ch-pill">Overview</a>
+    <a href="#ch1" class="ch-pill">1. Hosting</a>
+    <a href="#ch2" class="ch-pill">2. Users</a>
+    <a href="#ch3" class="ch-pill">3. Content</a>
+    <a href="#ch4" class="ch-pill">4. Themes</a>
+    <a href="#ch5" class="ch-pill">5. Feeds & Social</a>
+    <a href="#ch6" class="ch-pill">6. Posts & Pages</a>
+    <a href="#ch7" class="ch-pill">7. Scheduling</a>
+    <a href="#ch8" class="ch-pill">8. Settings</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- SIDEBAR TOC DOTS -->
+<nav class="toc-sidebar" id="tocSidebar">
+  <div class="toc-dot" onclick="location.href='#hero'"><span class="toc-label">Introduction</span></div>
+  <div class="toc-dot" onclick="location.href='#overview'"><span class="toc-label">Overview</span></div>
+  <div class="toc-dot" onclick="location.href='#ch1'"><span class="toc-label">Ch 1: Hosting</span></div>
+  <div class="toc-dot" onclick="location.href='#ch2'"><span class="toc-label">Ch 2: Users</span></div>
+  <div class="toc-dot" onclick="location.href='#ch3'"><span class="toc-label">Ch 3: Content</span></div>
+  <div class="toc-dot" onclick="location.href='#ch4'"><span class="toc-label">Ch 4: Themes</span></div>
+  <div class="toc-dot" onclick="location.href='#ch5'"><span class="toc-label">Ch 5: Feeds</span></div>
+  <div class="toc-dot" onclick="location.href='#ch6'"><span class="toc-label">Ch 6: Posts</span></div>
+  <div class="toc-dot" onclick="location.href='#ch7'"><span class="toc-label">Ch 7: Scheduling</span></div>
+  <div class="toc-dot" onclick="location.href='#ch8'"><span class="toc-label">Ch 8: Settings</span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-badge fade-up fade-up-1">📚 College Course Textbook</div>
+  <h1 class="fade-up fade-up-2">Introduction to <em>Content<br>Management Systems</em></h1>
+  <p class="hero-sub fade-up fade-up-3">A comprehensive, interactive guide to WordPress — from installation to advanced customization, themes, plugins, and beyond.</p>
+  <div class="hero-meta fade-up fade-up-4">
+    <div class="hero-stat"><strong>8</strong><span>Chapters</span></div>
+    <div class="hero-stat"><strong>40+</strong><span>Topics</span></div>
+    <div class="hero-stat"><strong>20+</strong><span>Videos</span></div>
+    <div class="hero-stat"><strong>8</strong><span>Quizzes</span></div>
+  </div>
+  <div class="hero-cta fade-up fade-up-4">
+    <a href="#overview" class="btn btn-primary">▶ Start Learning</a>
+    <a href="https://learn.wordpress.org" target="_blank" class="btn btn-outline">🔗 Official WP Docs</a>
+  </div>
+</section>
+
+<!-- CHAPTER OVERVIEW GRID -->
+<section class="overview" id="overview">
+  <div class="section-label">Course Chapters</div>
+  <h2 class="section-title">What You'll Learn</h2>
+  <div class="chapters-grid">
+    <a href="#ch1" class="chapter-card">
+      <div class="ch-icon">🖥️</div>
+      <div class="ch-num">Chapter 01</div>
+      <div class="ch-title">Hosting Options & Installing WordPress</div>
+      <div class="ch-desc">Compare hosting types, set up a domain, and install WordPress from scratch.</div>
+    </a>
+    <a href="#ch2" class="chapter-card">
+      <div class="ch-icon">👥</div>
+      <div class="ch-num">Chapter 02</div>
+      <div class="ch-title">Creating & Managing Users</div>
+      <div class="ch-desc">Understand user roles, permissions, and how to manage your WordPress team.</div>
+    </a>
+    <a href="#ch3" class="chapter-card">
+      <div class="ch-icon">✍️</div>
+      <div class="ch-num">Chapter 03</div>
+      <div class="ch-title">Content Creation & Management</div>
+      <div class="ch-desc">Use the Block Editor to create rich content, manage media, and organize your library.</div>
+    </a>
+    <a href="#ch4" class="chapter-card">
+      <div class="ch-icon">🎨</div>
+      <div class="ch-num">Chapter 04</div>
+      <div class="ch-title">Themes, Widgets & Plugins</div>
+      <div class="ch-desc">Install and customize themes, add widgets, and extend functionality with plugins.</div>
+    </a>
+    <a href="#ch5" class="chapter-card">
+      <div class="ch-icon">📡</div>
+      <div class="ch-num">Chapter 05</div>
+      <div class="ch-title">Feeds, Podcasting & Social Media</div>
+      <div class="ch-desc">Configure RSS feeds, set up podcast distribution, and integrate social platforms.</div>
+    </a>
+    <a href="#ch6" class="chapter-card">
+      <div class="ch-icon">📄</div>
+      <div class="ch-num">Chapter 06</div>
+      <div class="ch-title">Posts, Pages & Formatting</div>
+      <div class="ch-desc">Master the differences between posts and pages, and apply advanced formatting.</div>
+    </a>
+    <a href="#ch7" class="chapter-card">
+      <div class="ch-icon">🗂️</div>
+      <div class="ch-num">Chapter 07</div>
+      <div class="ch-title">Scheduling, Categories & Comments</div>
+      <div class="ch-desc">Schedule content, organize with taxonomy, and moderate reader interactions.</div>
+    </a>
+    <a href="#ch8" class="chapter-card">
+      <div class="ch-icon">⚙️</div>
+      <div class="ch-num">Chapter 08</div>
+      <div class="ch-title">Settings, Security & Maintenance</div>
+      <div class="ch-desc">Optimize WordPress settings, secure your site, and build a maintenance routine.</div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CHAPTER 1 ═══════════════════════════════════════ -->
+<section class="chapter" id="ch1">
+  <div class="chapter-header">
+    <div class="chapter-num-big">01</div>
+    <div class="chapter-info">
+      <div class="label">Chapter One</div>
+      <h2>Hosting Options & Installing WordPress</h2>
+      <p>Understand the hosting landscape and get WordPress running on your own server.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>What is WordPress?</h3>
+    <p>
+      <strong>WordPress</strong> is the world's most popular <span class="term">Content Management System (CMS)<span class="term-tooltip">A CMS is software that allows you to create, manage, and publish digital content without requiring advanced technical knowledge.</span></span>, powering over 43% of all websites on the internet. It began as a blogging platform in 2003 and has evolved into a flexible full-featured web publishing platform.
+    </p>
+    <p>There are two distinct flavors you should know:</p>
+
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" onclick="switchTab(this,'wordpress-com')">WordPress.com</button>
+        <button class="tab-btn" onclick="switchTab(this,'wordpress-org')">WordPress.org</button>
+      </div>
+      <div class="tab-content active" id="tab-wordpress-com">
+        <p><strong>WordPress.com</strong> is a hosted platform — Automattic hosts everything for you.</p>
+        <ul>
+          <li>✅ No server management required</li>
+          <li>✅ Free plan available</li>
+          <li>⚠️ Limited plugin access on lower tiers</li>
+          <li>⚠️ Less customization control</li>
+          <li>Best for: personal blogs, simple sites, beginners</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-wordpress-org">
+        <p><strong>WordPress.org</strong> is self-hosted — you download the software and run it on your own hosting.</p>
+        <ul>
+          <li>✅ Full control over everything</li>
+          <li>✅ Install any theme or plugin</li>
+          <li>⚠️ Requires web hosting &amp; domain</li>
+          <li>⚠️ You manage backups and updates</li>
+          <li>Best for: businesses, developers, serious bloggers</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Types of Web Hosting</h3>
+    <table class="comp-table">
+      <thead>
+        <tr><th>Hosting Type</th><th>Description</th><th>Performance</th><th>Cost</th><th>Best For</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Shared Hosting</strong></td><td>Multiple sites share one server</td><td>⭐⭐</td><td>$3–$10/mo</td><td>Beginners, low traffic</td></tr>
+        <tr><td><strong>VPS Hosting</strong></td><td>Virtual private server with dedicated resources</td><td>⭐⭐⭐⭐</td><td>$20–$80/mo</td><td>Growing sites</td></tr>
+        <tr><td><strong>Managed WP Hosting</strong></td><td>Optimized specifically for WordPress</td><td>⭐⭐⭐⭐⭐</td><td>$25–$150/mo</td><td>Professional sites</td></tr>
+        <tr><td><strong>Dedicated Server</strong></td><td>Your own physical server</td><td>⭐⭐⭐⭐⭐</td><td>$80–$500+/mo</td><td>High-traffic sites</td></tr>
+        <tr><td><strong>Cloud Hosting</strong></td><td>Scalable resources across multiple servers</td><td>⭐⭐⭐⭐⭐</td><td>Pay-as-you-go</td><td>Variable traffic</td></tr>
+        <tr><td><strong>Local Dev (XAMPP)</strong></td><td>WordPress on your own computer</td><td>N/A</td><td>Free</td><td>Development &amp; learning</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>Recommended for This Course</strong>
+        <p>For learning purposes, use <strong>LocalWP</strong> (free) to install WordPress on your local machine, or sign up for a free account at <a href="https://wordpress.com" target="_blank">WordPress.com</a>. Both give you a sandbox to practice without worrying about server costs.</p>
+      </div>
+    </div>
+
+    <h3>Installing WordPress (Step-by-Step)</h3>
+    <p>The official motto is "Famous 5-Minute Install." Here's what you need:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Purchase Hosting & Domain</strong>
+          <p>Choose a hosting provider (Bluehost, SiteGround, DreamHost). Register a domain name (yoursitename.com).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Create a MySQL Database</strong>
+          <p>In your hosting control panel (cPanel), create a new database, username, and password. Note these down.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Download & Upload WordPress</strong>
+          <p>Download from <a href="https://wordpress.org/download" target="_blank">wordpress.org/download</a>, then upload via FTP or your host's file manager to the public_html folder.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Run the Installer</strong>
+          <p>Navigate to your domain in a browser. The WordPress setup wizard will guide you through connecting to your database.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Set Up Your Admin Account</strong>
+          <p>Create a strong username, password, and enter your site title and email. Click "Install WordPress."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — Installing WordPress with LocalWP</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/8AZ8GqW5iak" allowfullscreen loading="lazy" title="Installing WordPress Locally"></iframe>
+      </div>
+      <div class="video-caption">▲ Official WordPress tutorial: Setting up a local development environment using LocalWP</div>
+    </div>
+
+    <h3>The wp-config.php File</h3>
+    <p>During installation, WordPress creates a critical configuration file. Understanding it is essential:</p>
+    <div class="code-block">
+      <div class="code-label">wp-config.php</div>
+      <code>
+<span class="cm">// Database configuration</span><br>
+<span class="kw">define</span>( <span class="str">'DB_NAME'</span>, <span class="str">'your_database_name'</span> );<br>
+<span class="kw">define</span>( <span class="str">'DB_USER'</span>, <span class="str">'your_db_username'</span> );<br>
+<span class="kw">define</span>( <span class="str">'DB_PASSWORD'</span>, <span class="str">'your_db_password'</span> );<br>
+<span class="kw">define</span>( <span class="str">'DB_HOST'</span>, <span class="str">'localhost'</span> );<br><br>
+<span class="cm">// Security Keys (generated automatically)</span><br>
+<span class="kw">define</span>( <span class="str">'AUTH_KEY'</span>, <span class="str">'put your unique phrase here'</span> );<br>
+<span class="kw">define</span>( <span class="str">'SECURE_AUTH_KEY'</span>, <span class="str">'put your unique phrase here'</span> );
+      </code>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 1 Quiz</h4>
+      <div class="quiz-question" id="q1">
+        <p>1. What percentage of websites on the internet use WordPress?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q1')"><span class="opt-letter">A</span> About 10%</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q1')"><span class="opt-letter">B</span> About 25%</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q1')"><span class="opt-letter">C</span> Over 43%</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q1')"><span class="opt-letter">D</span> Over 70%</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q1"></div>
+      </div>
+      <div class="quiz-question" id="q1b">
+        <p>2. Which hosting option is best for a beginner who wants to learn WordPress without spending money?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q1b')"><span class="opt-letter">A</span> Dedicated Server</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q1b')"><span class="opt-letter">B</span> Local installation (LocalWP) or WordPress.com free plan</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q1b')"><span class="opt-letter">C</span> Managed WordPress Hosting</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q1b')"><span class="opt-letter">D</span> VPS Hosting</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q1b"></div>
+      </div>
+    </div>
+
+    <div class="resources">
+      <a href="https://learn.wordpress.org/lesson/introduction-to-wordpress-2/" target="_blank" class="resource-card">
+        <div class="res-icon">📘</div>
+        <div><div class="res-title">Introduction to WordPress</div><div class="res-type">Official Lesson · learn.wordpress.org</div></div>
+      </a>
+      <a href="https://wordpress.org/download/" target="_blank" class="resource-card">
+        <div class="res-icon">⬇️</div>
+        <div><div class="res-title">Download WordPress</div><div class="res-type">Official Download · wordpress.org</div></div>
+      </a>
+      <a href="https://localwp.com/" target="_blank" class="resource-card">
+        <div class="res-icon">💻</div>
+        <div><div class="res-title">LocalWP</div><div class="res-type">Free Local Dev Tool · localwp.com</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <span></span>
+    <a href="#ch2">Chapter 2: Users →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CHAPTER 2 ═══════════════════════════════════════ -->
+<section class="chapter" id="ch2">
+  <div class="chapter-header">
+    <div class="chapter-num-big">02</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Two</div>
+      <h2>Creating & Managing Users</h2>
+      <p>Learn how WordPress handles user accounts, roles, and permissions.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>WordPress User Roles</h3>
+    <p>WordPress has a built-in <span class="term">role-based access control<span class="term-tooltip">A system where access rights are grouped by role, and users are assigned to roles, making permission management easier.</span></span> system. Each user is assigned a role that determines what they can and cannot do on your site.</p>
+
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">
+          👑 Administrator <span class="arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>The <strong>Administrator</strong> has complete control over the WordPress site. They can install/delete plugins and themes, create and manage all users, access all settings, and delete the site entirely. <br><br>⚠️ Only trusted individuals should have Admin access. This is your account as the site owner.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">
+          ✏️ Editor <span class="arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p><strong>Editors</strong> can publish, manage, and delete any posts and pages — including those written by other users. They can also moderate comments and manage categories/tags. Great for managing a content team.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">
+          📝 Author <span class="arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p><strong>Authors</strong> can write, publish, edit, and delete their own posts. They can upload files. However, they cannot modify others' content or access site settings. Perfect for trusted writers.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">
+          🙋 Contributor <span class="arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p><strong>Contributors</strong> can write and edit their own posts but <em>cannot publish them</em> — posts must be reviewed and published by an Editor or Admin. They also cannot upload files. Use for guest writers.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">
+          👁️ Subscriber <span class="arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p><strong>Subscribers</strong> can only manage their own profile. They cannot create or edit content. Used for membership sites where registered users get access to special content.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Adding a New User</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Navigate to Users → Add New</strong>
+          <p>In your WordPress admin dashboard (wp-admin), find the Users menu in the left sidebar and click "Add New User."</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Fill in User Details</strong>
+          <p>Enter username (required), email (required), first/last name, and website URL. The username cannot be changed later.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Set a Strong Password</strong>
+          <p>WordPress will generate a strong password. You can use this or create your own. Check "Send User Notification" to email them their credentials.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Assign the Appropriate Role</strong>
+          <p>Select the role that matches what this person needs to do. Remember: follow the principle of least privilege — give only the access needed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress User Roles Explained</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/5nJaFE0dGqE" allowfullscreen loading="lazy" title="WordPress User Roles"></iframe>
+      </div>
+      <div class="video-caption">▲ A complete walkthrough of all WordPress user roles and how to assign them</div>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <strong>Security Best Practice</strong>
+        <p>Never use "admin" as your username — it's the first thing attackers try. Always use a unique username and a strong password with uppercase, lowercase, numbers, and symbols.</p>
+      </div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 2 Quiz</h4>
+      <div class="quiz-question" id="q2">
+        <p>A guest writer submits articles for your site. They should write content but NOT publish it themselves. What role should you assign?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q2')"><span class="opt-letter">A</span> Editor</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q2')"><span class="opt-letter">B</span> Author</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q2')"><span class="opt-letter">C</span> Contributor</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q2')"><span class="opt-letter">D</span> Subscriber</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q2"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="#ch1">← Chapter 1</a>
+    <a href="#ch3">Chapter 3 →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CHAPTER 3 ═══════════════════════════════════════ -->
+<section class="chapter" id="ch3">
+  <div class="chapter-header">
+    <div class="chapter-num-big">03</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Three</div>
+      <h2>Content Creation & Management</h2>
+      <p>Master the WordPress Block Editor and manage your media library.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>The Block Editor (Gutenberg)</h3>
+    <p>Since WordPress 5.0, the default editor is the <span class="term">Gutenberg Block Editor<span class="term-tooltip">A visual page builder built into WordPress where content is created using individual "blocks" — each block is a discrete piece of content like a paragraph, image, or button.</span></span>. Everything you create is made of <strong>blocks</strong>.</p>
+
+    <div class="callout note">
+      <div class="callout-icon">ℹ️</div>
+      <div class="callout-body">
+        <strong>What is a Block?</strong>
+        <p>A block is a self-contained content element. Common blocks include: Paragraph, Heading, Image, Gallery, Video, Quote, List, Button, Columns, and hundreds more via plugins.</p>
+      </div>
+    </div>
+
+    <h4>Essential Block Types</h4>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">📝 Text Blocks <span class="arrow">▼</span></button>
+        <div class="acc-body"><p><strong>Paragraph</strong> — Basic text. <strong>Heading</strong> (H1–H6) — Section titles. <strong>List</strong> — Bullet or numbered. <strong>Quote</strong> — Styled blockquotes. <strong>Code</strong> — Monospace formatted code. <strong>Table</strong> — Data tables with rows and columns.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🖼️ Media Blocks <span class="arrow">▼</span></button>
+        <div class="acc-body"><p><strong>Image</strong> — Single photos with alt text, captions, and links. <strong>Gallery</strong> — Multiple images in a grid. <strong>Video</strong> — Self-hosted or YouTube embeds. <strong>Audio</strong> — MP3 and other audio files. <strong>Cover</strong> — Image with text overlay.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🏗️ Layout Blocks <span class="arrow">▼</span></button>
+        <div class="acc-body"><p><strong>Columns</strong> — Side-by-side content. <strong>Group</strong> — Wrap blocks together with shared styling. <strong>Spacer</strong> — Add whitespace. <strong>Separator</strong> — Horizontal dividers. <strong>Row</strong> — Horizontal block layouts.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔗 Embed Blocks <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>WordPress auto-embeds content from YouTube, Twitter/X, Instagram, Spotify, TikTok, and many more. Just paste the URL on its own line, or use the dedicated Embed block.</p></div>
+      </div>
+    </div>
+
+    <h3>Managing the Media Library</h3>
+    <p>The <strong>Media Library</strong> (found under Media in the left sidebar) is where all uploaded files live — images, PDFs, videos, audio, and documents.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Uploading Media</strong>
+          <p>Go to Media → Add New. Drag and drop files or click "Select Files." WordPress accepts JPEG, PNG, GIF, WebP, MP4, MP3, PDF, and more.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Adding Alt Text</strong>
+          <p>Always add descriptive alt text to images for accessibility and SEO. Click any image in the library to edit its details.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Organizing with Folders (Plugin Required)</strong>
+          <p>By default WordPress doesn't have media folders, but plugins like Filester or Enhanced Media Library add this functionality.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress Block Editor Complete Guide</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/2Mvl-pMOXoU" allowfullscreen loading="lazy" title="WordPress Block Editor Guide"></iframe>
+      </div>
+      <div class="video-caption">▲ Complete beginner's guide to the WordPress Gutenberg Block Editor</div>
+    </div>
+
+    <!-- Interactive Demo: Tag Builder -->
+    <h3>Try It: HTML Formatting in WordPress</h3>
+    <p>WordPress uses HTML formatting tags under the hood. Click the tags below to see how they work:</p>
+    <div class="demo-box">
+      <h4>🔧 Interactive HTML Tag Explorer</h4>
+      <div class="tag-builder" id="tagBuilder">
+        <button class="tag-chip" onclick="selectTag(this, '&lt;strong&gt;Bold Text&lt;/strong&gt;', 'Makes text bold — use for important keywords')">Bold</button>
+        <button class="tag-chip" onclick="selectTag(this, '&lt;em&gt;Italic Text&lt;/em&gt;', 'Italicizes text — use for titles, emphasis, or foreign words')">Italic</button>
+        <button class="tag-chip" onclick="selectTag(this, '&lt;h2&gt;Section Heading&lt;/h2&gt;', 'Creates a level-2 heading — main section titles')">Heading</button>
+        <button class="tag-chip" onclick="selectTag(this, '&lt;a href=&quot;url&quot;&gt;Link Text&lt;/a&gt;', 'Creates a hyperlink to another page or URL')">Link</button>
+        <button class="tag-chip" onclick="selectTag(this, '&lt;blockquote&gt;Quote here&lt;/blockquote&gt;', 'Styles a block quotation — often displayed with a visual indent')">Blockquote</button>
+        <button class="tag-chip" onclick="selectTag(this, '&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;', 'Creates an unordered (bulleted) list')">List</button>
+        <button class="tag-chip" onclick="selectTag(this, '&lt;img src=&quot;image.jpg&quot; alt=&quot;Description&quot;&gt;', 'Embeds an image. Alt text is required for accessibility')">Image</button>
+      </div>
+      <div class="tag-output" id="tagOutput">← Click a tag above to see its HTML and explanation</div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 3 Quiz</h4>
+      <div class="quiz-question" id="q3">
+        <p>Why is it important to always add alt text to images in WordPress?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q3')"><span class="opt-letter">A</span> It makes images load faster</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q3')"><span class="opt-letter">B</span> It changes the image format to WebP</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q3')"><span class="opt-letter">C</span> It improves accessibility for screen readers and helps with SEO</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q3')"><span class="opt-letter">D</span> It is required by WordPress to save an image</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q3"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="#ch2">← Chapter 2</a>
+    <a href="#ch4">Chapter 4 →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CHAPTER 4 ═══════════════════════════════════════ -->
+<section class="chapter" id="ch4">
+  <div class="chapter-header">
+    <div class="chapter-num-big">04</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Four</div>
+      <h2>Themes, Widgets & Plugins</h2>
+      <p>Customize the look of your site and extend its functionality.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>WordPress Themes</h3>
+    <p>A <span class="term">theme<span class="term-tooltip">A WordPress theme controls the visual presentation of your website — colors, fonts, layouts, and page structure — without affecting your content.</span></span> controls the visual design of your website. WordPress has two modern theme types:</p>
+
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" onclick="switchTab(this,'classic-themes')">Classic Themes</button>
+        <button class="tab-btn" onclick="switchTab(this,'block-themes')">Block Themes (FSE)</button>
+      </div>
+      <div class="tab-content active" id="tab-classic-themes">
+        <p><strong>Classic Themes</strong> use PHP template files, a traditional Customizer, and widget areas.</p>
+        <ul>
+          <li>Customized via Appearance → Customize</li>
+          <li>Use widget areas (sidebar, footer)</li>
+          <li>Thousands available at WordPress.org</li>
+          <li>Examples: Astra, OceanWP, GeneratePress</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-block-themes">
+        <p><strong>Block Themes (Full Site Editing)</strong> allow you to edit every part of your site with the block editor.</p>
+        <ul>
+          <li>Edit headers, footers, and templates visually</li>
+          <li>Customized via Appearance → Editor</li>
+          <li>Use Global Styles for site-wide design tokens</li>
+          <li>Examples: Twenty Twenty-Four, Kadence, Blocksy</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>Installing a Theme</h4>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Go to Appearance → Themes</strong>
+          <p>In your admin dashboard, navigate to Appearance → Themes to see installed themes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Click "Add New Theme"</strong>
+          <p>Browse thousands of free themes from the official WordPress.org repository. Filter by Popular, Latest, or use the Feature Filter.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Preview, Install & Activate</strong>
+          <p>Hover over a theme and click "Preview" to see it live, then "Install" to download it. Click "Activate" to make it your active theme.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Widgets</h3>
+    <p><span class="term">Widgets<span class="term-tooltip">Widgets are small, self-contained modules that add specific functionality to widget-ready areas of your WordPress site, like sidebars and footers.</span></span> are modular content blocks placed in widget-ready areas (sidebars, footers, headers). In classic themes, go to <strong>Appearance → Widgets</strong>.</p>
+    <p>Common widgets include: Recent Posts, Search Bar, Categories, Archives, Tag Cloud, Calendar, Custom HTML, and Text.</p>
+
+    <div class="callout note">
+      <div class="callout-icon">ℹ️</div>
+      <div class="callout-body">
+        <strong>Widgets in Block Themes</strong>
+        <p>Block themes don't use traditional widgets. Instead, you add blocks directly to your template parts (header, footer, sidebar) using the Site Editor. All blocks function as "widgets" in this context.</p>
+      </div>
+    </div>
+
+    <h3>Plugins</h3>
+    <p><span class="term">Plugins<span class="term-tooltip">Plugins are packages of code that extend WordPress functionality. There are over 59,000 free plugins in the official WordPress plugin directory.</span></span> add features to WordPress without editing any code. They range from contact forms to e-commerce to SEO tools.</p>
+
+    <table class="comp-table">
+      <thead><tr><th>Category</th><th>Popular Plugins</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>SEO</td><td>Yoast SEO, All in One SEO</td><td>Optimize for search engines</td></tr>
+        <tr><td>Security</td><td>Wordfence, Sucuri Security</td><td>Firewalls, malware scanning</td></tr>
+        <tr><td>Performance</td><td>WP Rocket, W3 Total Cache</td><td>Speed up page load times</td></tr>
+        <tr><td>Backup</td><td>UpdraftPlus, Jetpack</td><td>Automated site backups</td></tr>
+        <tr><td>Forms</td><td>Contact Form 7, WPForms</td><td>Create contact & lead forms</td></tr>
+        <tr><td>eCommerce</td><td>WooCommerce</td><td>Full online store</td></tr>
+        <tr><td>Page Builder</td><td>Elementor, Divi</td><td>Visual drag-and-drop building</td></tr>
+        <tr><td>Social Media</td><td>Social Snap, Monarch</td><td>Sharing buttons, feeds</td></tr>
+      </tbody>
+    </table>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — Installing & Customizing WordPress Themes</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/KRmA8Fw5P7o" allowfullscreen loading="lazy" title="WordPress Themes Tutorial"></iframe>
+      </div>
+      <div class="video-caption">▲ How to choose, install, and customize a WordPress theme from scratch</div>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <strong>Plugin Best Practices</strong>
+        <p>Only install plugins from trusted sources. Too many plugins slow your site down and increase security risk. Deactivate AND delete plugins you no longer use — deactivating alone leaves files on the server.</p>
+      </div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 4 Quiz</h4>
+      <div class="quiz-question" id="q4">
+        <p>What is the difference between deactivating and deleting a plugin?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q4')"><span class="opt-letter">A</span> There is no difference — they both remove the plugin completely</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q4')"><span class="opt-letter">B</span> Deactivating turns it off but keeps files; deleting removes it entirely from the server</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q4')"><span class="opt-letter">C</span> Deactivating removes the plugin from the database only</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q4')"><span class="opt-letter">D</span> You can only delete a plugin by accessing the server via FTP</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q4"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="#ch3">← Chapter 3</a>
+    <a href="#ch5">Chapter 5 →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CHAPTER 5 ═══════════════════════════════════════ -->
+<section class="chapter" id="ch5">
+  <div class="chapter-header">
+    <div class="chapter-num-big">05</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Five</div>
+      <h2>Feeds, Podcasting & Social Media Integration</h2>
+      <p>Distribute your content through RSS, podcasts, and social platforms.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>RSS Feeds in WordPress</h3>
+    <p><span class="term">RSS (Really Simple Syndication)<span class="term-tooltip">An XML-based format that allows users and applications to subscribe to website content updates automatically. Your WordPress site creates RSS feeds automatically.</span></span> feeds allow readers to subscribe to your content using feed readers like Feedly.</p>
+    <p>WordPress automatically generates several RSS feeds:</p>
+    <ul>
+      <li><strong>Main Feed:</strong> <code style="color:var(--wp-accent);font-family:'JetBrains Mono',monospace">yoursite.com/feed/</code> — all posts</li>
+      <li><strong>Category Feed:</strong> <code style="color:var(--wp-accent);font-family:'JetBrains Mono',monospace">yoursite.com/category/name/feed/</code></li>
+      <li><strong>Comments Feed:</strong> <code style="color:var(--wp-accent);font-family:'JetBrains Mono',monospace">yoursite.com/comments/feed/</code></li>
+      <li><strong>Author Feed:</strong> <code style="color:var(--wp-accent);font-family:'JetBrains Mono',monospace">yoursite.com/author/username/feed/</code></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>Configure Feed Settings</strong>
+        <p>Go to Settings → Reading to control how many posts appear in your feed and whether to show full content or just a summary excerpt.</p>
+      </div>
+    </div>
+
+    <h3>Setting Up a Podcast</h3>
+    <p>WordPress can serve as a podcast publishing platform. You need a plugin to add the necessary features:</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Install a Podcast Plugin</strong>
+          <p>Recommended: <strong>Seriously Simple Podcasting</strong> or <strong>Podlove Podcast Publisher</strong>. These add podcast-specific feeds and player.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Upload Your Audio Files</strong>
+          <p>Upload MP3 files to your Media Library or use a podcast media host (Buzzsprout, Libsyn, Anchor) for better bandwidth management.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Configure Podcast Feed Details</strong>
+          <p>Add show artwork (3000×3000px JPEG), show title, description, category, and author. These are required by Apple Podcasts and Spotify.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Submit to Directories</strong>
+          <p>Submit your podcast RSS feed URL to Apple Podcasts, Spotify, Google Podcasts, and Stitcher. They pull new episodes automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Social Media Integration</h3>
+    <p>Integrate WordPress with social platforms in several ways:</p>
+
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔗 Social Sharing Buttons <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Add share buttons to your posts so readers can share to Facebook, Twitter/X, LinkedIn, Pinterest, etc. Popular plugins: <strong>Social Snap</strong>, <strong>AddToAny Share Buttons</strong>, <strong>Shareaholic</strong>.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🤖 Auto-Publishing to Social <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Automatically share new posts to your social profiles using plugins like <strong>Jetpack Social</strong> or <strong>Blog2Social</strong>. Set it up once and every new post gets published to your linked accounts.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">📸 Embedding Social Media Posts <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Use the Embed block to paste a social media URL and WordPress will display it inline. Works with YouTube, Twitter/X, Instagram (with plugin), TikTok, and more.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🏷️ Open Graph & Social SEO <span class="arrow">▼</span></button>
+        <div class="acc-body"><p><strong>Open Graph</strong> tags control how your content looks when shared on social media — the title, description, and image shown in the preview card. Yoast SEO and Rank Math automatically add Open Graph tags.</p></div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress RSS Feeds & Podcasting</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/y4IqzEKDBHE" allowfullscreen loading="lazy" title="WordPress Podcast Setup"></iframe>
+      </div>
+      <div class="video-caption">▲ Complete guide to starting a podcast with WordPress</div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 5 Quiz</h4>
+      <div class="quiz-question" id="q5">
+        <p>What is the default RSS feed URL format for a WordPress site?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q5')"><span class="opt-letter">A</span> yoursite.com/rss.xml</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q5')"><span class="opt-letter">B</span> yoursite.com/feed/</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q5')"><span class="opt-letter">C</span> yoursite.com/feed.php</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q5')"><span class="opt-letter">D</span> yoursite.com/syndication/</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="#ch4">← Chapter 4</a>
+    <a href="#ch6">Chapter 6 →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CHAPTER 6 ═══════════════════════════════════════ -->
+<section class="chapter" id="ch6">
+  <div class="chapter-header">
+    <div class="chapter-num-big">06</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Six</div>
+      <h2>Using & Formatting Posts and Pages</h2>
+      <p>Understand the core content types and master advanced formatting.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>Posts vs. Pages</h3>
+    <p>WordPress has two primary content types. Understanding the difference is fundamental:</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr><th>Feature</th><th>Posts</th><th>Pages</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Purpose</td><td>Dynamic, time-based content (blogs, news)</td><td>Static, evergreen content (About, Contact)</td></tr>
+        <tr><td>Dated</td><td><span class="check">✓</span> Yes</td><td><span class="cross">✗</span> No date displayed</td></tr>
+        <tr><td>Categories &amp; Tags</td><td><span class="check">✓</span> Yes</td><td><span class="cross">✗</span> No (by default)</td></tr>
+        <tr><td>Appears in RSS Feed</td><td><span class="check">✓</span> Yes</td><td><span class="cross">✗</span> No</td></tr>
+        <tr><td>Author Displayed</td><td><span class="check">✓</span> Usually yes</td><td><span class="cross">✗</span> Usually no</td></tr>
+        <tr><td>Hierarchical</td><td><span class="cross">✗</span> No</td><td><span class="check">✓</span> Yes (parent/child pages)</td></tr>
+        <tr><td>Custom Templates</td><td>Limited</td><td><span class="check">✓</span> Full template support</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Formatting Posts & Pages</h3>
+    <h4>Block Editor Formatting Tips</h4>
+    <ul>
+      <li><strong>Heading hierarchy</strong> — Use H2 for main sections, H3 for sub-sections. Never skip levels.</li>
+      <li><strong>Featured Images</strong> — Set a featured image for every post; it appears in listings and social shares.</li>
+      <li><strong>Excerpt</strong> — Write a custom excerpt (150–160 characters) for better SEO and RSS display.</li>
+      <li><strong>Columns block</strong> — Create magazine-style layouts with the Columns block.</li>
+      <li><strong>Pull quotes</strong> — Use the Pull Quote block to highlight key statements.</li>
+    </ul>
+
+    <h4>Adding Images to Content</h4>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Insert the Image Block</strong>
+          <p>Click the + icon, search for "Image," and insert it. Upload a new image or select from the Media Library.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Set Image Size & Alignment</strong>
+          <p>In the right sidebar, choose from Thumbnail, Medium, Large, or Full Size. Set alignment to left, right, center, or wide/full-width.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Add Alt Text & Caption</strong>
+          <p>Required for accessibility: add descriptive alt text. Add an optional caption below the image for context.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress Posts vs Pages Explained</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/Nv_UXABq8CA" allowfullscreen loading="lazy" title="Posts vs Pages WordPress"></iframe>
+      </div>
+      <div class="video-caption">▲ The difference between Posts and Pages in WordPress, with real examples</div>
+    </div>
+
+    <h3>Post Formats</h3>
+    <p>Some themes support <strong>Post Formats</strong> — a way to style posts differently based on their content type. Common post formats include:</p>
+    <ul>
+      <li><strong>Standard</strong> — Default format</li>
+      <li><strong>Image</strong> — Photo-focused posts</li>
+      <li><strong>Video</strong> — Video-centric posts</li>
+      <li><strong>Quote</strong> — Short quotation posts</li>
+      <li><strong>Link</strong> — Posts that link to external content</li>
+      <li><strong>Gallery</strong> — Image gallery posts</li>
+      <li><strong>Audio</strong> — Music or podcast posts</li>
+    </ul>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 6 Quiz</h4>
+      <div class="quiz-question" id="q6">
+        <p>You want to create an "About Us" page for your company website that will rarely change and has no publish date. Which content type should you use?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q6')"><span class="opt-letter">A</span> Post with the "Standard" post format</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q6')"><span class="opt-letter">B</span> Page</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q6')"><span class="opt-letter">C</span> Post with no category</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q6')"><span class="opt-letter">D</span> A sticky post</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q6"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="#ch5">← Chapter 5</a>
+    <a href="#ch7">Chapter 7 →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CHAPTER 7 ═══════════════════════════════════════ -->
+<section class="chapter" id="ch7">
+  <div class="chapter-header">
+    <div class="chapter-num-big">07</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Seven</div>
+      <h2>Scheduling, Categories, Tags & Comments</h2>
+      <p>Organize content and manage community interactions.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>Scheduling Posts</h3>
+    <p>WordPress lets you write content now and publish it automatically at a future date and time. This is essential for content calendars and consistent publishing.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Write Your Post</strong>
+          <p>Create and format your post in the Block Editor. Don't click Publish yet.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Open the Publish Panel</strong>
+          <p>In the right sidebar under "Post," click "Publish" → "Immediately." A date/time picker will appear.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Set Your Publish Date & Time</strong>
+          <p>Choose the date and time you want the post to go live. WordPress uses your site's configured timezone (Settings → General).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Click "Schedule"</strong>
+          <p>The button changes from "Publish" to "Schedule." Click it and your post is queued for automatic publication.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Categories vs. Tags</h3>
+    <p>Both are <span class="term">taxonomy<span class="term-tooltip">A taxonomy is a classification system. WordPress uses taxonomies to group and organize posts.</span></span> systems for organizing posts, but they serve different purposes:</p>
+    <table class="comp-table">
+      <thead><tr><th>Aspect</th><th>Categories</th><th>Tags</th></tr></thead>
+      <tbody>
+        <tr><td>Purpose</td><td>Broad topic grouping</td><td>Specific topic keywords</td></tr>
+        <tr><td>Hierarchy</td><td><span class="check">✓</span> Parent/child categories</td><td><span class="cross">✗</span> Flat, no hierarchy</td></tr>
+        <tr><td>Required?</td><td><span class="check">✓</span> Yes (defaults to "Uncategorized")</td><td><span class="cross">✗</span> Optional</td></tr>
+        <tr><td>Quantity per post</td><td>1–3 (ideally)</td><td>3–10 (ideally)</td></tr>
+        <tr><td>Example</td><td>Technology → Web Design</td><td>#css, #frontend, #responsive</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>Taxonomy Best Practices</strong>
+        <p>Plan your category structure before publishing. Good categories are like chapters in a book — broad enough to contain multiple posts, specific enough to be meaningful. Don't create a new category unless you plan to have at least 5–10 posts in it.</p>
+      </div>
+    </div>
+
+    <h3>Managing Comments</h3>
+    <p>Comments allow readers to engage with your content. WordPress gives you full control over the commenting system.</p>
+
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">Comment Settings <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Go to <strong>Settings → Discussion</strong> to configure: require email/name, hold comments for moderation, auto-approve returning commenters, enable/disable threaded (nested) replies, and set how many comments appear per page.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">Moderating Comments <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Go to <strong>Comments</strong> in the admin sidebar. You can Approve, Spam, Trash, Edit, or Reply to any comment. You can also bulk-approve or bulk-delete selected comments.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">Fighting Comment Spam <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Install <strong>Akismet Anti-Spam</strong> (free for personal sites) — it automatically filters spam comments. Also consider requiring user registration before commenting, or adding a CAPTCHA with <strong>WPForms</strong> or <strong>hCaptcha</strong>.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">Comment Blacklist / Allow List <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>In Settings → Discussion, you can add words, IPs, emails, or URLs to the Comment Moderation list (holds for approval) or Comment Disallowed Keys list (sends directly to trash).</p></div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress Categories, Tags & Taxonomies</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/hYRQmS6YzNw" allowfullscreen loading="lazy" title="WordPress Categories and Tags"></iframe>
+      </div>
+      <div class="video-caption">▲ How to organize your WordPress content with categories and tags</div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 7 Quiz</h4>
+      <div class="quiz-question" id="q7">
+        <p>You write a post about "10 CSS Tricks for Beginners." Which would be an appropriate CATEGORY and which would be appropriate TAGS?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q7')"><span class="opt-letter">A</span> Category: Web Design | Tags: #css, #beginners, #frontend, #tricks</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q7')"><span class="opt-letter">B</span> Category: #css | Tags: Web Design, Frontend</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q7')"><span class="opt-letter">C</span> Category: 10 CSS Tricks | Tags: Beginners Guide</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q7')"><span class="opt-letter">D</span> No need for categories or tags on this type of post</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q7"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="#ch6">← Chapter 6</a>
+    <a href="#ch8">Chapter 8 →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CHAPTER 8 ═══════════════════════════════════════ -->
+<section class="chapter" id="ch8">
+  <div class="chapter-header">
+    <div class="chapter-num-big">08</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Eight</div>
+      <h2>WordPress Settings, Security & Maintenance</h2>
+      <p>Configure your site for performance, protect it from threats, and maintain it long-term.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>Essential WordPress Settings</h3>
+    <p>After installation, these settings panels should be reviewed immediately:</p>
+
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" onclick="switchTab(this,'set-general')">General</button>
+        <button class="tab-btn" onclick="switchTab(this,'set-reading')">Reading</button>
+        <button class="tab-btn" onclick="switchTab(this,'set-writing')">Writing</button>
+        <button class="tab-btn" onclick="switchTab(this,'set-permalinks')">Permalinks</button>
+        <button class="tab-btn" onclick="switchTab(this,'set-media')">Media</button>
+      </div>
+      <div class="tab-content active" id="tab-set-general">
+        <ul>
+          <li><strong>Site Title & Tagline</strong> — Used in your browser tab and SEO</li>
+          <li><strong>WordPress Address / Site Address</strong> — Your domain URLs (rarely need changing)</li>
+          <li><strong>Admin Email</strong> — Where WordPress notifications are sent</li>
+          <li><strong>Timezone</strong> — Critical for correct scheduled post publishing</li>
+          <li><strong>Date & Time Format</strong> — How dates display on your site</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-set-reading">
+        <ul>
+          <li><strong>Your homepage displays</strong> — Choose between latest posts (blog) or a static page (website)</li>
+          <li><strong>Blog pages show at most</strong> — Number of posts per page (10 default)</li>
+          <li><strong>For each article in a feed, include</strong> — Full text or summary in RSS</li>
+          <li><strong>Search Engine Visibility</strong> — Discourage search engine indexing (useful during development)</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-set-writing">
+        <ul>
+          <li><strong>Default post category</strong> — What category is pre-selected when creating posts</li>
+          <li><strong>Default post format</strong> — Standard, Image, Video, etc.</li>
+          <li><strong>Post via email</strong> — Publish posts by sending an email (legacy feature)</li>
+          <li><strong>Update Services</strong> — Ping services like Ping-O-Matic when you publish</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-set-permalinks">
+        <p>Permalinks control your URL structure. <strong>Always set this immediately after installation!</strong></p>
+        <ul>
+          <li><strong>Plain</strong> — <code style="color:var(--wp-accent)">/?p=123</code> — Bad for SEO</li>
+          <li><strong>Day and name</strong> — <code style="color:var(--wp-accent)">/2024/01/01/post-name/</code></li>
+          <li><strong>Month and name</strong> — <code style="color:var(--wp-accent)">/2024/01/post-name/</code></li>
+          <li><strong>Post name ✅</strong> — <code style="color:var(--wp-accent)">/post-name/</code> — Best for SEO!</li>
+          <li><strong>Custom structure</strong> — Define your own pattern</li>
+        </ul>
+      </div>
+      <div class="tab-content" id="tab-set-media">
+        <ul>
+          <li><strong>Thumbnail size</strong> — Default: 150×150px</li>
+          <li><strong>Medium size</strong> — Default: 300×300px max</li>
+          <li><strong>Large size</strong> — Default: 1024×1024px max</li>
+          <li>WordPress creates multiple sizes automatically when you upload an image</li>
+          <li>Enable <strong>Organize uploads into month- and year-based folders</strong> for cleaner media library</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>WordPress Security</h3>
+    <p>Security is non-negotiable. WordPress sites are frequent targets because of their popularity. Follow this security checklist:</p>
+
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔐 Strong Credentials <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Use a unique admin username (never "admin"). Use a password with 20+ characters including symbols. Enable <strong>Two-Factor Authentication (2FA)</strong> with a plugin like WP 2FA or Google Authenticator. Use a password manager.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔄 Keep Everything Updated <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Update WordPress core, themes, and plugins regularly. 80%+ of WordPress hacks exploit outdated software. Enable automatic minor updates in Settings → Updates or via wp-config.php. Test major updates on a staging site first.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🛡️ Security Plugin <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Install <strong>Wordfence Security</strong> (free) or <strong>Sucuri Security</strong>. These provide: a web application firewall (WAF), malware scanning, login attempt limiting (brute force protection), and email alerts for suspicious activity.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔒 Force HTTPS/SSL <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Your site should use HTTPS (the padlock in the browser). Most hosts provide free SSL via Let's Encrypt. After enabling SSL, update your WordPress Address to https:// in Settings → General. Use the <strong>Really Simple SSL</strong> plugin to fix mixed content issues.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">💾 Regular Backups <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>A backup is your safety net. Use <strong>UpdraftPlus</strong> (free) to automatically backup your files and database to Google Drive, Dropbox, or Amazon S3. Schedule daily database backups and weekly full-site backups. Test your restores!</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🚫 Limit Login Attempts <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>By default, WordPress allows unlimited login attempts, making brute-force attacks easy. Use <strong>Limit Login Attempts Reloaded</strong> or Wordfence to limit failed login tries and temporarily block IPs after X failures.</p></div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">wp-config.php — Security Additions</div>
+      <code>
+<span class="cm">// Disable file editing in the dashboard</span><br>
+<span class="kw">define</span>( <span class="str">'DISALLOW_FILE_EDIT'</span>, <span class="kw">true</span> );<br><br>
+<span class="cm">// Force SSL for admin and logins</span><br>
+<span class="kw">define</span>( <span class="str">'FORCE_SSL_ADMIN'</span>, <span class="kw">true</span> );<br><br>
+<span class="cm">// Limit post revisions to save database space</span><br>
+<span class="kw">define</span>( <span class="str">'WP_POST_REVISIONS'</span>, <span class="fn">3</span> );<br><br>
+<span class="cm">// Enable automatic core updates</span><br>
+<span class="kw">define</span>( <span class="str">'WP_AUTO_UPDATE_CORE'</span>, <span class="kw">true</span> );
+      </code>
+    </div>
+
+    <h3>Site Maintenance Routine</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">📅</div>
+        <div class="step-body">
+          <strong>Daily</strong>
+          <p>Check for new comments to moderate. Monitor for security alerts from your security plugin. Review site analytics.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📅</div>
+        <div class="step-body">
+          <strong>Weekly</strong>
+          <p>Update WordPress core, themes, and plugins. Check that backups are completing successfully. Review uptime monitoring.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📅</div>
+        <div class="step-body">
+          <strong>Monthly</strong>
+          <p>Optimize the database (WP-Optimize plugin). Delete unused themes and plugins. Test form submissions. Audit user accounts and remove inactive ones.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📅</div>
+        <div class="step-body">
+          <strong>Quarterly</strong>
+          <p>Test your backup restore process. Review and update outdated content. Check all external links for broken URLs (Broken Link Checker plugin). Review page speed scores.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress Security & Hardening</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/8KHaMDz3_mQ" allowfullscreen loading="lazy" title="WordPress Security Guide"></iframe>
+      </div>
+      <div class="video-caption">▲ Complete WordPress security hardening tutorial — protect your site from hackers</div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 8 Quiz</h4>
+      <div class="quiz-question" id="q8">
+        <p>Which permalink structure is considered best for SEO?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q8')"><span class="opt-letter">A</span> Plain (/?p=123)</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q8')"><span class="opt-letter">B</span> Day and name (/2024/01/01/post-name/)</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true, 'q8')"><span class="opt-letter">C</span> Post name (/post-name/)</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false, 'q8')"><span class="opt-letter">D</span> Numeric (/archives/123)</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q8"></div>
+      </div>
+    </div>
+
+    <div class="resources">
+      <a href="https://learn.wordpress.org/course/beginner-wordpress-user/" target="_blank" class="resource-card">
+        <div class="res-icon">🎓</div>
+        <div><div class="res-title">Beginner WordPress User Course</div><div class="res-type">Free Course · learn.wordpress.org</div></div>
+      </a>
+      <a href="https://learn.wordpress.org/course/intermediate-wordpress-user/" target="_blank" class="resource-card">
+        <div class="res-icon">📈</div>
+        <div><div class="res-title">Intermediate WordPress User</div><div class="res-type">Free Course · learn.wordpress.org</div></div>
+      </a>
+      <a href="https://wordpress.org/documentation/" target="_blank" class="resource-card">
+        <div class="res-icon">📖</div>
+        <div><div class="res-title">WordPress Documentation</div><div class="res-type">Official Docs · wordpress.org</div></div>
+      </a>
+      <a href="https://wordpress.tv/" target="_blank" class="resource-card">
+        <div class="res-icon">📺</div>
+        <div><div class="res-title">WordPress.tv</div><div class="res-type">Video Library · wordpress.tv</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="#ch7">← Chapter 7</a>
+    <a href="#hero">↑ Back to Top</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div style="margin-bottom:1rem">
+    <div class="wp-logo" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:var(--wp-blue);border-radius:50%;font-weight:700;font-size:1rem;color:white;margin-bottom:0.5rem">W</div>
+  </div>
+  <p style="font-size:1rem;color:var(--text-muted);font-family:'DM Serif Display',serif;margin-bottom:0.5rem">Introduction to Content Management Systems: WordPress</p>
+  <p>Course textbook built with HTML, CSS &amp; JavaScript for GitHub Pages hosting.</p>
+  <p style="margin-top:0.75rem">Reference resources: <a href="https://learn.wordpress.org" target="_blank">learn.wordpress.org</a> · <a href="https://wordpress.org/documentation/" target="_blank">WordPress Docs</a></p>
+</footer>
+
+<script>
+// ── PROGRESS BAR ──
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+
+  // Highlight active nav pill
+  const chapters = ['hero','overview','ch1','ch2','ch3','ch4','ch5','ch6','ch7','ch8'];
+  const pills = document.querySelectorAll('.ch-pill');
+  let current = 'overview';
+  chapters.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 80) current = id;
+  });
+  pills.forEach(p => {
+    p.classList.toggle('active', p.getAttribute('href') === '#' + current);
+  });
+
+  // TOC dots
+  const dots = document.querySelectorAll('.toc-dot');
+  const sections = ['hero','overview','ch1','ch2','ch3','ch4','ch5','ch6','ch7','ch8'];
+  let activeIdx = 0;
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 100) activeIdx = i;
+  });
+  dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+});
+
+// ── QUIZ LOGIC ──
+function checkAnswer(btn, isCorrect, qid) {
+  const question = document.getElementById(qid);
+  const allBtns = question.querySelectorAll('.quiz-option');
+  const feedback = document.getElementById('fb-' + qid);
+  
+  allBtns.forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct-fb';
+    feedback.innerHTML = '✅ Correct! Well done.';
+  } else {
+    btn.classList.add('wrong');
+    feedback.className = 'quiz-feedback show wrong-fb';
+    feedback.innerHTML = '❌ Not quite. Review the chapter content and try to identify the correct answer.';
+    allBtns.forEach(b => {
+      const clickFn = b.getAttribute('onclick');
+      if (clickFn && clickFn.includes('true')) b.classList.add('correct');
+    });
+  }
+}
+
+// ── TABS ──
+function switchTab(btn, tabId) {
+  const tabList = btn.closest('.tab-list');
+  const tabs = btn.closest('.tabs');
+  tabList.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  tabs.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const target = document.getElementById('tab-' + tabId);
+  if (target) target.classList.add('active');
+}
+
+// ── ACCORDION ──
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  // Close all in same container
+  const parent = header.closest('.accordion');
+  parent.querySelectorAll('.acc-body').forEach(b => b.classList.remove('open'));
+  parent.querySelectorAll('.acc-header').forEach(h => h.classList.remove('open'));
+  if (!isOpen) {
+    body.classList.add('open');
+    header.classList.add('open');
+  }
+}
+
+// ── INTERACTIVE TAG EXPLORER ──
+function selectTag(btn, code, desc) {
+  document.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('tagOutput').innerHTML =
+    '<span style="color:var(--wp-accent)">' + code + '</span><br>' +
+    '<span style="color:var(--text-dim);font-size:0.8rem;font-family:\'DM Sans\',sans-serif">' + desc + '</span>';
+}
+
+// ── SMOOTH SCROLL OFFSET FOR FIXED NAV ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - 75, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>

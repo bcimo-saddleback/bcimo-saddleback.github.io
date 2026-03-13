@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5: Feeds, Podcasting &amp; Social Media — CMS: WordPress</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="topnav-brand"><div class="wp-logo">W</div>CMS: WordPress</a>
+  <div class="topnav-chapters">
+    <a href="overview.html" class="ch-pill">Overview</a>
+    <a href="chapter-1.html" class="ch-pill">1. Hosting</a>
+    <a href="chapter-2.html" class="ch-pill">2. Users</a>
+    <a href="chapter-3.html" class="ch-pill">3. Content</a>
+    <a href="chapter-4.html" class="ch-pill">4. Themes</a>
+    <a href="chapter-5.html" class="ch-pill active">5. Feeds &amp; Social</a>
+    <a href="chapter-6.html" class="ch-pill">6. Posts &amp; Pages</a>
+    <a href="chapter-7.html" class="ch-pill">7. Scheduling</a>
+    <a href="chapter-8.html" class="ch-pill">8. Settings</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main class="chapter-page">
+  <div class="chapter-header">
+    <div class="chapter-num-big">05</div>
+    <div class="chapter-info">
+      <div class="label">Chapter Five</div>
+      <h2>Feeds, Podcasting &amp; Social Media Integration</h2>
+      <p>Distribute your content through RSS, podcasts, and social platforms.</p>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <h3>RSS Feeds in WordPress</h3>
+    <p><span class="term">RSS (Really Simple Syndication)<span class="term-tooltip">An XML-based format that allows users and applications to subscribe to website content updates automatically. Your WordPress site creates RSS feeds automatically.</span></span> feeds allow readers to subscribe to your content using feed readers like Feedly.</p>
+    <p>WordPress automatically generates several RSS feeds:</p>
+    <ul>
+      <li><strong>Main Feed:</strong> <code class="inline">yoursite.com/feed/</code> — all posts</li>
+      <li><strong>Category Feed:</strong> <code class="inline">yoursite.com/category/name/feed/</code></li>
+      <li><strong>Comments Feed:</strong> <code class="inline">yoursite.com/comments/feed/</code></li>
+      <li><strong>Author Feed:</strong> <code class="inline">yoursite.com/author/username/feed/</code></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>Configure Feed Settings</strong>
+        <p>Go to Settings → Reading to control how many posts appear in your feed and whether to show full content or just a summary excerpt.</p>
+      </div>
+    </div>
+
+    <h3>Setting Up a Podcast</h3>
+    <p>WordPress can serve as a podcast publishing platform. You need a plugin to add the necessary features:</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Install a Podcast Plugin</strong>
+          <p>Recommended: <strong>Seriously Simple Podcasting</strong> or <strong>Podlove Podcast Publisher</strong>. These add podcast-specific feeds and player.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Upload Your Audio Files</strong>
+          <p>Upload MP3 files to your Media Library or use a podcast media host (Buzzsprout, Libsyn, Anchor) for better bandwidth management.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Configure Podcast Feed Details</strong>
+          <p>Add show artwork (3000×3000px JPEG), show title, description, category, and author. These are required by Apple Podcasts and Spotify.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Submit to Directories</strong>
+          <p>Submit your podcast RSS feed URL to Apple Podcasts, Spotify, Google Podcasts, and Stitcher. They pull new episodes automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Social Media Integration</h3>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🔗 Social Sharing Buttons <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Add share buttons to your posts so readers can share to Facebook, Twitter/X, LinkedIn, Pinterest, etc. Popular plugins: <strong>Social Snap</strong>, <strong>AddToAny Share Buttons</strong>, <strong>Shareaholic</strong>.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🤖 Auto-Publishing to Social <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Automatically share new posts to your social profiles using plugins like <strong>Jetpack Social</strong> or <strong>Blog2Social</strong>. Set it up once and every new post gets published to your linked accounts.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">📸 Embedding Social Media Posts <span class="arrow">▼</span></button>
+        <div class="acc-body"><p>Use the Embed block to paste a social media URL and WordPress will display it inline. Works with YouTube, Twitter/X, Instagram (with plugin), TikTok, and more.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAccordion(this)">🏷️ Open Graph &amp; Social SEO <span class="arrow">▼</span></button>
+        <div class="acc-body"><p><strong>Open Graph</strong> tags control how your content looks when shared on social media — the title, description, and image shown in the preview card. Yoast SEO and Rank Math automatically add Open Graph tags.</p></div>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-header">
+        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <span style="margin-left:4px">📹 Video Lesson — WordPress RSS Feeds &amp; Podcasting</span>
+      </div>
+      <div class="video-iframe-container">
+        <iframe src="https://www.youtube.com/embed/y4IqzEKDBHE" allowfullscreen loading="lazy" title="WordPress Podcast Setup"></iframe>
+      </div>
+      <div class="video-caption">▲ Complete guide to starting a podcast with WordPress</div>
+    </div>
+
+    <div class="quiz-box">
+      <h4>🧠 Chapter 5 Quiz</h4>
+      <div class="quiz-question" id="q5">
+        <p>What is the default RSS feed URL format for a WordPress site?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q5')"><span class="opt-letter">A</span>yoursite.com/rss.xml</button>
+          <button class="quiz-option" onclick="checkAnswer(this,true,'q5')"><span class="opt-letter">B</span>yoursite.com/feed/</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q5')"><span class="opt-letter">C</span>yoursite.com/feed.php</button>
+          <button class="quiz-option" onclick="checkAnswer(this,false,'q5')"><span class="opt-letter">D</span>yoursite.com/syndication/</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-nav">
+    <a href="chapter-4.html">← Chapter 4</a>
+    <a href="chapter-6.html">Chapter 6 →</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wp-logo-footer">W</div>
+  <p class="footer-title">Introduction to Content Management Systems: WordPress</p>
+  <p>Reference: <a href="https://learn.wordpress.org" target="_blank">learn.wordpress.org</a> · <a href="https://wordpress.org/documentation/" target="_blank">WordPress Docs</a></p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
