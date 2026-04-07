@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDSS Graduate Course — Week 3: Spectroscopy &amp; Redshifts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c14;
+    --bg2: #0d1320;
+    --bg3: #111827;
+    --surface: #141c2e;
+    --surface2: #1a2540;
+    --border: rgba(99,140,210,0.18);
+    --border2: rgba(99,140,210,0.32);
+    --accent: #4f8ef7;
+    --accent2: #7eb3ff;
+    --accent-dim: rgba(79,142,247,0.12);
+    --gold: #e8b84b;
+    --gold-dim: rgba(232,184,75,0.12);
+    --teal: #3dd6b5;
+    --teal-dim: rgba(61,214,181,0.1);
+    --coral: #f07060;
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.1);
+    --text: #e8edf7;
+    --text2: #8fa3c8;
+    --text3: #4d6080;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+    --sidebar-w: 260px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 10%, rgba(200,220,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 30%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 85% 60%, rgba(200,220,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 55%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 33% 90%, rgba(200,220,255,0.35) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── Sidebar ─── */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    z-index: 100; overflow-y: auto;
+  }
+  .sidebar-logo { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); }
+  .sidebar-logo .course-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+  .sidebar-logo h2 { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; }
+  .sidebar-logo .sub { font-size: 11px; color: var(--text3); margin-top: 3px; font-family: var(--mono); }
+  .sidebar-nav { padding: 16px 0; flex: 1; }
+  .nav-section-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text3); text-transform: uppercase; padding: 0 20px; margin-bottom: 6px; margin-top: 12px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; font-size: 12px; color: var(--text2); text-decoration: none; transition: background 0.15s, color 0.15s; cursor: pointer; border: none; background: none; width: 100%; text-align: left; }
+  .nav-item:hover { background: var(--accent-dim); color: var(--accent2); }
+  .nav-item.active { background: var(--accent-dim); color: var(--accent); border-left: 2px solid var(--accent); }
+  .nav-item .wk-num { font-family: var(--mono); font-size: 10px; color: var(--text3); min-width: 20px; }
+  .nav-item.active .wk-num { color: var(--accent); }
+  .sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); font-size: 10px; color: var(--text3); font-family: var(--mono); }
+  .sidebar-footer a { color: var(--accent); text-decoration: none; }
+
+  /* ─── Main ─── */
+  main { margin-left: var(--sidebar-w); flex: 1; position: relative; z-index: 1; max-width: 960px; }
+
+  /* ─── Hero ─── */
+  .hero { padding: 60px 56px 44px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; right: -60px; top: -60px; width: 340px; height: 340px; border-radius: 50%; background: radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .pill { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; }
+  .pill-blue { background: var(--accent-dim); color: var(--accent2); border: 1px solid rgba(79,142,247,0.3); }
+  .pill-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(167,139,250,0.3); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(61,214,181,0.3); }
+  .hero h1 { font-size: 38px; font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 10px; }
+  .hero h1 span { color: var(--purple); }
+  .hero .subtitle { font-size: 16px; color: var(--text2); max-width: 560px; line-height: 1.6; margin-bottom: 28px; }
+  .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .hero-meta-item .label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; }
+  .hero-meta-item .value { font-size: 13px; color: var(--text); font-weight: 600; }
+
+  /* ─── Content ─── */
+  .content { padding: 0 56px 80px; }
+  .section { margin-top: 52px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .section-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .icon-blue { background: var(--accent-dim); border: 1px solid rgba(79,142,247,0.25); }
+  .icon-gold { background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.25); }
+  .icon-teal { background: var(--teal-dim); border: 1px solid rgba(61,214,181,0.25); }
+  .icon-coral { background: rgba(240,112,96,0.1); border: 1px solid rgba(240,112,96,0.25); }
+  .icon-purple { background: var(--purple-dim); border: 1px solid rgba(167,139,250,0.25); }
+  .section-header h2 { font-size: 18px; font-weight: 700; color: var(--text); }
+
+  /* ─── Topic cards ─── */
+  .topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .topic-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; transition: border-color 0.2s, transform 0.2s; }
+  .topic-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+  .topic-card .tc-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; margin-bottom: 6px; }
+  .topic-card .tc-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .topic-card .tc-body { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* ─── Callout ─── */
+  .callout { border-left: 3px solid var(--purple); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; font-size: 13px; color: var(--text2); line-height: 1.7; background: rgba(167,139,250,0.06); border: 1px solid rgba(167,139,250,0.18); border-left: 3px solid var(--purple); }
+  .callout strong { color: var(--purple); font-weight: 600; }
+  .callout-teal { background: rgba(61,214,181,0.06); border: 1px solid rgba(61,214,181,0.18); border-left: 3px solid var(--teal); }
+  .callout-teal strong { color: var(--teal); }
+
+  /* ─── Spectral line strip ─── */
+  .spec-strip {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .spec-bar {
+    height: 48px;
+    background: linear-gradient(to right,
+      #3a0080 0%, #6000c0 5%,   /* UV / violet */
+      #4400ff 10%, #0033ff 16%,  /* violet / blue */
+      #0088ff 22%, #00c8ff 28%,  /* blue / cyan */
+      #00e080 34%, #80ff00 42%,  /* cyan / green */
+      #c8ff00 48%, #ffee00 54%,  /* yellow-green / yellow */
+      #ffaa00 60%, #ff6600 68%,  /* orange */
+      #ff2200 76%, #cc0000 84%,  /* red */
+      #880000 92%, #330000 100%  /* deep red / near-IR */
+    );
+    position: relative;
+  }
+  /* Emission line markers */
+  .spec-bar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      /* Lyα  121.6nm — shown at far left edge */
+      linear-gradient(to right, transparent 2%, rgba(255,255,255,0.9) 2.2%, transparent 2.4%),
+      /* OII  372.7nm */
+      linear-gradient(to right, transparent 19.5%, rgba(255,255,255,0.85) 19.7%, transparent 19.9%),
+      /* Hβ   486.1nm */
+      linear-gradient(to right, transparent 34%, rgba(255,255,255,0.9) 34.2%, transparent 34.4%),
+      /* OIII 500.7nm */
+      linear-gradient(to right, transparent 36.5%, rgba(255,255,255,0.85) 36.7%, transparent 36.9%),
+      /* NII  658.3nm */
+      linear-gradient(to right, transparent 60.5%, rgba(255,255,255,0.85) 60.7%, transparent 60.9%),
+      /* Hα   656.3nm */
+      linear-gradient(to right, transparent 59.5%, rgba(255,255,255,0.95) 59.7%, transparent 59.9%),
+      /* CaII 854nm  */
+      linear-gradient(to right, transparent 83%, rgba(255,255,255,0.7) 83.2%, transparent 83.4%);
+  }
+  .spec-labels {
+    display: flex;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 8px 0;
+    overflow-x: auto;
+  }
+  .spec-label {
+    flex: 1;
+    text-align: center;
+    font-family: var(--mono);
+    min-width: 70px;
+  }
+  .spec-label .sl-name { font-size: 11px; color: var(--text); font-weight: 700; }
+  .spec-label .sl-wave { font-size: 10px; color: var(--text3); }
+  .spec-label .sl-ion  { font-size: 9px;  color: var(--teal); }
+
+  /* ─── zWarning table ─── */
+  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: var(--mono); }
+  .data-table thead tr { border-bottom: 1px solid var(--border2); }
+  .data-table th { text-align: left; padding: 10px 14px; color: var(--text3); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+  .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table td:first-child { color: var(--accent2); }
+  .data-table td:nth-child(2) { color: var(--gold); }
+  .data-table td:nth-child(3) { color: var(--text2); }
+  .badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; font-family: var(--mono); }
+  .badge-ok { background: rgba(61,214,181,0.15); color: var(--teal); border: 1px solid rgba(61,214,181,0.3); }
+  .badge-warn { background: rgba(232,184,75,0.15); color: var(--gold); border: 1px solid rgba(232,184,75,0.3); }
+  .badge-bad { background: rgba(240,112,96,0.15); color: var(--coral); border: 1px solid rgba(240,112,96,0.3); }
+
+  /* ─── Code block ─── */
+  .code-block { background: #06090f; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .code-header .lang { font-family: var(--mono); font-size: 10px; color: var(--teal); letter-spacing: 0.08em; }
+  .code-header .fname { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+  pre { padding: 20px; font-family: var(--mono); font-size: 12px; line-height: 1.8; overflow-x: auto; color: #c8d8f0; }
+  .kw { color: #7eb3ff; }
+  .str { color: #a8d8a8; }
+  .cm { color: var(--text3); font-style: italic; }
+  .fn { color: var(--teal); }
+  .num { color: var(--gold); }
+  .op { color: #f07060; }
+  .pu { color: var(--purple); }
+
+  /* ─── Video grid ─── */
+  .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .video-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+  .video-card:hover { border-color: var(--border2); }
+  .video-card .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+  .video-card .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+  .video-card .video-info { padding: 14px 16px; }
+  .video-card .video-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; margin-bottom: 5px; }
+  .video-card .video-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 4px; }
+  .video-card .video-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* ─── Notebook exercise ─── */
+  .nb-box { background: linear-gradient(135deg, rgba(61,214,181,0.06) 0%, rgba(167,139,250,0.06) 100%); border: 1px solid rgba(61,214,181,0.2); border-radius: 12px; padding: 24px 28px; }
+  .nb-box .nb-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .nb-box .nb-icon { font-size: 20px; }
+  .nb-box .nb-title { font-size: 14px; font-weight: 700; color: var(--teal); font-family: var(--mono); letter-spacing: 0.06em; }
+  .nb-box p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 14px; }
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .step-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 13px; color: var(--text2); }
+  .step-num { font-family: var(--mono); font-size: 11px; color: var(--teal); background: var(--teal-dim); border: 1px solid rgba(61,214,181,0.2); border-radius: 4px; padding: 1px 7px; flex-shrink: 0; margin-top: 2px; }
+  .tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .tag { font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 20px; background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+
+  /* ─── Resources ─── */
+  .resource-list { display: flex; flex-direction: column; gap: 8px; }
+  .resource-item { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+  .resource-item:hover { border-color: var(--accent); background: var(--accent-dim); }
+  .resource-item .ri-icon { font-size: 18px; flex-shrink: 0; }
+  .resource-item .ri-body { flex: 1; }
+  .resource-item .ri-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .resource-item .ri-url { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+  .resource-item .ri-arrow { color: var(--text3); font-size: 14px; }
+
+  /* ─── Week nav ─── */
+  .week-nav { margin-top: 60px; padding: 28px 56px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .week-btn { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 20px; color: var(--text); text-decoration: none; font-size: 13px; font-weight: 600; transition: border-color 0.2s, background 0.2s; }
+  .week-btn:hover { border-color: var(--accent); background: var(--accent-dim); color: var(--accent2); }
+  .week-btn .wk-label { font-family: var(--mono); font-size: 10px; color: var(--text3); display: block; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 820px) {
+    .sidebar { display: none; }
+    main { margin-left: 0; }
+    .hero { padding: 36px 24px 28px; }
+    .content { padding: 0 24px 60px; }
+    .topic-grid { grid-template-columns: 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 28px; }
+    .week-nav { padding: 24px; flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="course-tag">Graduate Seminar</div>
+    <h2>The Sloan Digital Sky Survey</h2>
+    <div class="sub">Data, Science &amp; Computation</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Course Weeks</div>
+    <a class="nav-item" href="sdss_week1.html"><span class="wk-num">01</span>The Universe in a Database</a>
+    <a class="nav-item" href="sdss_week2.html"><span class="wk-num">02</span>Photometric Imaging</a>
+    <a class="nav-item active" href="#"><span class="wk-num">03</span>Spectroscopy &amp; Redshifts</a>
+    <a class="nav-item" href="#"><span class="wk-num">04</span>Galaxy Populations</a>
+    <a class="nav-item" href="#"><span class="wk-num">05</span>Stars &amp; Stellar Populations</a>
+    <a class="nav-item" href="#"><span class="wk-num">06</span>Quasars &amp; AGN</a>
+    <a class="nav-item" href="#"><span class="wk-num">07</span>Large-Scale Structure</a>
+    <a class="nav-item" href="#"><span class="wk-num">08</span>Capstone Project</a>
+    <div class="nav-section-label" style="margin-top:20px;">Resources</div>
+    <a class="nav-item" href="https://skyserver.sdss.org" target="_blank">SDSS SkyServer ↗</a>
+    <a class="nav-item" href="https://sciserver.org" target="_blank">SciServer Compute ↗</a>
+    <a class="nav-item" href="https://www.sdss4.org/dr17/" target="_blank">DR17 Documentation ↗</a>
+  </nav>
+  <div class="sidebar-footer">
+    Powered by <a href="https://www.sdss.org" target="_blank">sdss.org</a> public data
+  </div>
+</aside>
+
+<!-- ── Main ── -->
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span class="pill pill-blue">Week 03 of 08</span>
+      <span class="pill pill-purple">Spectroscopy</span>
+    </div>
+    <h1>Spectroscopy<br><span>&amp; Redshifts</span></h1>
+    <p class="subtitle">
+      Reading the light from three million objects — how SDSS disperses spectra
+      using drilled aluminum plates and fiber optics, and how emission lines encode
+      cosmic distance, chemical composition, and physical conditions.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="label">Theme</span>
+        <span class="value">Reading the light</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Prerequisites</span>
+        <span class="value">Weeks 1–2; magnitudes &amp; CCD basics</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Tools this week</span>
+        <span class="value">specutils · astropy.io.fits · SpecObj table</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ── Videos ── -->
+    <div class="section" id="videos">
+      <div class="section-header">
+        <div class="section-icon icon-coral">▶</div>
+        <h2>Video Resources</h2>
+      </div>
+      <div class="video-grid">
+
+        <div class="video-card">
+          <div class="video-wrap">
+            <!-- Confirmed: SDSS official plate drilling video, University of Washington Physics Shop -->
+            <iframe src="https://www.youtube.com/embed/iYyO7pGaJNw"
+              title="SDSS Plate Drilling — University of Washington Physics Instrument Shop"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">SDSS Official · Instrumentation</div>
+            <div class="video-title">SDSS Plate Drilling — UW Physics Instrument Shop</div>
+            <div class="video-desc">Watch an actual SDSS aluminum plug plate being drilled at the University of Washington — the physical object that makes 640 simultaneous spectra possible each night at Apache Point.</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-wrap">
+            <!-- Confirmed: SDSS official fiber plugging video, Apache Point Observatory -->
+            <iframe src="https://www.youtube.com/embed/i6ZOUDWRwtg"
+              title="SDSS Fiber Plugging at Apache Point Observatory"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">SDSS Official · Operations</div>
+            <div class="video-title">SDSS Fiber Plugging at Apache Point Observatory</div>
+            <div class="video-desc">Plate pluggers at APO manually insert 640 optical fibers into a BOSS plate before the night's observations begin — each fiber feeding light from one galaxy or quasar directly to the spectrograph.</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-wrap">
+            <!-- Crash Course Astronomy #7: Spectra -->
+            <iframe src="https://www.youtube.com/embed/s_LcxHmI3X0"
+              title="Crash Course Astronomy: Spectra"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Astronomy Foundations · Spectroscopy</div>
+            <div class="video-title">Crash Course Astronomy: Spectra</div>
+            <div class="video-desc">An accessible, rigorous introduction to emission and absorption spectra, atomic transitions, and how spectral lines uniquely fingerprint chemical elements — the foundation of all redshift measurement.</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-wrap">
+            <!-- PBS Space Time: The Doppler Effect and Redshift -->
+            <iframe src="https://www.youtube.com/embed/aP264PYv4zE"
+              title="How Does the Redshift Tell Us the Universe is Expanding? — PBS Space Time"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Cosmology · Redshift</div>
+            <div class="video-title">How Redshift Reveals an Expanding Universe — PBS Space Time</div>
+            <div class="video-desc">Graduate-level discussion of the distinction between Doppler redshift and cosmological redshift, why z = Δλ/λ encodes spacetime expansion rather than simple velocity, and its implications for SDSS data.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Spectral Line Strip ── -->
+    <div class="section" id="lines">
+      <div class="section-header">
+        <div class="section-icon icon-purple">λ</div>
+        <h2>Key Spectral Lines in SDSS</h2>
+      </div>
+
+      <div class="callout">
+        <strong>Why lines matter:</strong> Spectral lines are the anchors of redshift measurement. Each element emits and absorbs photons at fixed rest wavelengths set by quantum mechanics. By measuring how far an observed line has shifted from its lab wavelength, SDSS computes z to four decimal places — placing every galaxy precisely in cosmic time and space.
+      </div>
+
+      <div class="spec-strip">
+        <div class="spec-bar"></div>
+        <div class="spec-labels">
+          <div class="spec-label">
+            <div class="sl-name">Lyα</div>
+            <div class="sl-wave">121.6 nm</div>
+            <div class="sl-ion">H I</div>
+          </div>
+          <div class="spec-label">
+            <div class="sl-name">[O II]</div>
+            <div class="sl-wave">372.7 nm</div>
+            <div class="sl-ion">doublet</div>
+          </div>
+          <div class="spec-label">
+            <div class="sl-name">Hβ</div>
+            <div class="sl-wave">486.1 nm</div>
+            <div class="sl-ion">H I Balmer</div>
+          </div>
+          <div class="spec-label">
+            <div class="sl-name">[O III]</div>
+            <div class="sl-wave">500.7 nm</div>
+            <div class="sl-ion">nebular</div>
+          </div>
+          <div class="spec-label">
+            <div class="sl-name">Hα</div>
+            <div class="sl-wave">656.3 nm</div>
+            <div class="sl-ion">H I Balmer</div>
+          </div>
+          <div class="spec-label">
+            <div class="sl-name">[N II]</div>
+            <div class="sl-wave">658.3 nm</div>
+            <div class="sl-ion">nebular</div>
+          </div>
+          <div class="spec-label">
+            <div class="sl-name">Ca II</div>
+            <div class="sl-wave">854 nm</div>
+            <div class="sl-ion">triplet</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-grid">
+        <div class="topic-card">
+          <div class="tc-label">Emission Lines</div>
+          <div class="tc-title">Star-Forming &amp; Active Galaxies</div>
+          <div class="tc-body">Emission lines arise when electrons cascade down to lower energy states, releasing photons of specific energy. [O II] 3727Å and [O III] 5007Å trace ionized gas in H II regions and AGN narrow-line regions. Hα is the primary star formation rate tracer in nearby galaxies. These lines dominate galaxy spectra at z &lt; 0.4 where SDSS's wavelength range covers them.</div>
+        </div>
+        <div class="topic-card">
+          <div class="tc-label">Absorption Lines</div>
+          <div class="tc-title">Passive Galaxies &amp; Stellar Atmospheres</div>
+          <div class="tc-body">Absorption lines form when photons are removed by cooler foreground material. The Ca II H&amp;K doublet (3968/3934Å) dominates passive elliptical galaxy spectra — the single most used pair for low-z redshifts. The Mg b triplet (~5175Å) traces stellar velocity dispersion. The 4000Å break — a flux discontinuity from metal line blanketing — encodes galaxy age.</div>
+        </div>
+        <div class="topic-card">
+          <div class="tc-label">Signal-to-Noise</div>
+          <div class="tc-title">S/N and Spectral Resolution R</div>
+          <div class="tc-body">S/N per pixel determines whether faint lines are detectable above noise. SDSS targets S/N &gt; 4 per pixel at the fiber magnitude limit. Spectral resolution R = λ/Δλ ≈ 2000 for SDSS, meaning lines separated by &gt;3Å are resolved. Equivalent width (EW) measures line strength relative to the continuum regardless of overall flux level.</div>
+        </div>
+        <div class="topic-card">
+          <div class="tc-label">Redshift Formula</div>
+          <div class="tc-title">z = (λ_obs − λ_rest) / λ_rest</div>
+          <div class="tc-body">Cosmological redshift z encodes lookback time. At z = 0.1, the universe was ~1.3 Gyr younger than today. At z = 1, ~8 Gyr younger. For low-z, velocity v ≈ cz; at high z, the proper distance requires integrating the comoving metric. SDSS SpecObj stores both the pipeline redshift <code style="color:var(--teal);font-size:12px;">z</code> and its uncertainty <code style="color:var(--teal);font-size:12px;">zErr</code>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SDSS Spectrograph Hardware ── -->
+    <div class="section" id="instrument">
+      <div class="section-header">
+        <div class="section-icon icon-gold">⬡</div>
+        <h2>The SDSS Spectrograph System</h2>
+      </div>
+
+      <div class="callout" style="background:rgba(232,184,75,0.06); border:1px solid rgba(232,184,75,0.18); border-left:3px solid var(--gold);">
+        <strong style="color:var(--gold);">Plates as data identifiers:</strong> Every SDSS spectrum is uniquely identified by three numbers — <strong style="color:var(--gold);">plate</strong> (which aluminum disk), <strong style="color:var(--gold);">MJD</strong> (which night), and <strong style="color:var(--gold);">fiberID</strong> (which of the 640 holes). These three integers together point to exactly one spectrum in the archive, and they appear in every filename, database join, and paper citation.
+      </div>
+
+      <div class="topic-grid" style="margin-bottom: 24px;">
+        <div class="topic-card">
+          <div class="tc-label">The Plug Plate</div>
+          <div class="tc-title">3° Field, 640 Fibers, Drilled by Hand</div>
+          <div class="tc-body">Each aluminum plate covers a 3°-diameter field. Holes are drilled at the exact sky positions of targets selected from SDSS photometry. Optical fibers (180μm diameter, 3″ on-sky) are plugged by hand at Apache Point each afternoon. BOSS plates accommodate 1,000 fibers with 62″ minimum separation due to fiber collision constraints.</div>
+        </div>
+        <div class="topic-card">
+          <div class="tc-label">The Spectrograph</div>
+          <div class="tc-title">Wavelength Coverage: 3800–9200Å</div>
+          <div class="tc-body">SDSS uses two fiber-fed spectrographs (320 fibers each). A dichroic splits each fiber's light into a blue channel (3800–6165Å) and red channel (5765–9200Å). The logarithmic wavelength grid has constant pixel spacing: Δlog₁₀(λ) = 10⁻⁴, giving ~69 km/s per pixel — ideal for velocity measurements.</div>
+        </div>
+        <div class="topic-card">
+          <div class="tc-label">FITS File Structure</div>
+          <div class="tc-title">spPlate HDU Layout</div>
+          <div class="tc-body">The primary HDU contains a 2D image where each row is one spectrum (640 rows × ~3800 wavelength pixels). HDU2 holds the inverse variance (noise) array; HDU3 holds the and-mask/or-mask bitmasks; HDU4 holds the wavelength solution. The <code style="color:var(--teal);font-size:12px;">loglam</code> array gives log₁₀(λ) in Å — convert with 10**loglam.</div>
+        </div>
+        <div class="topic-card">
+          <div class="tc-label">Sky Subtraction</div>
+          <div class="tc-title">32 Sky Fibers Per Plate</div>
+          <div class="tc-body">About 32 fibers per plate are intentionally placed on blank sky, measuring the night-sky emission spectrum (bright OH airglow lines in the red). The pipeline median-combines these to form a sky model, which is subtracted from every object fiber. The quality of sky subtraction limits S/N for faint targets in the red.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SpecObj Table ── -->
+    <div class="section" id="specobj">
+      <div class="section-header">
+        <div class="section-icon icon-purple">⬡</div>
+        <h2>SpecObj Table: Key Columns</h2>
+      </div>
+
+      <div class="table-wrap" style="margin-bottom: 20px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Type / Range</th>
+              <th>Meaning &amp; Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>specObjID</td>
+              <td>bigint (64-bit)</td>
+              <td>Unique spectrum identifier — use for cross-table JOINs; encodes plate/MJD/fiberID/rerun</td>
+            </tr>
+            <tr>
+              <td>z</td>
+              <td>float, 0–7</td>
+              <td>Pipeline redshift — primary distance estimator; always check zWarning before use</td>
+            </tr>
+            <tr>
+              <td>zErr</td>
+              <td>float</td>
+              <td>Redshift uncertainty (1σ); typical galaxy value ~3×10⁻⁵; high zErr flags noisy spectra</td>
+            </tr>
+            <tr>
+              <td>zWarning</td>
+              <td>bitmask integer</td>
+              <td>Quality flags (see table below); zWarning = 0 means clean redshift — always filter on this</td>
+            </tr>
+            <tr>
+              <td>class</td>
+              <td>string</td>
+              <td>'GALAXY', 'STAR', or 'QSO' — pipeline spectral classification; more reliable than photometric type</td>
+            </tr>
+            <tr>
+              <td>subClass</td>
+              <td>string</td>
+              <td>Finer classification: 'AGN', 'BROADLINE', 'STARFORMING', 'STARBURST', 'SEYFERT', etc.</td>
+            </tr>
+            <tr>
+              <td>plate</td>
+              <td>integer</td>
+              <td>Plug plate number — first element of the plate/MJD/fiberID triplet identifying the spectrum</td>
+            </tr>
+            <tr>
+              <td>mjd</td>
+              <td>integer</td>
+              <td>Modified Julian Date of observation; convert with astropy.time.Time(mjd, format='mjd')</td>
+            </tr>
+            <tr>
+              <td>fiberID</td>
+              <td>1–640 (SDSS) / 1–1000 (BOSS)</td>
+              <td>Which fiber collected this spectrum; with plate+MJD gives the FITS file row number</td>
+            </tr>
+            <tr>
+              <td>velDisp</td>
+              <td>km/s</td>
+              <td>Stellar velocity dispersion σ — measured from absorption line broadening; proxy for BH mass</td>
+            </tr>
+            <tr>
+              <td>elodieTeff</td>
+              <td>Kelvin (stars)</td>
+              <td>Effective temperature from ELODIE template fit — valid for class = 'STAR' only</td>
+            </tr>
+            <tr>
+              <td>sciencePrimary</td>
+              <td>0 or 1</td>
+              <td>= 1 flags the best-quality spectrum when multiple exist for same object; always use = 1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:14px; color:var(--text2); margin-bottom:14px; font-family:var(--mono); letter-spacing:0.06em; text-transform:uppercase; margin-top:28px;">zWarning Bitmask — Common Flags</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Bit / Value</th>
+              <th>Name</th>
+              <th>Meaning</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>—</td>
+              <td>No warnings — clean, reliable redshift</td>
+              <td><span class="badge badge-ok">use</span></td>
+            </tr>
+            <tr>
+              <td>bit 0 (1)</td>
+              <td>SKY</td>
+              <td>Spectrum is a sky fiber, not an object</td>
+              <td><span class="badge badge-bad">discard</span></td>
+            </tr>
+            <tr>
+              <td>bit 1 (2)</td>
+              <td>LITTLE_COVERAGE</td>
+              <td>Wavelength coverage too small to fit template</td>
+              <td><span class="badge badge-bad">discard</span></td>
+            </tr>
+            <tr>
+              <td>bit 2 (4)</td>
+              <td>SMALL_DELTA_CHI2</td>
+              <td>Best-fit z not significantly better than next-best — redshift ambiguous</td>
+              <td><span class="badge badge-warn">caution</span></td>
+            </tr>
+            <tr>
+              <td>bit 4 (16)</td>
+              <td>MANY_OUTLIERS</td>
+              <td>Many pixels masked as bad — spectrum quality poor</td>
+              <td><span class="badge badge-warn">caution</span></td>
+            </tr>
+            <tr>
+              <td>bit 7 (128)</td>
+              <td>NEGATIVE_MODEL</td>
+              <td>Best-fit template is unphysically negative</td>
+              <td><span class="badge badge-bad">discard</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── Code ── -->
+    <div class="section" id="code">
+      <div class="section-header">
+        <div class="section-icon icon-teal">&lt;/&gt;</div>
+        <h2>Fetching &amp; Analyzing an SDSS Spectrum</h2>
+      </div>
+      <p style="color:var(--text2); font-size:14px; margin-bottom:18px; line-height:1.7;">
+        This workflow fetches a galaxy spectrum directly from the SDSS SAS (Science Archive Server),
+        reads its FITS structure, identifies emission lines, and computes the redshift manually
+        to compare against the pipeline value in <code style="color:var(--teal);">SpecObj</code>.
+      </p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="lang">Python 3 · Jupyter Notebook</span>
+          <span class="fname">week3_sdss_spectra.ipynb</span>
+        </div>
+        <pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">from</span> astropy.io <span class="kw">import</span> fits
+<span class="kw">from</span> astropy.table <span class="kw">import</span> Table
+<span class="kw">import</span> urllib.request
+
+<span class="cm"># ─── 1. Download a spectrum from the SDSS SAS ─────────────────────────────</span>
+<span class="cm"># URL pattern for spSpec (individual spectrum FITS files)</span>
+plate, mjd, fiber = <span class="num">0266</span>, <span class="num">51602</span>, <span class="num">0001</span>   <span class="cm"># first SDSS Legacy plate</span>
+url = (<span class="str">f"https://dr17.sdss.org/sas/dr17/sdss/spectro/redux/26/spectra/"</span>
+       <span class="str">f"{plate:04d}/spec-{plate:04d}-{mjd}-{fiber:04d}.fits"</span>)
+urllib.request.<span class="fn">urlretrieve</span>(url, <span class="str">"spectrum.fits"</span>)
+
+<span class="cm"># ─── 2. Read the FITS structure ───────────────────────────────────────────</span>
+hdul  = fits.<span class="fn">open</span>(<span class="str">"spectrum.fits"</span>)
+<span class="cm"># HDU 0: header with z, class, plate/mjd/fiber</span>
+z_pipeline = hdul[<span class="num">0</span>].header[<span class="str">'Z'</span>]
+obj_class   = hdul[<span class="num">0</span>].header[<span class="str">'CLASS'</span>]
+z_warning   = hdul[<span class="num">0</span>].header[<span class="str">'ZWARNING'</span>]
+<span class="cm"># HDU 1: binary table — flux, loglam, ivar, and_mask</span>
+spec   = Table(hdul[<span class="num">1</span>].data)
+flux   = spec[<span class="str">'flux'</span>]          <span class="cm"># 10⁻¹⁷ erg/s/cm²/Å</span>
+loglam = spec[<span class="str">'loglam'</span>]        <span class="cm"># log₁₀(wavelength in Å)</span>
+ivar   = spec[<span class="str">'ivar'</span>]          <span class="cm"># inverse variance</span>
+wave   = <span class="num">10</span> <span class="op">**</span> loglam           <span class="cm"># wavelength in Å (observed frame)</span>
+
+print(<span class="str">f"Object class: {obj_class} | Pipeline z = {z_pipeline:.5f} | zWarning = {z_warning}"</span>)
+
+<span class="cm"># ─── 3. Plot the spectrum ─────────────────────────────────────────────────</span>
+fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="num">12</span>, <span class="num">4</span>))
+<span class="cm"># Mask bad pixels (ivar == 0)</span>
+good = ivar <span class="op">></span> <span class="num">0</span>
+ax.<span class="fn">plot</span>(wave[good], flux[good], color=<span class="str">'#7eb3ff'</span>, lw=<span class="num">0.6</span>, alpha=<span class="num">0.9</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="str">'Observed wavelength (Å)'</span>)
+ax.<span class="fn">set_ylabel</span>(<span class="str">'Flux (10⁻¹⁷ erg/s/cm²/Å)'</span>)
+ax.<span class="fn">set_title</span>(<span class="str">f'SDSS spec-{plate:04d}-{mjd}-{fiber:04d}  [{obj_class}  z={z_pipeline:.4f}]'</span>)
+
+<span class="cm"># ─── 4. Mark known emission lines redshifted to observed frame ───────────</span>
+rest_lines = {
+    <span class="str">'[OII] 3727'</span>:  <span class="num">3727.0</span>,
+    <span class="str">'Hβ'</span>:          <span class="num">4861.3</span>,
+    <span class="str">'[OIII] 5007'</span>: <span class="num">5006.8</span>,
+    <span class="str">'Hα'</span>:          <span class="num">6562.8</span>,
+    <span class="str">'[NII] 6583'</span>:  <span class="num">6583.5</span>,
+}
+<span class="kw">for</span> name, lam_rest <span class="kw">in</span> rest_lines.items():
+    lam_obs = lam_rest <span class="op">*</span> (<span class="num">1</span> <span class="op">+</span> z_pipeline)
+    ax.<span class="fn">axvline</span>(lam_obs, color=<span class="str">'#3dd6b5'</span>, lw=<span class="num">0.8</span>, alpha=<span class="num">0.7</span>, ls=<span class="str">'--'</span>)
+    ax.<span class="fn">text</span>(lam_obs, ax.<span class="fn">get_ylim</span>()[<span class="num">1</span>] <span class="op">*</span> <span class="num">0.92</span>, name, fontsize=<span class="num">7</span>,
+           color=<span class="str">'#3dd6b5'</span>, rotation=<span class="num">90</span>, va=<span class="str">'top'</span>)
+plt.<span class="fn">tight_layout</span>()
+
+<span class="cm"># ─── 5. Manual redshift from a detected emission line ─────────────────────</span>
+<span class="cm"># Fit a Gaussian to the Hα line to measure its observed wavelength</span>
+<span class="kw">from</span> scipy.optimize <span class="kw">import</span> curve_fit
+
+lam_ha_rest = <span class="num">6562.8</span>                         <span class="cm"># Hα rest wavelength (Å)</span>
+lam_ha_obs  = lam_ha_rest <span class="op">*</span> (<span class="num">1</span> <span class="op">+</span> z_pipeline) <span class="cm"># expected observed wavelength</span>
+window      = (wave <span class="op">></span> lam_ha_obs <span class="op">-</span> <span class="num">50</span>) <span class="op">&</span> (wave <span class="op"><</span> lam_ha_obs <span class="op">+</span> <span class="num">50</span>)
+
+<span class="kw">def</span> <span class="fn">gaussian</span>(x, amp, mu, sigma, continuum):
+    <span class="kw">return</span> amp <span class="op">*</span> np.<span class="fn">exp</span>(<span class="op">-</span><span class="num">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> mu) <span class="op">/</span> sigma)<span class="op">**</span><span class="num">2</span>) <span class="op">+</span> continuum
+
+p0 = [flux[window].<span class="fn">max</span>(), lam_ha_obs, <span class="num">5.0</span>, np.<span class="fn">median</span>(flux[window])]
+popt, _ = curve_fit(<span class="fn">gaussian</span>, wave[window], flux[window], p0=p0)
+z_manual = (popt[<span class="num">1</span>] <span class="op">/</span> lam_ha_rest) <span class="op">-</span> <span class="num">1</span>
+
+print(<span class="str">f"Pipeline z = {z_pipeline:.5f}"</span>)
+print(<span class="str">f"Manual z   = {z_manual:.5f}  (Δz = {abs(z_manual - z_pipeline):.1e})"</span>)</pre>
+      </div>
+    </div>
+
+    <!-- ── Notebook Exercise ── -->
+    <div class="section" id="notebook">
+      <div class="section-header">
+        <div class="section-icon icon-teal">⊞</div>
+        <h2>Jupyter Notebook Exercise</h2>
+      </div>
+      <div class="nb-box">
+        <div class="nb-header">
+          <span class="nb-icon">📓</span>
+          <span class="nb-title">week3_sdss_spectroscopy.ipynb</span>
+        </div>
+        <p>By the end of this notebook you will have fetched real SDSS FITS spectra, identified emission and absorption lines by eye, computed redshifts manually from Gaussian fits, and compared your results to the pipeline — the same cross-check professional astronomers run on every new survey data release.</p>
+
+        <ol class="step-list">
+          <li>
+            <span class="step-num">01</span>
+            <span>Query SpecObj via CasJobs for 10 galaxies with <code style="color:var(--teal);font-size:12px;">zWarning = 0</code>, <code style="color:var(--teal);font-size:12px;">class = 'GALAXY'</code>, and a range of redshifts (0.05 &lt; z &lt; 0.4). Record their plate/MJD/fiberID triplets.</span>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <span>Download each spectrum FITS file from the DR17 SAS using the URL pattern above. Load each spectrum's flux, loglam, and ivar arrays. Convert loglam → wavelength in Å.</span>
+          </li>
+          <li>
+            <span class="step-num">03</span>
+            <span>Plot all 10 spectra in a grid. For each, overlay vertical dashed lines at the observed positions of [O II] 3727, Hβ, [O III] 5007, Hα, and Ca II H&amp;K, using the pipeline z. Verify the lines visually align with features in the spectrum.</span>
+          </li>
+          <li>
+            <span class="step-num">04</span>
+            <span>For 3 of your galaxies, fit a Gaussian to the Hα line using <code style="color:var(--teal);font-size:12px;">scipy.optimize.curve_fit</code>. Compute z_manual from the fitted line center. Calculate Δz = |z_manual − z_pipeline| and Δv = c × Δz in km/s. Discuss the discrepancy.</span>
+          </li>
+          <li>
+            <span class="step-num">05</span>
+            <span>Use <code style="color:var(--teal);font-size:12px;">specutils</code> to load one of your spectra as a <code style="color:var(--teal);font-size:12px;">Spectrum1D</code> object. Apply a rest-frame correction using the pipeline z, then use <code style="color:var(--teal);font-size:12px;">specutils.analysis.equivalent_width</code> to measure the Hα equivalent width and compare to the BPT diagram classification.</span>
+          </li>
+          <li>
+            <span class="step-num">06</span>
+            <span>Repeat steps 2–4 for one <code style="color:var(--teal);font-size:12px;">class = 'QSO'</code> spectrum with z &gt; 1.5. Identify Lyα, C IV 1549Å, and Mg II 2798Å in the SDSS wavelength window. Compute z from each line independently and compare the three values.</span>
+          </li>
+        </ol>
+
+        <div class="tags-row">
+          <span class="tag">astropy.io.fits</span>
+          <span class="tag">specutils</span>
+          <span class="tag">Spectrum1D</span>
+          <span class="tag">scipy.optimize</span>
+          <span class="tag">Gaussian fitting</span>
+          <span class="tag">equivalent width</span>
+          <span class="tag">zWarning = 0</span>
+          <span class="tag">SpecObj SQL</span>
+          <span class="tag">plate/MJD/fiberID</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Resources ── -->
+    <div class="section" id="resources">
+      <div class="section-header">
+        <div class="section-icon icon-blue">⇗</div>
+        <h2>Key Resources &amp; Links</h2>
+      </div>
+      <div class="resource-list">
+        <a class="resource-item" href="https://www.sdss4.org/dr17/spectro/spectro_basics/" target="_blank">
+          <span class="ri-icon">📡</span>
+          <div class="ri-body">
+            <div class="ri-title">DR17 Spectroscopy Basics — Plates, Fibers, FITS Structure</div>
+            <div class="ri-url">sdss4.org/dr17/spectro/spectro_basics</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://dr17.sdss.org/optical/spectrum/search" target="_blank">
+          <span class="ri-icon">🔍</span>
+          <div class="ri-body">
+            <div class="ri-title">DR17 Spectrum Search — Find &amp; Preview Spectra by Object</div>
+            <div class="ri-url">dr17.sdss.org/optical/spectrum/search</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://specutils.readthedocs.io" target="_blank">
+          <span class="ri-icon">🐍</span>
+          <div class="ri-body">
+            <div class="ri-title">specutils — Astropy-affiliated Spectral Analysis Package</div>
+            <div class="ri-url">specutils.readthedocs.io</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://www.sdss4.org/dr17/algorithms/redshifts/" target="_blank">
+          <span class="ri-icon">📄</span>
+          <div class="ri-body">
+            <div class="ri-title">SDSS Redshift Measurement Algorithm — How the Pipeline Fits Templates</div>
+            <div class="ri-url">sdss4.org/dr17/algorithms/redshifts</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://www.sdss4.org/dr17/algorithms/bitmasks/" target="_blank">
+          <span class="ri-icon">🚩</span>
+          <div class="ri-body">
+            <div class="ri-title">SDSS Bitmask Reference — zWarning, SpecObj Flags, Mask Bits</div>
+            <div class="ri-url">sdss4.org/dr17/algorithms/bitmasks</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://arxiv.org/abs/astro-ph/0206120" target="_blank">
+          <span class="ri-icon">📑</span>
+          <div class="ri-body">
+            <div class="ri-title">Bolton et al. 2012 — SDSS Spectroscopic Reduction Pipeline Paper (idlspec2d)</div>
+            <div class="ri-url">arxiv.org/abs/astro-ph/0206120</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- Week nav -->
+  <div class="week-nav">
+    <a class="week-btn" href="sdss_week2.html">
+      <div>
+        <span class="wk-label">← Previous</span>
+        Week 02: Photometric Imaging
+      </div>
+    </a>
+    <a class="week-btn" href="#">
+      <div>
+        <span class="wk-label">Next →</span>
+        Week 04: Galaxy Populations
+      </div>
+    </a>
+  </div>
+
+</main>
+</body>
+</html>

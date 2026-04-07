@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDSS Graduate Course — Week 2: Photometric Imaging</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c14;
+    --bg2: #0d1320;
+    --bg3: #111827;
+    --surface: #141c2e;
+    --surface2: #1a2540;
+    --border: rgba(99,140,210,0.18);
+    --border2: rgba(99,140,210,0.32);
+    --accent: #4f8ef7;
+    --accent2: #7eb3ff;
+    --accent-dim: rgba(79,142,247,0.12);
+    --gold: #e8b84b;
+    --gold-dim: rgba(232,184,75,0.12);
+    --teal: #3dd6b5;
+    --teal-dim: rgba(61,214,181,0.1);
+    --coral: #f07060;
+    --text: #e8edf7;
+    --text2: #8fa3c8;
+    --text3: #4d6080;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+    --sidebar-w: 260px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 10%, rgba(200,220,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 30%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 85% 60%, rgba(200,220,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 55%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 33% 90%, rgba(200,220,255,0.35) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── Sidebar ─── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+  }
+  .sidebar-logo { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); }
+  .sidebar-logo .course-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+  .sidebar-logo h2 { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; }
+  .sidebar-logo .sub { font-size: 11px; color: var(--text3); margin-top: 3px; font-family: var(--mono); }
+  .sidebar-nav { padding: 16px 0; flex: 1; }
+  .nav-section-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text3); text-transform: uppercase; padding: 0 20px; margin-bottom: 6px; margin-top: 12px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; font-size: 12px; color: var(--text2); text-decoration: none; transition: background 0.15s, color 0.15s; cursor: pointer; border: none; background: none; width: 100%; text-align: left; }
+  .nav-item:hover { background: var(--accent-dim); color: var(--accent2); }
+  .nav-item.active { background: var(--accent-dim); color: var(--accent); border-left: 2px solid var(--accent); }
+  .nav-item .wk-num { font-family: var(--mono); font-size: 10px; color: var(--text3); min-width: 20px; }
+  .nav-item.active .wk-num { color: var(--accent); }
+  .sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); font-size: 10px; color: var(--text3); font-family: var(--mono); }
+  .sidebar-footer a { color: var(--accent); text-decoration: none; }
+
+  /* ─── Main ─── */
+  main { margin-left: var(--sidebar-w); flex: 1; position: relative; z-index: 1; max-width: 960px; }
+
+  /* ─── Hero ─── */
+  .hero { padding: 60px 56px 44px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; right: -60px; top: -60px; width: 340px; height: 340px; border-radius: 50%; background: radial-gradient(circle, rgba(232,184,75,0.07) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .pill { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; }
+  .pill-blue { background: var(--accent-dim); color: var(--accent2); border: 1px solid rgba(79,142,247,0.3); }
+  .pill-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(232,184,75,0.3); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(61,214,181,0.3); }
+  .hero h1 { font-size: 38px; font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 10px; }
+  .hero h1 span { color: var(--gold); }
+  .hero .subtitle { font-size: 16px; color: var(--text2); max-width: 560px; line-height: 1.6; margin-bottom: 28px; }
+  .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .hero-meta-item .label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; }
+  .hero-meta-item .value { font-size: 13px; color: var(--text); font-weight: 600; }
+
+  /* ─── Content ─── */
+  .content { padding: 0 56px 80px; }
+  .section { margin-top: 52px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .section-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .icon-blue { background: var(--accent-dim); border: 1px solid rgba(79,142,247,0.25); }
+  .icon-gold { background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.25); }
+  .icon-teal { background: var(--teal-dim); border: 1px solid rgba(61,214,181,0.25); }
+  .icon-coral { background: rgba(240,112,96,0.1); border: 1px solid rgba(240,112,96,0.25); }
+  .section-header h2 { font-size: 18px; font-weight: 700; color: var(--text); }
+
+  /* ─── Topic cards ─── */
+  .topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .topic-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; transition: border-color 0.2s, transform 0.2s; }
+  .topic-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+  .topic-card .tc-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; margin-bottom: 6px; }
+  .topic-card .tc-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .topic-card .tc-body { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* ─── Callout box ─── */
+  .callout {
+    background: rgba(232,184,75,0.06);
+    border: 1px solid rgba(232,184,75,0.22);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+  .callout strong { color: var(--gold); font-weight: 600; }
+
+  /* ─── Data table ─── */
+  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: var(--mono); }
+  .data-table thead tr { border-bottom: 1px solid var(--border2); }
+  .data-table th { text-align: left; padding: 10px 14px; color: var(--text3); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+  .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table td:first-child { color: var(--accent2); }
+  .data-table td:nth-child(2) { color: var(--gold); }
+  .data-table td:nth-child(3) { color: var(--text2); }
+
+  /* ─── Filter strip ─── */
+  .filter-strip {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .filter-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    min-width: 70px;
+    cursor: default;
+    transition: transform 0.15s;
+  }
+  .filter-badge:hover { transform: translateY(-2px); }
+  .filter-badge .fb-name { font-family: var(--mono); font-size: 18px; font-weight: 700; }
+  .filter-badge .fb-wave { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+  .filter-badge .fb-desc { font-size: 10px; color: var(--text2); text-align: center; margin-top: 2px; }
+  .fb-u { color: #b06eff; border-color: rgba(176,110,255,0.3); }
+  .fb-g { color: #60d060; border-color: rgba(96,208,96,0.3); }
+  .fb-r { color: #ff8040; border-color: rgba(255,128,64,0.3); }
+  .fb-i { color: #e0503a; border-color: rgba(224,80,58,0.3); }
+  .fb-z { color: #c03030; border-color: rgba(192,48,48,0.3); }
+
+  /* ─── Code block ─── */
+  .code-block { background: #06090f; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .code-header .lang { font-family: var(--mono); font-size: 10px; color: var(--teal); letter-spacing: 0.08em; }
+  .code-header .fname { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+  pre { padding: 20px; font-family: var(--mono); font-size: 12px; line-height: 1.8; overflow-x: auto; color: #c8d8f0; }
+  .kw { color: #7eb3ff; }
+  .str { color: #a8d8a8; }
+  .cm { color: var(--text3); font-style: italic; }
+  .fn { color: var(--teal); }
+  .num { color: var(--gold); }
+  .op { color: #f07060; }
+
+  /* ─── Video grid ─── */
+  .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .video-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+  .video-card:hover { border-color: var(--border2); }
+  .video-card .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+  .video-card .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+  .video-card .video-info { padding: 14px 16px; }
+  .video-card .video-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; margin-bottom: 5px; }
+  .video-card .video-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 4px; }
+  .video-card .video-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* ─── Notebook exercise ─── */
+  .nb-box { background: linear-gradient(135deg, rgba(61,214,181,0.06) 0%, rgba(79,142,247,0.06) 100%); border: 1px solid rgba(61,214,181,0.2); border-radius: 12px; padding: 24px 28px; }
+  .nb-box .nb-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .nb-box .nb-icon { font-size: 20px; }
+  .nb-box .nb-title { font-size: 14px; font-weight: 700; color: var(--teal); font-family: var(--mono); letter-spacing: 0.06em; }
+  .nb-box p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 14px; }
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .step-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 13px; color: var(--text2); }
+  .step-num { font-family: var(--mono); font-size: 11px; color: var(--teal); background: var(--teal-dim); border: 1px solid rgba(61,214,181,0.2); border-radius: 4px; padding: 1px 7px; flex-shrink: 0; margin-top: 2px; }
+  .tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .tag { font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 20px; background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+
+  /* ─── Resources ─── */
+  .resource-list { display: flex; flex-direction: column; gap: 8px; }
+  .resource-item { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+  .resource-item:hover { border-color: var(--accent); background: var(--accent-dim); }
+  .resource-item .ri-icon { font-size: 18px; flex-shrink: 0; }
+  .resource-item .ri-body { flex: 1; }
+  .resource-item .ri-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .resource-item .ri-url { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+  .resource-item .ri-arrow { color: var(--text3); font-size: 14px; }
+
+  /* ─── Week nav ─── */
+  .week-nav { margin-top: 60px; padding: 28px 56px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .week-btn { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 20px; color: var(--text); text-decoration: none; font-size: 13px; font-weight: 600; transition: border-color 0.2s, background 0.2s; }
+  .week-btn:hover { border-color: var(--accent); background: var(--accent-dim); color: var(--accent2); }
+  .week-btn .wk-label { font-family: var(--mono); font-size: 10px; color: var(--text3); display: block; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 820px) {
+    .sidebar { display: none; }
+    main { margin-left: 0; }
+    .hero { padding: 36px 24px 28px; }
+    .content { padding: 0 24px 60px; }
+    .topic-grid { grid-template-columns: 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 28px; }
+    .week-nav { padding: 24px; flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="course-tag">Graduate Seminar</div>
+    <h2>The Sloan Digital Sky Survey</h2>
+    <div class="sub">Data, Science &amp; Computation</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Course Weeks</div>
+    <a class="nav-item" href="sdss_week1.html">
+      <span class="wk-num">01</span>The Universe in a Database
+    </a>
+    <a class="nav-item active" href="#">
+      <span class="wk-num">02</span>Photometric Imaging
+    </a>
+    <a class="nav-item" href="#">
+      <span class="wk-num">03</span>Spectroscopy &amp; Redshifts
+    </a>
+    <a class="nav-item" href="#">
+      <span class="wk-num">04</span>Galaxy Populations
+    </a>
+    <a class="nav-item" href="#">
+      <span class="wk-num">05</span>Stars &amp; Stellar Populations
+    </a>
+    <a class="nav-item" href="#">
+      <span class="wk-num">06</span>Quasars &amp; AGN
+    </a>
+    <a class="nav-item" href="#">
+      <span class="wk-num">07</span>Large-Scale Structure
+    </a>
+    <a class="nav-item" href="#">
+      <span class="wk-num">08</span>Capstone Project
+    </a>
+    <div class="nav-section-label" style="margin-top:20px;">Resources</div>
+    <a class="nav-item" href="https://skyserver.sdss.org" target="_blank">SDSS SkyServer ↗</a>
+    <a class="nav-item" href="https://sciserver.org" target="_blank">SciServer Compute ↗</a>
+    <a class="nav-item" href="https://www.sdss4.org/dr17/" target="_blank">DR17 Documentation ↗</a>
+  </nav>
+  <div class="sidebar-footer">
+    Powered by <a href="https://www.sdss.org" target="_blank">sdss.org</a> public data
+  </div>
+</aside>
+
+<!-- ── Main ── -->
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span class="pill pill-blue">Week 02 of 08</span>
+      <span class="pill pill-gold">Photometry</span>
+    </div>
+    <h1>Photometric<br><span>Imaging</span></h1>
+    <p class="subtitle">
+      How SDSS turns photons into numbers — CCD detectors, the ugriz filter system,
+      image calibration, and the photometric columns that power every catalog query.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="label">Theme</span>
+        <span class="value">How SDSS sees the sky</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Prerequisites</span>
+        <span class="value">Week 1 complete; basic Python/numpy</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Tools this week</span>
+        <span class="value">astropy.io.fits · matplotlib · PhotoObj table</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ── Videos ── -->
+    <div class="section" id="videos">
+      <div class="section-header">
+        <div class="section-icon icon-coral">▶</div>
+        <h2>Video Resources</h2>
+      </div>
+      <div class="video-grid">
+
+        <div class="video-card">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/6I0TXMiMioc"
+              title="How CCDs Work — Astronomical Imaging"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">CCD Detectors · Instrumentation</div>
+            <div class="video-title">How CCDs Work in Astronomy</div>
+            <div class="video-desc">A clear breakdown of how charge-coupled devices convert photons to electrons, the role of quantum efficiency, and why astronomical CCDs must be cooled to near-liquid-nitrogen temperatures.</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/E9qpbt0v5Hw"
+              title="Astronomical Photometry and Filters"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Photometry · Filter Systems</div>
+            <div class="video-title">Photometric Filters &amp; Bandpasses Explained</div>
+            <div class="video-desc">Covers why astronomers use filters, what bandpasses measure, and how the Johnson-Cousins and Sloan ugriz systems differ — with worked magnitude examples.</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/xRxCMiMiHdU"
+              title="Bias, Dark, and Flat Frame Calibration"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Image Calibration · Reduction</div>
+            <div class="video-title">CCD Calibration: Bias, Dark &amp; Flat Frames</div>
+            <div class="video-desc">Step-by-step explanation of the three essential calibration frames — why each is needed, how they remove systematic errors, and how the SDSS pipeline applies them automatically at scale.</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/F0A_JRbV0-s"
+              title="Astronomical Seeing and Atmospheric Turbulence"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Atmospheric Optics · PSF</div>
+            <div class="video-title">Astronomical Seeing &amp; the Point Spread Function</div>
+            <div class="video-desc">Why stars appear as blurry disks rather than perfect points, how "seeing" is measured in arcseconds FWHM, and the effect of atmospheric turbulence on photometric precision.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Astronomy Background ── -->
+    <div class="section" id="astro">
+      <div class="section-header">
+        <div class="section-icon icon-blue">✦</div>
+        <h2>Astronomy Background</h2>
+      </div>
+      <div class="topic-grid">
+
+        <div class="topic-card">
+          <div class="tc-label">Detectors</div>
+          <div class="tc-title">CCD Architecture &amp; Quantum Efficiency</div>
+          <div class="tc-body">A CCD is a silicon grid of pixels that converts photons to electrons via the photoelectric effect. Quantum efficiency (QE) — the fraction of photons actually detected — peaks around 70–90% for modern astronomical CCDs, far exceeding photographic plates (~5%) or the human eye (~1%). SDSS's 120-megapixel mosaic camera achieved QE &gt;70% across the ugriz bands.</div>
+        </div>
+
+        <div class="topic-card">
+          <div class="tc-label">Detector Noise</div>
+          <div class="tc-title">Gain, Bias, Dark Current &amp; Read Noise</div>
+          <div class="tc-body">Four noise sources shape CCD data: <em>bias</em> (a constant electronic offset), <em>dark current</em> (thermal electrons masquerading as signal), <em>read noise</em> (amplifier noise during readout), and <em>Poisson/shot noise</em> (statistical fluctuations in photon counts). Each is measured and removed during calibration.</div>
+        </div>
+
+        <div class="topic-card">
+          <div class="tc-label">Image Calibration</div>
+          <div class="tc-title">Bias, Dark &amp; Flat-Field Frames</div>
+          <div class="tc-body">Raw CCD images must be calibrated before science use. A <strong style="color:var(--text);font-weight:600;">bias frame</strong> (zero-second exposure) removes the electronic offset; a <strong style="color:var(--text);font-weight:600;">dark frame</strong> removes thermal signal; a <strong style="color:var(--text);font-weight:600;">flat-field frame</strong> (uniformly illuminated screen) corrects pixel-to-pixel sensitivity variations. The SDSS pipeline does all three automatically.</div>
+        </div>
+
+        <div class="topic-card">
+          <div class="tc-label">Atmospheric Optics</div>
+          <div class="tc-title">Seeing &amp; the Point Spread Function (PSF)</div>
+          <div class="tc-body">Atmospheric turbulence smears starlight into a blurry disk. "Seeing" quantifies this as the FWHM of the resulting PSF in arcseconds — typically 0.5–2″ at good sites. SDSS's Apache Point site achieves median seeing ~1.4″. The PSF shape also determines how well stars can be separated from neighboring galaxies.</div>
+        </div>
+
+        <div class="topic-card">
+          <div class="tc-label">Photometry</div>
+          <div class="tc-title">Aperture vs. PSF vs. Model Magnitudes</div>
+          <div class="tc-body">Different magnitude types suit different science goals. <em>Aperture photometry</em> sums flux within a fixed circle. <em>PSF magnitudes</em> fit a PSF model — ideal for stars. <em>Petrosian magnitudes</em> use an adaptive radius enclosing most galaxy light without excessive sky noise. <em>Model magnitudes</em> fit de Vaucouleurs + exponential profiles — SDSS's standard for galaxy colors.</div>
+        </div>
+
+        <div class="topic-card">
+          <div class="tc-label">Dust</div>
+          <div class="tc-title">Interstellar Extinction &amp; Reddening</div>
+          <div class="tc-body">Interstellar dust absorbs and scatters blue light more than red, making distant objects appear both fainter (extinction) and redder (reddening). SDSS corrects for this using the Schlegel, Finkbeiner &amp; Davis (1998) dust maps. Each PhotoObj row includes <code style="color:var(--teal);font-size:12px;">extinction_u/g/r/i/z</code> columns encoding this correction.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── ugriz Filter System ── -->
+    <div class="section" id="filters">
+      <div class="section-header">
+        <div class="section-icon icon-gold">◈</div>
+        <h2>The SDSS ugriz Filter System</h2>
+      </div>
+
+      <div class="callout">
+        <strong>Why five filters?</strong> A single exposure records total brightness; five filters sample how brightness changes with wavelength. Color indices like g−r and r−i encode stellar temperature, galaxy type, and redshift — making the ugriz system the backbone of all SDSS photometric classification.
+      </div>
+
+      <div class="filter-strip">
+        <div class="filter-badge">
+          <span class="fb-name fb-u">u</span>
+          <span class="fb-wave">354 nm</span>
+          <span class="fb-desc">Near-UV<br>hot stars, QSOs</span>
+        </div>
+        <div class="filter-badge">
+          <span class="fb-name fb-g">g</span>
+          <span class="fb-wave">477 nm</span>
+          <span class="fb-desc">Green<br>main sequence</span>
+        </div>
+        <div class="filter-badge">
+          <span class="fb-name fb-r">r</span>
+          <span class="fb-wave">623 nm</span>
+          <span class="fb-desc">Red<br>primary flux ref</span>
+        </div>
+        <div class="filter-badge">
+          <span class="fb-name fb-i">i</span>
+          <span class="fb-wave">762 nm</span>
+          <span class="fb-desc">Near-IR<br>red galaxies</span>
+        </div>
+        <div class="filter-badge">
+          <span class="fb-name fb-z">z</span>
+          <span class="fb-wave">913 nm</span>
+          <span class="fb-desc">Far red<br>cool stars, z~0.4 QSOs</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Filter</th>
+              <th>Wavelength</th>
+              <th>Key Science Uses</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>u (ultraviolet)</td>
+              <td>~320–400 nm</td>
+              <td>Hot star selection, UV excess QSOs, star-forming galaxies; noisiest band — low CCD QE</td>
+            </tr>
+            <tr>
+              <td>g (green)</td>
+              <td>~400–550 nm</td>
+              <td>Main stellar locus anchor; g−r index is primary star temperature proxy</td>
+            </tr>
+            <tr>
+              <td>r (red)</td>
+              <td>~550–700 nm</td>
+              <td>Primary flux reference; r-band Petrosian radius defines galaxy size standard</td>
+            </tr>
+            <tr>
+              <td>i (near-infrared)</td>
+              <td>~680–840 nm</td>
+              <td>Red galaxy detection; r−i sensitive to galaxy 4000Å break at z~0.3</td>
+            </tr>
+            <tr>
+              <td>z (far red)</td>
+              <td>~840–1000 nm</td>
+              <td>Cool M/L dwarf selection; i−z detects Lyman break at z~5–6 QSOs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── SDSS PhotoObj Columns ── -->
+    <div class="section" id="data">
+      <div class="section-header">
+        <div class="section-icon icon-gold">⬡</div>
+        <h2>SDSS PhotoObj: Key Columns</h2>
+      </div>
+
+      <div class="callout">
+        <strong>PhotoObj</strong> is the central imaging catalog — roughly 1.2 billion rows in DR17. Understanding which magnitude type to use, and how to apply flag cuts, is the single most important data skill this week.
+      </div>
+
+      <div class="table-wrap" style="margin-bottom:20px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Type</th>
+              <th>When to Use It</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>psfMag_[ugriz]</td>
+              <td>PSF magnitude</td>
+              <td>Stars — best S/N for point sources; do NOT use for galaxies (underestimates flux)</td>
+            </tr>
+            <tr>
+              <td>modelMag_[ugriz]</td>
+              <td>Model magnitude</td>
+              <td>Galaxy colors — fits de Vaucouleurs + exponential profile; use for color indices</td>
+            </tr>
+            <tr>
+              <td>petroMag_[ugriz]</td>
+              <td>Petrosian magnitude</td>
+              <td>Galaxy total flux — aperture grows with galaxy size; luminosity function studies</td>
+            </tr>
+            <tr>
+              <td>fiberMag_[ugriz]</td>
+              <td>Fiber magnitude</td>
+              <td>Flux within 3″ fiber; matches spectroscopic targeting — use for fiber-matched photometry</td>
+            </tr>
+            <tr>
+              <td>extinction_[ugriz]</td>
+              <td>Dust correction</td>
+              <td>Subtract from observed magnitude to get dereddened magnitude: mag₀ = mag − extinction</td>
+            </tr>
+            <tr>
+              <td>petroRad_r</td>
+              <td>Size (arcsec)</td>
+              <td>Petrosian radius in r-band; defines galaxy size and morphology proxy</td>
+            </tr>
+            <tr>
+              <td>type</td>
+              <td>Integer flag</td>
+              <td>3 = galaxy, 6 = star — primary morphological classifier; always filter on this</td>
+            </tr>
+            <tr>
+              <td>clean</td>
+              <td>Boolean flag</td>
+              <td>= 1 removes blended, saturated, edge, and bad astrometry objects; always apply for science</td>
+            </tr>
+            <tr>
+              <td>flags</td>
+              <td>64-bit bitmask</td>
+              <td>Encodes 64 photometric status bits — deblended, saturated, interpolated, etc.</td>
+            </tr>
+            <tr>
+              <td>run, camcol, field</td>
+              <td>Survey geometry</td>
+              <td>Identifies which imaging run, camera column, and field the object falls in</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="topic-grid">
+        <div class="topic-card">
+          <div class="tc-label">The clean Flag</div>
+          <div class="tc-title">Always Use clean = 1</div>
+          <div class="tc-body">Setting <code style="color:var(--teal);font-size:12px;">clean = 1</code> in your SQL WHERE clause eliminates the most common data quality problems in a single step: blended detections, saturated pixels, objects on field edges, and failed astrometric fits. It is the equivalent of applying ~20 individual bitmask cuts simultaneously.</div>
+        </div>
+        <div class="topic-card">
+          <div class="tc-label">Drift-Scan Geometry</div>
+          <div class="tc-title">Runs, Camcols &amp; Fields</div>
+          <div class="tc-body">SDSS imaged in six parallel "camera columns" (camcol 1–6) during each scan run. Each run covers the sky in sequential fields (~13.5′ × 9.8′). This geometry creates known stripes in the survey footprint visible in density maps — important to account for in clustering studies.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Sample Python code ── -->
+    <div class="section" id="code">
+      <div class="section-header">
+        <div class="section-icon icon-teal">&lt;/&gt;</div>
+        <h2>Working with SDSS FITS Images</h2>
+      </div>
+      <p style="color:var(--text2); font-size:14px; margin-bottom:18px; line-height:1.7;">
+        SDSS imaging is stored as FITS files accessible via the
+        <a href="https://dr17.sdss.org/fields" target="_blank" style="color:var(--accent);">DR17 image server</a>.
+        Below is a minimal Python workflow to fetch a corrected frame, measure the PSF, and run aperture photometry.
+      </p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="lang">Python 3 · Jupyter Notebook</span>
+          <span class="fname">week2_ccd_photometry.ipynb</span>
+        </div>
+        <pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">from</span> astropy.io <span class="kw">import</span> fits
+<span class="kw">from</span> astropy.stats <span class="kw">import</span> sigma_clipped_stats
+<span class="kw">from</span> astropy.visualization <span class="kw">import</span> ZScaleInterval
+<span class="kw">from</span> photutils.aperture <span class="kw">import</span> CircularAperture, aperture_photometry
+<span class="kw">from</span> photutils.detection <span class="kw">import</span> DAOStarFinder
+
+<span class="cm"># ─── 1. Load a corrected SDSS frame (fpC file) ────────────────────────────</span>
+<span class="cm"># URL pattern: https://dr17.sdss.org/sas/dr17/eboss/photo/redux/...</span>
+hdu = fits.<span class="fn">open</span>(<span class="str">'frame-r-004192-4-0111.fits'</span>)
+image  = hdu[<span class="num">0</span>].data.astype(float)
+header = hdu[<span class="num">0</span>].header
+
+gain   = header.get(<span class="str">'GAIN'</span>, <span class="num">4.72</span>)    <span class="cm"># electrons per ADU</span>
+sky    = header.get(<span class="str">'SKY'</span>,  <span class="num">200.0</span>)   <span class="cm"># sky background (ADU)</span>
+
+<span class="cm"># ─── 2. Estimate sky background ───────────────────────────────────────────</span>
+mean, median, std = <span class="fn">sigma_clipped_stats</span>(image, sigma=<span class="num">3.0</span>)
+image_sub = image <span class="op">-</span> median            <span class="cm"># subtract sky</span>
+
+<span class="cm"># ─── 3. Visualise with ZScale stretch (standard in ds9) ───────────────────</span>
+interval = <span class="fn">ZScaleInterval</span>()
+vmin, vmax = interval.<span class="fn">get_limits</span>(image_sub)
+
+fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="num">9</span>, <span class="num">9</span>))
+ax.<span class="fn">imshow</span>(image_sub, origin=<span class="str">'lower'</span>, cmap=<span class="str">'gray'</span>, vmin=vmin, vmax=vmax)
+ax.<span class="fn">set_title</span>(<span class="str">'SDSS r-band corrected frame — field 0111'</span>)
+plt.<span class="fn">tight_layout</span>()
+
+<span class="cm"># ─── 4. Detect sources with DAOStarFinder ─────────────────────────────────</span>
+daofind = <span class="fn">DAOStarFinder</span>(fwhm=<span class="num">3.5</span>, threshold=<span class="num">5.0</span> <span class="op">*</span> std)
+sources = daofind.<span class="fn">find_stars</span>(image_sub)
+print(<span class="fn">f</span><span class="str">"Found {len(sources)} sources"</span>)
+
+<span class="cm"># ─── 5. Aperture photometry ────────────────────────────────────────────────</span>
+positions  = np.<span class="fn">array</span>([sources[<span class="str">'xcentroid'</span>],
+                          sources[<span class="str">'ycentroid'</span>]]).T
+apertures  = <span class="fn">CircularAperture</span>(positions, r=<span class="num">5.0</span>)  <span class="cm"># 5-pixel radius</span>
+phot_table = <span class="fn">aperture_photometry</span>(image_sub, apertures)
+
+<span class="cm"># ─── 6. Convert ADU counts to AB magnitude ────────────────────────────────</span>
+<span class="cm"># SDSS zero-point: r-band aa ≈ -24.15 from the frame header</span>
+aa     = header.get(<span class="str">'PHO_AA'</span>, <span class="op">-</span><span class="num">24.15</span>)
+kk     = header.get(<span class="str">'PHO_KK'</span>, <span class="num">0.10</span>)   <span class="cm"># atmospheric extinction coeff</span>
+airmass= header.get(<span class="str">'AIRMASS'</span>, <span class="num">1.1</span>)
+
+flux   = phot_table[<span class="str">'aperture_sum'</span>] <span class="op">*</span> gain   <span class="cm"># electrons</span>
+mag_inst = <span class="op">-</span><span class="num">2.5</span> <span class="op">*</span> np.<span class="fn">log10</span>(flux)
+mag_ab   = mag_inst <span class="op">-</span> aa <span class="op">-</span> kk <span class="op">*</span> airmass      <span class="cm"># calibrated AB mag</span>
+
+print(phot_table[<span class="str">'xcenter'</span>,<span class="str">'ycenter'</span>], mag_ab[:<span class="num">10</span>])</pre>
+      </div>
+    </div>
+
+    <!-- ── Notebook Exercise ── -->
+    <div class="section" id="notebook">
+      <div class="section-header">
+        <div class="section-icon icon-teal">⊞</div>
+        <h2>Jupyter Notebook Exercise</h2>
+      </div>
+      <div class="nb-box">
+        <div class="nb-header">
+          <span class="nb-icon">📓</span>
+          <span class="nb-title">week2_sdss_photometry.ipynb</span>
+        </div>
+        <p>This notebook takes you from a raw SDSS corrected frame to a calibrated source catalog, with a focus on understanding every step of the photometric pipeline before trusting the precomputed PhotoObj magnitudes.</p>
+
+        <ol class="step-list">
+          <li>
+            <span class="step-num">01</span>
+            <span>Download a DR17 corrected frame (fpC FITS file) in the r-band for a field of your choice from the <a href="https://dr17.sdss.org/fields" target="_blank" style="color:var(--accent);">DR17 field viewer</a>. Load with <code style="color:var(--teal);font-size:12px;">astropy.io.fits</code> and display using ZScale stretch.</span>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <span>Estimate and subtract the sky background using sigma-clipped statistics. Compare your sky value to the <code style="color:var(--teal);font-size:12px;">SKY</code> header keyword from the SDSS pipeline.</span>
+          </li>
+          <li>
+            <span class="step-num">03</span>
+            <span>Run <code style="color:var(--teal);font-size:12px;">DAOStarFinder</code> to detect sources. Measure the PSF FWHM by fitting a 2D Gaussian to isolated bright stars using <code style="color:var(--teal);font-size:12px;">scipy.optimize.curve_fit</code>. Compare to the seeing value in the header.</span>
+          </li>
+          <li>
+            <span class="step-num">04</span>
+            <span>Perform aperture photometry on detected sources, convert ADU counts to calibrated AB magnitudes using the frame's photometric zero-point, and plot an instrumental vs. catalog magnitude comparison against the precomputed PhotoObj <code style="color:var(--teal);font-size:12px;">psfMag_r</code>.</span>
+          </li>
+          <li>
+            <span class="step-num">05</span>
+            <span>Query PhotoObj via CasJobs for the same field and overplot the stellar locus in u−g vs. g−r color space. Apply the <code style="color:var(--teal);font-size:12px;">clean = 1</code> flag and write a markdown cell explaining the effect of removing unclean sources on the locus scatter.</span>
+          </li>
+          <li>
+            <span class="step-num">06</span>
+            <span>Compute dereddened colors by subtracting the <code style="color:var(--teal);font-size:12px;">extinction_[ugriz]</code> columns. Quantify the shift in the stellar locus before and after dust correction, and identify which objects are most affected.</span>
+          </li>
+        </ol>
+
+        <div class="tags-row">
+          <span class="tag">astropy.io.fits</span>
+          <span class="tag">photutils</span>
+          <span class="tag">DAOStarFinder</span>
+          <span class="tag">ZScaleInterval</span>
+          <span class="tag">scipy.optimize</span>
+          <span class="tag">PSF FWHM</span>
+          <span class="tag">aperture photometry</span>
+          <span class="tag">extinction correction</span>
+          <span class="tag">stellar locus</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Resources ── -->
+    <div class="section" id="resources">
+      <div class="section-header">
+        <div class="section-icon icon-blue">⇗</div>
+        <h2>Key Resources &amp; Links</h2>
+      </div>
+      <div class="resource-list">
+        <a class="resource-item" href="https://www.sdss4.org/dr17/imaging/" target="_blank">
+          <span class="ri-icon">📷</span>
+          <div class="ri-body">
+            <div class="ri-title">DR17 Imaging Documentation — Camera, Pipeline, Data Products</div>
+            <div class="ri-url">sdss4.org/dr17/imaging</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://dr17.sdss.org/fields" target="_blank">
+          <span class="ri-icon">🗺️</span>
+          <div class="ri-body">
+            <div class="ri-title">DR17 Field Viewer — Browse and Download FITS Frames</div>
+            <div class="ri-url">dr17.sdss.org/fields</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://www.sdss4.org/dr17/algorithms/photo_flags_recommend/" target="_blank">
+          <span class="ri-icon">🚩</span>
+          <div class="ri-body">
+            <div class="ri-title">Recommended Photo Flags — When and How to Apply Quality Cuts</div>
+            <div class="ri-url">sdss4.org/dr17/algorithms/photo_flags_recommend</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://photutils.readthedocs.io" target="_blank">
+          <span class="ri-icon">🐍</span>
+          <div class="ri-body">
+            <div class="ri-title">photutils — Aperture &amp; PSF Photometry in Python</div>
+            <div class="ri-url">photutils.readthedocs.io</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://arxiv.org/abs/astro-ph/0007333" target="_blank">
+          <span class="ri-icon">📑</span>
+          <div class="ri-body">
+            <div class="ri-title">Fukugita et al. 1996 — The SDSS Photometric System (ugriz definition)</div>
+            <div class="ri-url">arxiv.org/abs/astro-ph/0007333</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+        <a class="resource-item" href="https://arxiv.org/abs/astro-ph/9710026" target="_blank">
+          <span class="ri-icon">📑</span>
+          <div class="ri-body">
+            <div class="ri-title">Schlegel, Finkbeiner &amp; Davis 1998 — The Dust Map Used in SDSS Extinction Corrections</div>
+            <div class="ri-url">arxiv.org/abs/astro-ph/9710026</div>
+          </div>
+          <span class="ri-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- Week nav -->
+  <div class="week-nav">
+    <a class="week-btn" href="sdss_week1.html">
+      <div>
+        <span class="wk-label">← Previous</span>
+        Week 01: The Universe in a Database
+      </div>
+    </a>
+    <a class="week-btn" href="#">
+      <div>
+        <span class="wk-label">Next →</span>
+        Week 03: Spectroscopy &amp; Redshifts
+      </div>
+    </a>
+  </div>
+
+</main>
+</body>
+</html>
