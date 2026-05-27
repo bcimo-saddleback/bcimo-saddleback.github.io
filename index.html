@@ -5,77 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Table of Contents: Beginning Web Development with HTML By Bryan Cimo</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            width: 90%;
-        }
-        h1 {
-            text-align: center;
-            margin-top: 0;
-        }
-        h2 {
-            text-align: center;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 15px 0;
-            line-height: 1.8;
-        }
-        dt {
-            font-weight: bold;
-            color: #2980b9;
-            margin-top: 15px;
-            margin-bottom: 5px;
-        }
-        dd {
-            margin-left: 30px;
-            margin-bottom: 5px;
-        }
-        .footer-text {
-            text-align: center;
-            color: #7f8c8d;
-            font-size: 0.95em;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Beginning Web Development with HTML</h1>
-        <p style="text-align: center; color: #2c3e50; font-size: 1.05em;">Author: Bryan Cimo</p>
-        <p style="text-align: center; color: #34495e;">Web Site Development - Html-Beginning - CIMW 100A<br><a href="https://www.saddleback.edu/">Saddleback College</a></p>
-        <hr>
-        <h2>Table of Contents</h2>
-        <ul>
-            <li><a href="chapter1.html">Chapter 1: Introduction to the Internet and the World Wide Web</a></li>
-            <li><a href="chapter2.html">Chapter 2: Introduction to HTML and Web Page Structure</a></li>
-            <dl>
-                <dt>Chapter 3: Working with Text and Links</dt>
-                <dd><a href="chapter3-1.html">Section 1: Formatting Text in HTML</a></dd>
-                <dd><a href="chapter3-2.html">Section 2: Creating Hyperlinks Using the &lt;a&gt; Tag</a></dd>
-                <dd><a href="chapter3-3.html">Section 3: Other Types of Links</a></dd>
-            </dl>
-            <dl>
-                <dt>Chapter 4: Visual Elements and Graphics</dt>
-                <dd><a href="chapter4-1.html">Section 1: Inserting Images Using the img Tag</a></dd>
-                <dd><a href="chapter4-2.html">Section 2: Introduction to Multimedia</a></dd>
-            </dl>
-            <li><a href="chapter5.html">Chapter 5: Publishing Your Website</a></li>
-            <li><a href="chapter6.html">Chapter 6: Web Design Basics</a></li>
-            <li><a href="chapter7.html">Chapter 7: CSS Techniques</a></li>
-            <li><a href="chapter8.html">Chapter 8: Best Practices for Web Development</a></li>
-        </ul>
-        <hr>
-        <p class="footer-text">Copyright 2025 Bryan Cimo</p>
-        
-    </div>
+    <header class="top-nav">
+        <nav aria-label="Top chapter navigation">
+            <ul class="top-links">
+                <li><a href="chapter1.html">Chapter 1</a></li>
+                <li><a href="chapter2.html">Chapter 2</a></li>
+                <li><a href="chapter3-1.html">Chapter 3</a></li>
+                <li><a href="chapter4-1.html">Chapter 4</a></li>
+                <li><a href="chapter5.html">Chapter 5</a></li>
+                <li><a href="chapter6.html">Chapter 6</a></li>
+                <li><a href="chapter7.html">Chapter 7</a></li>
+                <li><a href="chapter8.html">Chapter 8</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-section">
+        <div class="container">
+            <h1>Beginning Web Development with HTML</h1>
+            <p class="intro-text">Author: <a href="https://www.saddleback.edu/bios/bcimo">Bryan Cimo</a></p>
+            <p class="intro-subtext">Web Site Development - Html-Beginning - CIMW 100A<br><a href="https://www.saddleback.edu/">Saddleback College</a></p>
+            <hr>
+            <section class="toc-section">
+                <h2>Table of Contents</h2>
+                <nav aria-label="Chapter section navigation">
+                    <ul>
+                        <li><a href="chapter1.html">Chapter 1: Introduction to the Internet and the World Wide Web</a></li>
+                        <li><a href="chapter2.html">Chapter 2: Introduction to HTML and Web Page Structure</a></li>
+                        <li>
+                            <strong>Chapter 3: Working with Text and Links</strong>
+                            <ul>
+                                <li><a href="chapter3-1.html">Section 1: Formatting Text in HTML</a></li>
+                                <li><a href="chapter3-2.html">Section 2: Creating Hyperlinks Using the &lt;a&gt; Tag</a></li>
+                                <li><a href="chapter3-3.html">Section 3: Other Types of Links</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Chapter 4: Visual Elements and Graphics</strong>
+                            <ul>
+                                <li><a href="chapter4-1.html">Section 1: Inserting Images Using the img Tag</a></li>
+                                <li><a href="chapter4-2.html">Section 2: Introduction to Multimedia</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="chapter5.html">Chapter 5: Publishing Your Website</a></li>
+                        <li><a href="chapter6.html">Chapter 6: Web Design Basics</a></li>
+                        <li><a href="chapter7.html">Chapter 7: CSS Techniques</a></li>
+                        <li><a href="chapter8.html">Chapter 8: Best Practices for Web Development</a></li>
+                    </ul>
+                </nav>
+            </section>
+            <hr>
+            <p class="footer-text">Copyright 2026 Bryan Cimo</p>
+        </div>
+    </main>
 </body>
 </html>
