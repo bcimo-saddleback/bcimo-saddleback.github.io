@@ -82,9 +82,9 @@
             encapsulated and formatted. Understanding this distinction is crucial for creating well-structured web
             pages, as it helps browsers accurately interpret and display the intended layout and style.
         </p>
-        <center>
+        <div style="text-align: center;">
             <img src="taginfo.png" alt="open tag and closing tag example">
-        </center>
+        </div>
         </p>
         <p>
             <strong>Basic Structure of an HTML Document</strong>
@@ -475,13 +475,14 @@
             <h4>Code Runner</h4>
             <p>
                 <!-- Textarea for the user to input HTML -->
+                <label for="htmlCode">Enter HTML Code:</label>
                 <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
 
                 <!-- Run code button -->
                 <button onclick="runCode()">Run Code</button>
 
                 <!-- Output iframe where the HTML is rendered -->
-                <iframe id="output" src="about:blank"></iframe>
+                <iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
             </p>
         </section>
         <div align="center">

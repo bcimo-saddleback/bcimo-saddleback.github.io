@@ -37,13 +37,11 @@
 
 <body>
     <div class="container">
-        <p>
-            <center>
-                <h1>
-                    Chapter 1: Introduction to the Internet and the World Wide Web
-                </h1>
-            </center>
-        </p>
+        <div style="text-align: center;">
+            <h1>
+                Chapter 1: Introduction to the Internet and the World Wide Web
+            </h1>
+        </div>
 
         <p>Welcome to the first chapter of our course! In this interactive module, we&apos;ll explore the history,
             development, and structure of the Internet and the Web. By the end of this chapter, you should be able to:
@@ -258,13 +256,14 @@
         <p>Try running this code! Copy the HTML Code example above into the text box below, then click on run.</p>
 
         <!-- Textarea for the user to input HTML -->
+        <label for="htmlCode">Enter HTML Code:</label>
         <textarea id="htmlCode" placeholder="Write your HTML here..."></textarea>
 
         <!-- Run code button -->
         <button onclick="runCode()">Run Code</button>
 
         <!-- Output iframe where the HTML is rendered -->
-        <iframe id="output" src="about:blank"></iframe>
+        <iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
         <hr>
 
         <h3><strong>Conclusion</strong></h3>
