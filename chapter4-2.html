@@ -2,7 +2,7 @@
 
 <head>
 	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Chapter 4: Visual Elements and Graphics - Section 2</title>
 	<link rel="stylesheet" href="style.css">
 	<script>
@@ -29,7 +29,7 @@
 	<div class="container">
 
 		<h1>Chapter 4: Visual Elements and Graphics</h1>
-			
+
 		<h2>Section 2: Introduction to Multimedia: Embedding Videos and Audio</h2>
 		<p>While images enhance the visual appeal of a website, videos and audio are essential for creating more
 			interactive and engaging experiences. HTML provides simple tags to embed video and audio files directly into
@@ -50,7 +50,8 @@
 		</ul>
 		<h4>Interactive Activity:</h4>
 		<p>Try embedding a video in your HTML. Copy the code below into the code editor:</p>
-		<pre><code>&lt;video width="640" height="360" controls&gt;<br />&nbsp; &lt;source src="video/Apollo11_clip.mp4" type="video/mp4"&gt;<br />&nbsp; Your browser does not support the video tag.<br />&lt;/video&gt;</code></pre></p>
+		<pre><code>&lt;video width="640" height="360" controls&gt;<br />&nbsp; &lt;source src="video/Apollo11_clip.mp4" type="video/mp4"&gt;<br />&nbsp; Your browser does not support the video tag.<br />&lt;/video&gt;</code></pre>
+		</p>
 		<ul>
 			<li>Try changing the height and width.</li>
 			<li>Try changing the name of the video.</li>
@@ -58,6 +59,7 @@
 			</li>
 		</ul>
 		<section id="coderunner">
+			<h4>Code Runner</h4>
 			<p>
 				<!-- Textarea for the user to input HTML -->
 				<label for="htmlCode">Enter HTML Code:</label>
@@ -71,17 +73,23 @@
 			</p>
 		</section>
 
-		<iframe width="600" height="350" src="https://www.youtube.com/embed/h51jaPt5A5s" title="How To Insert A Video Using HTML #shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<iframe width="600" height="350" src="https://www.youtube.com/embed/h51jaPt5A5s"
+			title="How To Insert A Video Using HTML #shorts" frameborder="0"
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+			referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 		<h3>Embedding Audio with the &lt;audio&gt; Tag</h3>
 		<p>The &lt;audio&gt; tag is similar to the &lt;video&gt; tag but for audio files, see the example below.</p>
 		<pre><code>&lt;audio src="audio.mp3" controls&gt;<br />&nbsp; Your browser does not support the audio tag.<br />&lt;/audio&gt;</code></pre>
 		<p>This will embed an audio player that allows users to play the file.</p>
 		<ul>
-			<li><strong><code>src</code></strong>: Specifies the path to the audio file. It can be a relative or absolute URL.</li>
-			<li><strong><code>controls</code></strong>: Displays the default audio controls (play, pause, volume, etc.).</li>
-			<li><strong>Fallback text</strong>: The text between the <code>&lt;audio&gt;</code> tags will appear if the browser doesn&rsquo;t support the audio element.</li>
-			</ul>
+			<li><strong><code>src</code></strong>: Specifies the path to the audio file. It can be a relative or
+				absolute URL.</li>
+			<li><strong><code>controls</code></strong>: Displays the default audio controls (play, pause, volume, etc.).
+			</li>
+			<li><strong>Fallback text</strong>: The text between the <code>&lt;audio&gt;</code> tags will appear if the
+				browser doesn&rsquo;t support the audio element.</li>
+		</ul>
 		<br>
 		<div class=MsoNormal align=center style='margin-bottom:0in;text-align:center'>
 
@@ -137,26 +145,26 @@
 		<p>Images, videos, and audio are powerful tools for improving the user experience and making websites more
 			dynamic. Experiment with these elements and be mindful of accessibility considerations, such as providing
 			alternative text for images and ensuring media is easily accessible to all users.</p>
-		
+
 	</div>
 
-<footer>
-	<div class="nav-container">
-		<div class="nav-link">
-			<strong>← Previous</strong>
-			<a href="chapter4-1.html">Chapter 4.1</a><br>
-			<a href="index.html">Home</a>
+	<footer>
+		<div class="nav-container">
+			<div class="nav-link">
+				<strong>← Previous</strong>
+				<a href="chapter4-1.html">Chapter 4.1</a><br>
+				<a href="index.html">Home</a>
+			</div>
+			<div class="nav-link">
+				<strong>📖 Current Chapter</strong>
+				<span>Chapter 4.2</span>
+			</div>
+			<div class="nav-link">
+				<strong>Next →</strong>
+				<a href="chapter5.html">Chapter 5</a>
+			</div>
 		</div>
-		<div class="nav-link">
-			<strong>📖 Current Chapter</strong>
-			<span>Chapter 4.2</span>
-		</div>
-		<div class="nav-link">
-			<strong>Next →</strong>
-			<a href="chapter5.html">Chapter 5</a>
-		</div>
-	</div>
-</footer>
+	</footer>
 </body>
 
 </html>

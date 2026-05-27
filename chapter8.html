@@ -6,24 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chapter 8: Best Practices for Web Development</title>
     <link rel="stylesheet" href="style.css">
-        <script>
-            // Function to run the HTML code
-            function runCode() {
-                var htmlCode = document.getElementById('htmlCode').value;
+    <script>
+        // Function to run the HTML code
+        function runCode() {
+            var htmlCode = document.getElementById('htmlCode').value;
 
-                var iframe = document.getElementById('output');
-                var iframeDoc = iframe.contentWindow.document;
-                iframeDoc.open();
+            var iframe = document.getElementById('output');
+            var iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
 
-                // Write the HTML code to the iframe
-                iframeDoc.write(`
+            // Write the HTML code to the iframe
+            iframeDoc.write(`
                     ${htmlCode}
                 `);
 
-                iframeDoc.close();
-            }
-        </script>
-    </head>
+            iframeDoc.close();
+        }
+    </script>
+</head>
 
 <body lang=EN-US style='word-wrap:break-word'>
 
@@ -34,8 +34,9 @@
             <a href="index.html">Home</a>
             clean, well-structured HTML. Additionally, we&rsquo;ll touch on performance optimization, security
             considerations, and the importance of keeping up with web development trends. By following these guidelines,
-            you'll develop websites that are easy to maintain, perform well, and are secure.</p>
-            <span>Chapter 8</span>
+            you'll develop websites that are easy to maintain, perform well, and are secure.
+        </p>
+        <span>Chapter 8</span>
         <ol>
             <li><strong>Writing Clean, Well-Structured HTML</strong></li>
         </ol>
@@ -191,7 +192,8 @@
             <li><strong>Web Development Communities</strong>: Platforms like Stack Overflow, GitHub, and Reddit's web
                 development subreddits are great places to ask questions, share knowledge, and collaborate.</li>
             <li><strong>Stay Updated with Blogs and Podcasts</strong>: Follow blogs like <a
-                    href="https://css-tricks.com/">CSS-Tricks</a> and <a href="https://www.smashingmagazine.com/">Smashing
+                    href="https://css-tricks.com/">CSS-Tricks</a> and <a
+                    href="https://www.smashingmagazine.com/">Smashing
                     Magazine</a>, or listen to podcasts for the latest trends.</li>
         </ul>
         <p><strong>Interactive Learning Path:</strong> Explore these platforms and watch videos for ongoing learning in
@@ -214,19 +216,20 @@
 </body>
 
 <footer>
-	<div class="nav-container">
-		<div class="nav-link">
-			<strong>← Previous</strong>
-			<a href="chapter7.html">Chapter 7</a>
-		</div>
-		<div class="nav-link">
-			<strong>📖 Current Chapter</strong>
-			Chapter 8
-		</div>
-		<div class="nav-link">
-			<strong>Next →</strong>
-			<a href="index.html">Back to Home</a>
-		</div>
-	</div>
+    <div class="nav-container">
+        <div class="nav-link">
+            <strong>← Previous</strong>
+            <a href="chapter7.html">Chapter 7</a>
+        </div>
+        <div class="nav-link">
+            <strong>📖 Current Chapter</strong>
+            Chapter 8
+        </div>
+        <div class="nav-link">
+            <strong>Next →</strong>
+            <a href="index.html">Back to Home</a>
+        </div>
+    </div>
 </footer>
+
 </html>
