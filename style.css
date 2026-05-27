@@ -189,7 +189,7 @@ body {
 .top-links a:hover,
 .top-links a:focus-visible {
 	background: rgba(52, 152, 219, 0.12);
-	color: #2980b9;
+	color: #2a98e1;
 }
 
 .main-section {
@@ -354,7 +354,7 @@ hr {
 
 /* ================== FOOTER & NAVIGATION ================== */
 footer {
-	background: linear-gradient(135deg, #11132e, #11132e);
+	background: linear-gradient(135deg, #2e0a40, #1a0874);
 	color: #ecf0f1;
 	padding: 30px 20px;
 	margin-top: 3em;
