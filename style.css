@@ -59,19 +59,19 @@ h4 {
 
 /* ================== LINKS ================== */
 a {
-	color: #3498db;
+	color: #1a5f7a;
 	text-decoration: none;
 	transition: all 0.3s ease;
 	font-weight: 500;
 }
 
 a:hover {
-	color: #2980b9;
+	color: #0f486b;
 	text-decoration: underline;
 }
 
 a:visited {
-	color: #8e44ad;
+	color: #1a5f7a;
 }
 
 /* ================== CONTAINER & LAYOUT ================== */
@@ -354,7 +354,7 @@ hr {
 
 /* ================== FOOTER & NAVIGATION ================== */
 footer {
-	background: linear-gradient(135deg, #2c3e50, #34495e);
+	background: linear-gradient(135deg, #11132e, #11132e);
 	color: #ecf0f1;
 	padding: 30px 20px;
 	margin-top: 3em;
@@ -367,26 +367,29 @@ footer .nav-container {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 5px;
+	gap: 5px;
 	text-align: center;
 }
 
 footer .nav-link {
 	padding: 5px;
+	padding: 5px;
 }
 
 footer a {
-	color: #3498db;
+	color: #1a5f7a;
 	text-decoration: none;
 	font-weight: 600;
 	transition: all 0.3s ease;
 	display: inline-block;
+	padding: 5px 5px;
 	padding: 5px 5px;
 	border-radius: 6px;
 }
 
 footer a:hover {
 	color: #ffffff;
-	background: rgba(52, 152, 219, 0.2);
+	background: #1a5f7a;
 	text-decoration: none;
 }
 
@@ -412,5 +415,6 @@ footer .nav-link strong {
 
 .supporting {	
 	padding-left: 10px; 
+	margin-bottom: 10px;
 	margin-bottom: 10px;
 }
