@@ -7,94 +7,167 @@
     <title>Chapter 2: Introduction to HTML and Web Page Structure</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // Function to run the HTML code
+        // Function to run the HTML code inside the iframe environment
         function runCode() {
             var htmlCode = document.getElementById('htmlCode').value;
-
             var iframe = document.getElementById('output');
             var iframeDoc = iframe.contentWindow.document;
             iframeDoc.open();
 
-            // Write the HTML code to the iframe
-            iframeDoc.write(`
-            ${htmlCode}
-        `);
-
+            // Auto-inject document boilerplate structure if user just writes code fragments
+            if (!htmlCode.trim().toLowerCase().startsWith('<!doctype') && !htmlCode.trim().toLowerCase().startsWith('<html')) {
+                iframeDoc.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Live Preview Sandbox Output</title>
+                        <style>body { font-family: sans-serif; padding: 10px; margin: 0; }</style>
+                    </head>
+                    <body>
+                        ${htmlCode}
+                    </body>
+                    </html>
+                `);
+            } else {
+                iframeDoc.write(htmlCode);
+            }
             iframeDoc.close();
         }
+
+        // Programmatic Macro Snippet Tool Injector
+        function insertMacroSnippet(macroType) {
+            const textarea = document.getElementById('htmlCode');
+            let snippetsMap = {
+                skeleton: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>My First Web Page</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>Welcome to your first HTML page.</p>\n</body>\n</html>",
+                semantic: "<section id=\"main-content\">\n    <h2>Understanding Inclusion</h2>\n    <p>Semantic tags help assistive technologies interpret page layout documents mapping out interfaces accurately.</p>\n</section>",
+                link: "<a href=\"https://www.saddleback.edu\" target=\"_blank\">Visit Saddleback College</a>"
+            };
+
+            const selectedText = snippetsMap[macroType];
+            if (!selectedText) return;
+
+            const startPos = textarea.selectionStart;
+            const endPos = textarea.selectionEnd;
+            
+            textarea.value = textarea.value.substring(0, startPos) + selectedText + textarea.value.substring(endPos);
+            textarea.focus();
+            textarea.selectionStart = startPos + selectedText.length;
+            textarea.selectionEnd = startPos + selectedText.length;
+            
+            runCode(); // Trigger execution preview automatically
+        }
+
+        // Self-Contained Client Grading Logic
+        function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+            const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+            const displayBox = document.getElementById(targetFeedbackId);
+
+            if (!checkedOption) {
+                displayBox.innerHTML = "<span style='color: #d97706; font-weight: bold;'>⚠️ Please make an explicit selection before submission.</span>";
+                return;
+            }
+
+            if (checkedOption.value === targetKey) {
+                displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 Correct!</strong> ${textSuccess}</div>`;
+            } else {
+                displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ Incorrect.</strong> ${textFailure}</div>`;
+            }
+        }
     </script>
+    <style>
+        /* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
+        .quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+        .quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
+        .quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
+        .quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
+        .quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
+        .action-button, .macro-btn { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
+        .action-button:hover { background: #1d4ed8; }
+        .macro-btn { background: #0d9488; margin-right: 8px; margin-bottom: 8px; }
+        .macro-btn:hover { background: #0f766e; }
+        .macro-container-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; font-weight: 700; margin-bottom: 6px; display: block; }
+        .ethics-highlight-card { background: #fff1f2; border: 1px solid #ffe4e6; border-left: 5px solid #e11d48; border-radius: 6px; padding: 22px; margin: 25px 0; }
+        .ethics-highlight-card h3, .ethics-highlight-card h4 { color: #9f1239; margin-top: 0; }
+        textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
+        iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
+        .tag-block-title { display: inline-block; background-color: #e2e8f0; color: #0f172a; padding: 2px 8px; font-family: monospace; border-radius: 4px; font-size: 1.05rem; }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <p>
-        <h1>Chapter 2: Introduction to HTML and Web Page Structure</h1>
-        </p>
-        <p>
-            <strong>Overview</strong>
-        </p>
-        <p>
-            In this chapter, you will learn the basics of HTML, the foundational
-            language used to create web pages. By the end of this chapter, you will be
-            able to create a simple HTML document and understand its basic structure
-            and essential elements.
-        </p>
-        <p>
-            <strong>What is HTML and Why it's important</strong>
-        </p>
-        <p>
-            HTML stands for HyperText Markup Language. It is the standard language used
-            to create and structure web pages and web applications. HTML provides the
-            building blocks for web content, defining elements such as headings,
-            paragraphs, images, links, and more.
-        </p>
-        <p>
-            <strong>Why Learn HTML?</strong>
-        </p>
-        <ul type="disc">
-            <li>
-                <strong>Universal Foundation</strong>: HTML is the backbone of web
-                development, regardless of the tools or frameworks you use.
-            </li>
-            <li>
-                <strong>Essential for Communication</strong>: Understanding HTML allows
-                developers, designers, and marketers to work together effectively.
-            </li>
-            <li>
-                <strong>Control and Customization</strong>: Learning HTML gives you more
-                control over the content and structure of your web pages.
-            </li>
-        </ul>
+        <main>
+            <header style="text-align: center; margin-bottom: 25px;">
+                <h1>Chapter 2: Introduction to HTML and Web Page Structure</h1>
+            </header>
 
-        <strong>HTML Tags</strong>
-        <p>
-            HTML tags are the fundamental building blocks of web pages. They are used to structure content, define
-            elements, and provide instructions to web browsers on how to display information. Each HTML tag consists of
-            a name enclosed in angle brackets, such as <strong>&lt;p&gt;</strong> for a paragraph or
-            <strong>&lt;a&gt;</strong> for a hyperlink.
-        </p>
-        <p>
-            Tags often come in pairs, with an opening tag and a closing tag, like <strong>&lt;h1&gt;</strong> and
-            <strong>&lt;/h1&gt;</strong>, to denote the start and end of an element. The opening tag,
-            <strong>&lt;h1&gt;</strong>, signals the start of an element, while the closing tag,
-            <strong>&lt;/h1&gt;</strong>, indicates its end. The key difference lies in the forward slash / present in
-            closing tags, which denotes the conclusion of the element. This pairing ensures that content is properly
-            encapsulated and formatted. Understanding this distinction is crucial for creating well-structured web
-            pages, as it helps browsers accurately interpret and display the intended layout and style.
-        </p>
-        <div style="text-align: center;">
-            <img src="taginfo.png" alt="open tag and closing tag example">
-        </div>
-        </p>
-        <p>
-            <strong>Basic Structure of an HTML Document</strong>
-        </p>
-        <p>
-            An HTML document has a simple and predictable structure, making it easy to
-            learn and use. Here is a simple example of a webpage in HTML:
-        </p>
+            <section id="chapter-overview">
+                <h3><strong>Overview</strong></h3>
+                <p>
+                    In this chapter, you will learn the basics of HTML, the foundational
+                    language used to create web pages. By the end of this chapter, you will be
+                    able to create a simple HTML document and understand its basic structure
+                    and essential elements.
+                </p>
+            </section>
 
-        <pre>
+            <section id="html-definition">
+                <h3><strong>What is HTML and Why it's important</strong></h3>
+                <p>
+                    HTML stands for HyperText Markup Language. It is the standard language used
+                    to create and structure web pages and web applications. HTML provides the
+                    building blocks for web content, defining elements such as headings,
+                    paragraphs, images, links, and more.
+                </p>
+                
+                <h3><strong>Why Learn HTML?</strong></h3>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>
+                        <strong>Universal Foundation</strong>: HTML is the backbone of web
+                        development, regardless of the tools or frameworks you use.
+                    </li>
+                    <li>
+                        <strong>Essential for Communication</strong>: Understanding HTML allows
+                        developers, designers, and marketers to work together effectively.
+                    </li>
+                    <li>
+                        <strong>Control and Customization</strong>: Learning HTML gives you more
+                        control over the content and structure of your web pages.
+                    </li>
+                </ul>
+            </section>
+
+            <section id="html-tags-concept">
+                <h3><strong>HTML Tags</strong></h3>
+                <p>
+                    HTML tags are the fundamental building blocks of web pages. They are used to structure content, define
+                    elements, and provide instructions to web browsers on how to display information. Each HTML tag consists of
+                    a name enclosed in angle brackets, such as <strong>&lt;p&gt;</strong> for a paragraph or
+                    <strong>&lt;a&gt;</strong> for a hyperlink.
+                </p>
+                <p>
+                    Tags often come in pairs, with an opening tag and a closing tag, like <strong>&lt;h1&gt;</strong> and
+                    <strong>&lt;/h1&gt;</strong>, to denote the start and end of an element. The opening tag,
+                    <strong>&lt;h1&gt;</strong>, signals the start of an element, while the closing tag,
+                    <strong>&lt;/h1&gt;</strong>, indicates its end. The key difference lies in the forward slash / present in
+                    closing tags, which denotes the conclusion of the element. This pairing ensures that content is properly
+                    encapsulated and formatted. Understanding this distinction is crucial for creating well-structured web
+                    pages, as it helps browsers accurately interpret and display the intended layout and style.
+                </p>
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="taginfo.png" alt="open tag and closing tag example" style="max-width: 100%; height: auto; border: 1px solid #e2e8f0; padding: 4px; border-radius: 4px;">
+                </div>
+            </section>
+
+            <section id="document-structure">
+                <h3><strong>Basic Structure of an HTML Document</strong></h3>
+                <p>
+                    An HTML document has a simple and predictable structure, making it easy to
+                    learn and use. Here is a simple example of a webpage in HTML:
+                </p>
+
+                <pre style="background-color: #f1f5f9; padding: 15px; border-radius: 6px; overflow-x: auto; font-family: monospace;">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
@@ -104,333 +177,307 @@
         &lt;h1&gt;Welcome to beginning web development!&lt;/h1&gt;
         &lt;p&gt;I'm glad you are here.&lt;/p&gt;
     &lt;/body&gt;
-&lt;/html&gt;
-</pre>
-        <strong>What do all those tags do?</strong><br>
-        </p>
-        <ol start="1" type="1">
-            <li>
-                &lt;!DOCTYPE html&gt;: Declares the document type and version of
-                HTML being used (HTML5).
-            </li>
-            <li>
-                &lt;html&gt;: The root element of an HTML document, enclosing all
-                content.
-            </li>
-            <li>
-                &lt;head&gt;: Contains metadata about the document, such as the
-                title and links to stylesheets or scripts.
-            </li>
-            <li>
-                &lt;title&gt;: Sets the title of the web page, which appears on
-                the browser tab.
-            </li>
-            <li>
-                &lt;body&gt;: Contains the content that is displayed on the web
-                page, including text, images, and other elements.
-            </li>
-        </ol>
+&lt;/html&gt;</pre>
+                
+                <p><strong>What do all those tags do?</strong></p>
+                <ol style="padding-left: 20px; margin-bottom: 20px;">
+                    <li>
+                        <code>&lt;!DOCTYPE html&gt;</code>: Declares the document type and version of
+                        HTML being used (HTML5).
+                    </li>
+                    <li>
+                        <code>&lt;html&gt;</code>: The root element of an HTML document, enclosing all
+                        content.
+                    </li>
+                    <li>
+                        <code>&lt;head&gt;</code>: Contains metadata about the document, such as the
+                        title and links to stylesheets or scripts.
+                    </li>
+                    <li>
+                        <code>&lt;title&gt;</code>: Sets the title of the web page, which appears on
+                        the browser tab.
+                    </li>
+                    <li>
+                        <code>&lt;body&gt;</code>: Contains the content that is displayed on the web
+                        page, including text, images, and other elements.
+                    </li>
+                </ol>
 
-        The HTML code above will produce a webpage, what do you think it will look like?<br>
-        Copy the code above into the <a href="#coderunner">code runner</a> at the bottom of the page and click "Run
-        Code" to find out.
+                <p>
+                    The HTML code above will produce a webpage, what do you think it will look like?<br>
+                    Copy the code above into the <a href="#coderunner">code runner</a> at the bottom of the page and click "Run
+                    Code" to find out.
+                </p>
+            </section>
 
-        <p>
-            <strong>Common HTML Tags</strong>
-        </p>
-        <hr>
-        <p>
-        <h4>
-            <strong>1. </strong><strong>&lt;html&gt;:</strong>
-        </h4> The
-        &lt;html&gt;
-        tag is the root element of an HTML document. It signifies the beginning and
-        end of an HTML document and encompasses all other HTML elements. The
-        structure of an HTML document begins with the opening
-        &lt;html&gt;
-        tag and concludes with the closing
-        &lt;html&gt;
-        tag. This tag informs the browser that the content within these tags is
-        HTML code. Here is a simple example of how the
-        &lt;html&gt;
-        tag is used:
-        </p>
-        <pre>
-<code>&lt;!DOCTYPE html&gt;</code>
-<code>&lt;html&gt;</code>
-    <code>  &lt;!-- Other HTML elements go here --&gt;</code>
-<code>&lt;/html&gt;</code>
-</pre>
-        <hr>
-        <p>
-        <h4>
-            <strong>2. </strong><strong>&lt;head&gt;:</strong>
-        </h4> The
-        &lt;head&gt;
-        tag is a container for metadata and links to external resources. Metadata
-        includes information about the document such as its title, character set,
-        styles, scripts, and other meta-information. The content within the
-        &lt;head&gt;
-        tag is not displayed on the webpage itself but is essential for the proper
-        functioning and identification of the page. Here is an example of how the
-        &lt;head&gt;
-        tag might be used:
-        </p>
-        <pre><code>&lt;html&gt;</code>
-<code>  &lt;head&gt;</code>
-<code>    &lt;meta charset="UTF-8"&gt;</code>
-<code>    &lt;title&gt;My Web Page&lt;/title&gt;</code>
-<code>    &lt;link rel="stylesheet" href="styles.css"&gt;</code>
-<code>    &lt;script src="script.js"&gt;&lt;/script&gt;</code>
-<code>  &lt;/head&gt;</code>
-<code>  &lt;!-- Body content goes here --&gt;</code>
-<code>&lt;/html&gt;</code>
-</pre>
-        <hr>
-        <p>
-        <h4>
-            <strong>3. </strong><strong>&lt;body&gt;:</strong>
-        </h4> The
-        &lt;body&gt;
-        tag contains the actual content of the webpage that is visible to users.
-        This includes text, images, links, tables, and any other elements that make
-        up the main part of the webpage. The
-        &lt;body&gt;
-        tag follows the
-        &lt;head&gt;
-        tag and is closed just before the closing
-        &lt;/html&gt;
-        tag. Here is an example of how the
-        &lt;body&gt;
-        tag might be used:
-        </p>
-        <pre><code>&lt;html&gt;</code>
-<code>  &lt;head&gt;</code>
-<code>    &lt;!-- Head content goes here --&gt;</code>
-<code>  &lt;/head&gt;</code>
-<code>  &lt;body&gt;</code>
-<code>    &lt;h1&gt;Welcome to My Web Page&lt;/h1&gt;</code>
-<code>    &lt;p&gt;This is a paragraph of text on my webpage.&lt;/p&gt;</code>
-<code>  &lt;/body&gt;</code>
-<code>&lt;/html&gt;</code>
-</pre>
-        <hr>
-        <p>
-        <h4> <strong>4. </strong><strong>&lt;title&gt;:</strong></h4> The
-        &lt;title&gt;
-        tag is used to set the title of the webpage, which is displayed on the
-        browser's title bar or tab. It is a crucial part of the
-        &lt;head&gt;
-        section and helps users identify the page they are viewing. The
-        &lt;title&gt;
-        tag should be concise and descriptive to effectively convey the content of
-        the page. Here is an example of how the
-        &lt;title&gt;
-        tag might be used:
-        </p>
-        <pre><code>&lt;html&gt;</code>
-<code>  &lt;head&gt;</code>
-<code>    &lt;title&gt;Introduction to HTML Tags&lt;/title&gt;</code>
-<code>  &lt;/head&gt;</code>
-<code>  &lt;body&gt;</code>
-<code>    &lt;!-- Body content goes here --&gt;</code>
-<code>  &lt;/body&gt;</code>
-<code>&lt;/html&gt;</code>
-</pre>
-        <hr>
-        <p>
-        <h4> <strong>5. </strong><strong>&lt;div&gt;:</strong></h4> The &lt;div&gt; tag, short
-        for "division," is a block-level element used to group together larger
-        sections of HTML content. It is commonly used to create layout structures,
-        such as headers, footers, sidebars, and main content areas. The &lt;div&gt;
-        tag does not inherently carry any specific styling or semantic meaning, but
-        it can be styled using CSS (Cascading Style Sheets) to achieve the desired
-        appearance. For example, a &lt;div&gt; can be used to create a container for
-        a website's main content:
-        </p>
-        <pre><code>&lt;div class="main-content"&gt;</code>
-<code>    &lt;h1&gt;Welcome to My Website&lt;/h1&gt;</code>
-<code>    &lt;p&gt;This is the main section of the website where content is displayed.&lt;/p&gt;</code>
-<code>&lt;/div&gt;</code>
-</pre>
-        <p>
-            In this example, the
-            <code>div</code>
-            tag is used to encapsulate a header and a paragraph, allowing developers to
-            apply styles or scripts to this section as a whole.
-        </p>
-        <hr>
-        <p>
-        <h4> <strong>6. </strong><strong>&lt;span&gt;:</strong></h4> The &lt;span&gt;
-        tag is an inline element used to apply styles or manipulate specific parts
-        of text within a larger block of content. Unlike &lt;div&gt;, which affects entire sections,
-        &lt;span&gt; is used for smaller portions, such as individual words or phrases. The &lt;span&gt;
-        tag is often used in conjunction with CSS to change the appearance of text.
-        For instance:
-        </p>
-        <pre><code>&lt;p&gt;This is an example of a &lt;span style="color: red;"&gt;highlighted&lt;/span&gt; word.&lt;/p&gt;</code>
-</pre>
-        <p>
-            Here, the
-            <code>span</code>
-            tag is used to change the color of the word "highlighted" to red,
-            demonstrating how
-            <code>span</code>
-            can be used to target specific text for styling.
-        </p>
-        <hr>
-        <p>
-        <h4> <strong>7. </strong><strong>&lt;a&gt; (Anchor):</strong></h4> The &lt;a&gt; tag, known as the anchor tag,
-        is used to create hyperlinks, which are essential for navigating the web. The
-        <code>href</code>
-        attribute within the &lt;a&gt; tag specifies the URL of the page the link points to. Hyperlinks can link
-        to other web pages, files, email addresses, or specific sections within the
-        same page. An example of an anchor tag is:
-        </p>
-        <pre><code>&lt;a href="https://www.example.com"&gt;Visit Example.com&lt;/a&gt;</code>
-</pre>
-        <p>
-            This code creates a clickable link that directs users to
-            "https://www.example.com". The text "Visit Example.com" is the clickable
-            part of the link, known as the anchor text.
-        </p>
-        <hr>
-        <p>
-        <h4> <strong>8. &lt;br&gt;:</strong></h4> The &lt;br&gt; tag, short
-        for "break," is an empty tag used to insert a line break in the text. It is
-        useful for formatting text where a new line is needed without starting a
-        new paragraph. The &lt;br&gt; tag does not have a closing tag, and it is
-        written as a self-closing tag in HTML5. For example:
-        </p>
-        <pre><code>&lt;p&gt;This is the first line.&lt;br&gt;This is the second line.&lt;/p&gt;</code>
-</pre>
-        <p>
-            In this example, the
-            <code>br</code>
-            tag creates a line break between "This is the first line." and "This is the
-            second line.", allowing them to appear on separate lines within the same
-            paragraph.
-        </p>
-        <hr>
-        <p>
-        <h4> <strong>9. </strong><strong>&lt;nav&gt;:</strong></h4> The &lt;nav&gt; tag is used
-        to define a set of navigation links. It is a semantic element that helps
-        search engines and screen readers understand the structure of a webpage.
-        Typically, the &lt;nav&gt; tag is used to enclose the primary navigation
-        menu of a website, which may include links to other pages or sections
-        within the same page.
-        </p>
-        <p>
-            <strong>Example of</strong> <code>nav</code>
-            <strong>tag usage:</strong>
-        </p>
-        <pre><code>&lt;nav&gt;</code>
-<code>  &lt;ul&gt;</code>
-<code>    &lt;li&gt;&lt;a href="#home"&gt;Home&lt;/a&gt;&lt;/li&gt;</code>
-<code>    &lt;li&gt;&lt;a href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;</code>
-<code>    &lt;li&gt;&lt;a href="#services"&gt;Services&lt;/a&gt;&lt;/li&gt;</code>
-<code>    &lt;li&gt;&lt;a href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;</code>
-<code>  &lt;/ul&gt;</code>
-<code>&lt;/nav&gt;</code>
-</pre>
-        <p>
-            In this example, the &lt;nav&gt; tag contains an unordered list (
-            <code>ul</code>
-            ) of links (
-            <code>a</code>
-            tags) that serve as the main navigation for a website.
-        </p>
-        <hr>
-        <p>
-        <h4> <strong>10. </strong><strong>&lt;section&gt;:</strong></h4> The &lt;section&gt; tag
-        is used to define a thematic grouping of content, typically with a heading.
-        It is a semantic tag that helps organize content into logical sections.
-        Each &lt;section&gt; can be thought of as a distinct part of the document
-        that can stand alone in terms of its content.
-        </p>
-        <p>
-            <strong>Example of</strong> &lt;section&gt;
-            <strong>
-                tag usage with an ID:
-            </strong>
-        </p>
-        <pre><code>&lt;section id="about"&gt;</code>
-<code>  &lt;h2&gt;About Us&lt;/h2&gt;</code>
-<code>  &lt;p&gt;We are a company dedicated to providing the best services to our clients.&lt;/p&gt;</code>
-<code>&lt;/section&gt;</code>
-</pre>
-        <p>
-            In this example, the &lt;section&gt; tag is used to group content related to
-            the "About Us" part of the webpage. The
-            <code>&lt;id&gt;</code>
-            attribute is used to uniquely identify this section, which can be useful
-            for linking directly to it from other parts of the webpage or from external
-            sources.
-        </p>
-        <hr>
-        <p>
-        <h4> <strong>11. </strong><strong>&lt;footer&gt;:</strong></h4> The
-        &lt;footer&gt;
-        tag is used to define the footer of a document or a section. It typically
-        contains information about the author, copyright information, contact
-        details, or links to related documents. The &lt;footer&gt; tag is a semantic element that helps delineate the
-        end of a section or the
-        entire webpage.
-        </p>
-        <p>
-            <strong>Example of</strong>
-            &lt;footer&gt;
-            <strong>tag usage:</strong>
-        </p>
-        <pre><code>&lt;footer&gt;</code>
-    Contact Us at: &lt;a href="mailto:bcimo@saddleback.edu"&gt;bcimo@saddleback.edu&lt;/a&gt;
-<code>&lt;/footer&gt;</code>
-</pre>
-        <p>
-            In this example, the
-            &lt;footer&gt;
-            tag contains copyright information and a contact email, providing users
-            with essential details about the webpage.
-        </p>
-        <hr>
-        <p>
-        <h4> <strong>12. </strong><strong>heading:</strong></h4> Heading tags, ranging
-        from &lt;h1&gt; to &lt;h6&gt;, are used to define headings in a document. The
-        &lt;h1&gt; tag is the highest level of heading and is typically used for the main
-        title of a page, while &lt;h6&gt; is the lowest level. Headings help to organize content
-        and make it more accessible to users and search engines.
-        </p>
-        <p>
-            <strong>Example:</strong>
-        </p>
-        <pre><code>&lt;h1&gt;Main Title of the Document&lt;/h1&gt;</code>
-<code>&lt;h2&gt;Subheading Level h2&lt;/h2&gt;</code>
-<code>&lt;h3&gt;Subheading Level h3&lt;/h3&gt;</code>
-</pre>
-        <p>
-            In this example, the &lt;h1&gt; tag is used for the main title, while
-            &lt;h2&gt; and &lt;h3&gt; are used for subheadings. Using headings appropriately helps create a clear
-            hierarchy of information.
-        </p>
-        <div align="center">
-            <hr size="0" width="100%" align="center" />
-        </div>
+            <section id="common-tags-deepdive">
+                <h3><strong>Common HTML Tags</strong></h3>
+                <hr>
+                
+                <article style="margin: 20px 0;">
+                    <h4><strong>1. </strong><span class="tag-block-title">&lt;html&gt;</span></h4>
+                    <p>
+                        The &lt;html&gt; tag is the root element of an HTML document. It signifies the beginning and
+                        end of an HTML document and encompasses all other HTML elements. The
+                        structure of an HTML document begins with the opening
+                        &lt;html&gt;
+                        tag and concludes with the closing
+                        &lt;html&gt;
+                        tag. This tag informs the browser that the content within these tags is
+                        HTML code. Here is a simple example of how the
+                        &lt;html&gt;
+                        tag is used:
+                    </p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;!DOCTYPE html&gt;</code>\n<code>&lt;html&gt;</code>\n<code>  &lt;!-- Other HTML elements go here --&gt;</code>\n<code>&lt;/html&gt;</code></pre>
+                </article>
+                <hr>
 
-        <p>
-            <strong>You Try It: Create Your First Web Page</strong>
-        </p>
-        <p>
-            Follow these steps to create your first HTML page:
-        </p>
-        <ol start="1" type="1">
-            <li>
-                Find the built-in code editor on this webpage.
-            </li>
-            <li>
-                Copy and paste the following code:
-            </li>
-        </ol>
-        <pre>
+                <article style="margin: 20px 0;">
+                    <h4><strong>2. </strong><span class="tag-block-title">&lt;head&gt;</span></h4>
+                    <p>
+                        The &lt;head&gt; tag is a container for metadata and links to external resources. Metadata
+                        includes information about the document such as its title, character set,
+                        styles, scripts, and other meta-information. The content within the
+                        &lt;head&gt;
+                        tag is not displayed on the webpage itself but is essential for the proper
+                        functioning and identification of the page. Here is an example of how the
+                        &lt;head&gt;
+                        tag might be used:
+                    </p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;html&gt;</code>\n<code>  &lt;head&gt;</code>\n<code>    &lt;meta charset="UTF-8"&gt;</code>\n<code>    &lt;title&gt;My Web Page&lt;/title&gt;</code>\n<code>    &lt;link rel="stylesheet" href="styles.css"&gt;</code>\n<code>    &lt;script src="script.js"&gt;&lt;/script&gt;</code>\n<code>  &lt;/head&gt;</code>\n<code>  &lt;!-- Body content goes here --&gt;</code>\n<code>&lt;/html&gt;</code></pre>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>3. </strong><span class="tag-block-title">&lt;body&gt;</span></h4>
+                    <p>
+                        The &lt;body&gt; tag contains the actual content of the webpage that is visible to users.
+                        This includes text, images, links, tables, and any other elements that make
+                        up the main part of the webpage. The
+                        &lt;body&gt;
+                        tag follows the
+                        &lt;head&gt;
+                        tag and is closed just before the closing
+                        &lt;/html&gt;
+                        tag. Here is an example of how the
+                        &lt;body&gt;
+                        tag might be used:
+                    </p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;html&gt;</code>\n<code>  &lt;head&gt;</code>\n<code>    &lt;!-- Head content goes here --&gt;</code>\n<code>  &lt;/head&gt;</code>\n<code>  &lt;body&gt;</code>\n<code>    &lt;h1&gt;Welcome to My Web Page&lt;/h1&gt;</code>\n<code>    &lt;p&gt;This is a paragraph of text on my webpage.&lt;/p&gt;</code>\n<code>  &lt;/body&gt;</code>\n<code>&lt;/html&gt;</code></pre>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>4. </strong><span class="tag-block-title">&lt;title&gt;</span></h4>
+                    <p>
+                        The &lt;title&gt; tag is used to set the title of the webpage, which is displayed on the
+                        browser's title bar or tab. It is a crucial part of the
+                        &lt;head&gt;
+                        section and helps users identify the page they are viewing. The
+                        &lt;title&gt;
+                        tag should be concise and descriptive to effectively convey the content of
+                        the page. Here is an example of how the
+                        &lt;title&gt;
+                        tag might be used:
+                    </p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;html&gt;</code>\n<code>  &lt;head&gt;</code>\n<code>    &lt;title&gt;Introduction to HTML Tags&lt;/title&gt;</code>\n<code>  &lt;/head&gt;</code>\n<code>  &lt;body&gt;</code>\n<code>    &lt;!-- Body content goes here --&gt;</code>\n<code>  &lt;/body&gt;</code>\n<code>&lt;/html&gt;</code></pre>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>5. </strong><span class="tag-block-title">&lt;div&gt;</span></h4>
+                    <p>
+                        The &lt;div&gt; tag, short for "division," is a block-level element used to group together larger
+                        sections of HTML content. It is commonly used to create layout structures,
+                        such as headers, footers, sidebars, and main content areas. The &lt;div&gt;
+                        tag does not inherently carry any specific styling or semantic meaning, but
+                        it can be styled using CSS (Cascading Style Sheets) to achieve the desired
+                        appearance. For example, a &lt;div&gt; can be used to create a container for
+                        a website's main content:
+                    </p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;div class="main-content"&gt;</code>\n<code>    &lt;h1&gt;Welcome to My Website&lt;/h1&gt;</code>\n<code>    &lt;p&gt;This is the main section of the website where content is displayed.&lt;/p&gt;</code>\n<code>&lt;/div&gt;</code></pre>
+                    <p>
+                        In this example, the <code>div</code> tag is used to encapsulate a header and a paragraph, allowing developers to
+                        apply styles or scripts to this section as a whole.
+                    </p>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>6. </strong><span class="tag-block-title">&lt;span&gt;</span></h4>
+                    <p>
+                        The &lt;span&gt; tag is an inline element used to apply styles or manipulate specific parts
+                        of text within a larger block of content. Unlike &lt;div&gt;, which affects entire sections,
+                        &lt;span&gt; is used for smaller portions, such as individual words or phrases. The &lt;span&gt;
+                        tag is often used in conjunction with CSS to change the appearance of text.
+                        For instance:
+                    </p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;p&gt;This is an example of a &lt;span style="color: red;"&gt;highlighted&lt;/span&gt; word.&lt;/p&gt;</code></pre>
+                    <p>
+                        Here, the <code>span</code> tag is used to change the color of the word "highlighted" to red,
+                        demonstrating how <code>span</code> can be used to target specific text for styling.
+                    </p>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>7. </strong><span class="tag-block-title">&lt;a&gt; (Anchor)</span></h4>
+                    <p>
+                        The &lt;a&gt; tag, known as the anchor tag, is used to create hyperlinks, which are essential for navigating the web. The
+                        <code>href</code> attribute within the &lt;a&gt; tag specifies the URL of the page the link points to. Hyperlinks can link
+                        to other web pages, files, email addresses, or specific sections within the
+                        same page. An example of an anchor tag is:
+                    </p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;a href="https://www.example.com"&gt;Visit Example.com&lt;/a&gt;</code></pre>
+                    <p>
+                        This code creates a clickable link that directs users to
+                        "https://www.example.com". The text "Visit Example.com" is the clickable
+                        part of the link, known as the anchor text.
+                    </p>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>8. </strong><span class="tag-block-title">&lt;br&gt;</span></h4>
+                    <p>
+                        The &lt;br&gt; tag, short for "break," is an empty tag used to insert a line break in the text. It is
+                        useful for formatting text where a new line is needed without starting a
+                        new paragraph. The &lt;br&gt; tag does not have a closing tag, and it is
+                        written as a self-closing tag in HTML5. For example:
+                    </p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;p&gt;This is the first line.&lt;br&gt;This is the second line.&lt;/p&gt;</code></pre>
+                    <p>
+                        In this example, the <code>br</code> tag creates a line break between "This is the first line." and "This is the
+                        second line.", allowing them to appear on separate lines within the same
+                        paragraph.
+                    </p>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>9. </strong><span class="tag-block-title">&lt;nav&gt;</span></h4>
+                    <p>
+                        The &lt;nav&gt; tag is used to define a set of navigation links. It is a semantic element that helps
+                        search engines and screen readers understand the structure of a webpage.
+                        Typically, the &lt;nav&gt; tag is used to enclose the primary navigation
+                        menu of a website, which may include links to other pages or sections
+                        within the same page.
+                    </p>
+                    <p><strong>Example of <code>nav</code> tag usage:</strong></p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;nav&gt;</code>\n<code>  &lt;ul&gt;</code>\n<code>    &lt;li&gt;&lt;a href="#home"&gt;Home&lt;/a&gt;&lt;/li&gt;</code>\n<code>    &lt;li&gt;&lt;a href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;</code>\n<code>    &lt;li&gt;&lt;a href="#services"&gt;Services&lt;/a&gt;&lt;/li&gt;</code>\n<code>    &lt;li&gt;&lt;a href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;</code>\n<code>  &lt;/ul&gt;</code>\n<code>&lt;/nav&gt;</code></pre>
+                    <p>
+                        In this example, the &lt;nav&gt; tag contains an unordered list (<code>ul</code>) of links (<code>a</code> tags) that serve as the main navigation for a website.
+                    </p>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>10. </strong><span class="tag-block-title">&lt;section&gt;</span></h4>
+                    <p>
+                        The &lt;section&gt; tag is used to define a thematic grouping of content, typically with a heading.
+                        It is a semantic tag that helps organize content into logical sections.
+                        Each &lt;section&gt; can be thought of as a distinct part of the document
+                        that can stand alone in terms of its content.
+                    </p>
+                    <p><strong>Example of &lt;section&gt; tag usage with an ID:</strong></p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;section id="about"&gt;</code>\n<code>  &lt;h2&gt;About Us&lt;/h2&gt;</code>\n<code>  &lt;p&gt;We are a company dedicated to providing the best services to our clients.&lt;/p&gt;</code>\n<code>&lt;/section&gt;</code></pre>
+                    <p>
+                        In this example, the &lt;section&gt; tag is used to group content related to
+                        the "About Us" part of the webpage. The <code>id</code> attribute is used to uniquely identify this section, which can be useful
+                        for linking directly to it from other parts of the webpage or from external sources.
+                    </p>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>11. </strong><span class="tag-block-title">&lt;footer&gt;</span></h4>
+                    <p>
+                        The &lt;footer&gt; tag is used to define the footer of a document or a section. It typically
+                        contains information about the author, copyright information, contact
+                        details, or links to related documents. The &lt;footer&gt; tag is a semantic element that helps delineate the
+                        end of a section or the entire webpage.
+                    </p>
+                    <p><strong>Example of &lt;footer&gt; tag usage:</strong></p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;footer&gt;</code>\n    Contact Us at: &lt;a href="mailto:bcimo@saddleback.edu"&gt;bcimo@saddleback.edu&lt;/a&gt;\n<code>&lt;/footer&gt;</code></pre>
+                    <p>
+                        In this example, the &lt;footer&gt; tag contains copyright information and a contact email, providing users with essential details about the webpage.
+                    </p>
+                </article>
+                <hr>
+
+                <article style="margin: 20px 0;">
+                    <h4><strong>12. </strong><span class="tag-block-title">Heading Tags (&lt;h1&gt; to &lt;h6&gt;)</span></h4>
+                    <p>
+                        Heading tags, ranging from &lt;h1&gt; to &lt;h6&gt;, are used to define headings in a document. The
+                        &lt;h1&gt; tag is the highest level of heading and is typically used for the main
+                        title of a page, while &lt;h6&gt; is the lowest level. Headings help to organize content
+                        and make it more accessible to users and search engines.
+                    </p>
+                    <p><strong>Example:</strong></p>
+                    <pre style="background-color: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #64748b;"><code>&lt;h1&gt;Main Title of the Document&lt;/h1&gt;</code>\n<code>&lt;h2&gt;Subheading Level h2&lt;/h2&gt;</code>\n<code>&lt;h3&gt;Subheading Level h3&lt;/h3&gt;</code></pre>
+                    <p>
+                        In this example, the &lt;h1&gt; tag is used for the main title, while
+                        &lt;h2&gt; and &lt;h3&gt; are used for subheadings. Using headings appropriately helps create a clear hierarchy of information.
+                    </p>
+                </article>
+            </section>
+
+            <section id="web-ethics-inclusion" class="ethics-highlight-card">
+                <h3><strong>13. The Ethics of Web Development: Accessibility & Digital Inclusion</strong></h3>
+                <p>
+                    Writing HTML code is not merely a technical configuration task; it carries profound **ethical responsibilities**. 
+                    When we develop structures for the web, we act as digital architects building the infrastructure of modern human society.
+                </p>
+                
+                <h4><strong>Accessibility as a Matter of Civil Rights</strong></h4>
+                <p>
+                    In the contemporary physical world, structural civil rights guarantees dictate that buildings include access ramps, tactile paving, and audio cues. 
+                    Because critical functions of human life—applying for employment, submitting tax filings, engaging in higher education, and managing personal health—have transitioned online, **web accessibility is a direct matter of digital inclusion and civil rights**.
+                </p>
+                <p>
+                    When a developer deploys non-semantic, poorly structured code lacking proper indicators, it creates an invisible barrier that completely bars individuals with visual, motor, auditory, or cognitive disabilities from accessing critical data resources.
+                </p>
+
+                <h4><strong>Key Pillars of Ethical Structure:</strong></h4>
+                <ul style="padding-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Universal Digital Inclusion</strong>: Constructing applications that guarantee equal access pathways for every single visitor, regardless of what assistive hardware, navigation devices, or browser tools they use.</li>
+                    <li><strong>The Curb-Cut Effect</strong>: An design ethos proving that features built intentionally to support vulnerable populations inherently improve accessibility conditions for all users (e.g., adding structured semantic blocks helps screen readers navigate, but it also improves search engine indexing efficiency for SEO optimization).</li>
+                    <li><strong>Semantic Compliance</strong>: Committing to elements like <code>&lt;nav&gt;</code>, <code>&lt;section&gt;</code>, and alt text fields because they serve as foundational anchors for assistive technologies to read and navigate interfaces smoothly.</li>
+                </ul>
+
+                <div class="quiz-panel-wrapper">
+                    <form id="ethicsQuizForm" onsubmit="event.preventDefault();">
+                        <p><strong>Quiz 2.2: Ethics and Accessibility Compliance</strong></p>
+                        <p>Framing web accessibility strictly as a matter of digital inclusion and fundamental civil rights implies that clean semantic HTML structural code is:</p>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="chapter2_ethics_q" id="opt_a" value="a">
+                                <label for="opt_a">a) An optional performance optimization tactic to explore after visual styling finishes.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="chapter2_ethics_q" id="opt_b" value="b">
+                                <label for="opt_b">b) A core baseline ethical obligation ensuring equity of informational access to public infrastructure components.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="chapter2_ethics_q" id="opt_c" value="c">
+                                <label for="opt_c">c) A tool used solely to prevent search engines from penalizing website page rankings.</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('chapter2_ethics_q', 'b', 'ethics_quiz_feedback', 'Precisely! Developing accessible interfaces honors the civil rights of all individuals in the modern global town square.', 'Incorrect. Think deeper about website structures as essential components of modern civil life infrastructure.')">Submit Answer</button>
+                    </form>
+                    <div id="ethics_quiz_feedback"></div>
+                </div>
+            </section>
+
+            <section id="student-lab-exercise">
+                <h3><strong>You Try It: Create Your First Web Page</strong></h3>
+                <p>Follow these steps to create your first HTML page:</p>
+                <ol style="padding-left: 20px;">
+                    <li>Find the built-in code editor on this webpage.</li>
+                    <li>Copy and paste the following code into the input field:</li>
+                </ol>
+                
+                <pre style="background-color: #f1f5f9; padding: 15px; border-radius: 6px; font-family: monospace;">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
@@ -440,117 +487,94 @@
   &lt;h1&gt;Hello, World!&lt;/h1&gt;
   &lt;p&gt;Welcome to your first HTML page.&lt;/p&gt;
 &lt;/body&gt;
-&lt;/html&gt;
-</pre>
+&lt;/html&gt;</pre>
 
-        <ol start="3" type="1">
-            <li>
-                Run the code and view the output in the browser window.
-            </li>
-            <li>
-                Now try modifying the code:
-            </li>
-            <ol start="1" type="1">
-                <li>
-                    Change “World” to your name.
-                </li>
-                <li>
-                    Make five more headers under the first from 2 to 6 and note
-                    the size.
-                </li>
-                <li>
-                    Add a link to the following webpage: saddleback.edu.
-                </li>
-                <li>
-                    Add a footer to the page.
-                </li>
-            </ol>
-        </ol>
+                <ol start="3" style="padding-left: 20px;">
+                    <li>Run the code and view the output in the browser window.</li>
+                    <li>Now try modifying the code:
+                        <ol style="list-style-type: lower-alpha; padding-left: 20px; margin-top: 5px;">
+                            <li>Change “World” to your name.</li>
+                            <li>Make five more headers under the first from 2 to 6 and note the size adjustments.</li>
+                            <li>Add a link to the following webpage: <strong>saddleback.edu</strong>.</li>
+                            <li>Add a footer to the page.</li>
+                        </ol>
+                    </li>
+                </ol>
+            </section>
 
-        <div align="center">
-            <hr size="0" width="100%" align="center" />
-        </div>
+            <section id="coderunner" style="margin-top: 30px; padding: 20px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff;">
+                <h4>Code Runner Sandbox Workspace</h4>
+                <p style="font-size: 0.9rem; color: #475569; margin-top: -5px;">Use the helper macros below to inject baseline code elements into the editor canvas canvas area instantly.</p>
+                
+                <div style="margin-bottom: 12px;">
+                    <span class="macro-container-title">Quick Injection Tools:</span>
+                    <button type="button" class="macro-btn" onclick="insertMacroSnippet('skeleton')">+ HTML Document Base Structure</button>
+                    <button type="button" class="macro-btn" onclick="insertMacroSnippet('semantic')">+ Semantic Section Element</button>
+                    <button type="button" class="macro-btn" onclick="insertMacroSnippet('link')">+ Hyperlink Anchor Tag</button>
+                </div>
 
-        <section id="coderunner">
-            <h4>Code Runner</h4>
-            <p>
-                <!-- Textarea for the user to input HTML -->
-                <label for="htmlCode">Enter HTML Code:</label>
-                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+                <div style="margin-top: 15px;">
+                    <label for="htmlCode" style="font-weight: 700; display: block; margin-bottom: 6px;">Enter HTML Target Code Structure Here:</label>
+                    <textarea id="htmlCode" placeholder="Type or use macros to build your custom HTML layouts here..."></textarea>
+                </div>
 
-                <!-- Run code button -->
-                <button onclick="runCode()">Run Code</button>
+                <button type="button" class="action-button" style="margin: 12px 0 20px 0; padding: 10px 24px; font-size: 0.95rem;" onclick="runCode()">Run Sandbox Code</button>
 
-                <!-- Output iframe where the HTML is rendered -->
-                <iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
-            </p>
-        </section>
-        <div align="center">
-            <hr size="0" width="100%" align="center" />
-        </div>
-        <p>
-            <strong>Summary of the Lesson</strong>
-        </p>
-        <ul type="disc">
-            <li>
-                HTML (HyperText Markup Language) structures content for the web.
-            </li>
-            <li>
-                The basic structure of an HTML document includes the &lt;!DOCTYPE
-                html&gt;, &lt;html&gt;, &lt;head&gt;, and &lt;body&gt; tags.
-            </li>
-            <li>
-                Tags and elements like &lt;div&gt;, &lt;span&gt;, and &lt;a&gt; help
-                organize and display content.
-            </li>
-            <li>
-                Practice is essential to becoming proficient in HTML. Start by
-                creating simple pages and experimenting with different tags.
-            </li>
-        </ul>
+                <div>
+                    <label style="font-weight: 700; display: block; margin-bottom: 6px;">Live Document Render Output Screen Window:</label>
+                    <iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
+                </div>
+            </section>
 
+            <section id="lesson-summary" style="margin-top: 30px;">
+                <h3><strong>Summary of the Lesson</strong></h3>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>HTML (HyperText Markup Language) structures content for the web.</li>
+                    <li>The basic structure of an HTML document includes the <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, and <code>&lt;body&gt;</code> tags.</li>
+                    <li>Tags and elements like <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, and <code>&lt;a&gt;</code> help organize and display content.</li>
+                    <li>Practice is essential to becoming proficient in HTML. Start by creating simple pages and experimenting with different tags.</li>
+                </ul>
+            </section>
 
-        <p>
-            <strong>Additional Resources:</strong>
-        </p>
-        Watch this video that explains some HTML Elements.
-        <iframe width="600" height="350"
-            src="https://www.youtube.com/embed/vIoO52MdZFE?list=PLP9IO4UYNF0VdAajP_5pYG-jG2JRrG72s"
-            title="HTML - Elements - W3Schools.com" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <section id="curated-resources" style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e2e8f0;">
+                <h3><strong>Additional Resources:</strong></h3>
+                <p>Watch this video that explains some HTML Elements.</p>
+                <iframe width="600" height="350"
+                    src="https://www.youtube.com/embed/vIoO52MdZFE?list=PLP9IO4UYNF0VdAajP_5pYG-jG2JRrG72s"
+                    title="HTML - Elements - W3Schools.com" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width:100%; margin-bottom: 15px;"></iframe>
 
-        <p>Element reference page, here you will find a reference to all of the HTML elements, from a to xmp. <a
-                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a</a>
-        </p>
+                <p>Element reference page, here you will find a reference to all of the HTML elements, from a to xmp: 
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a</a>
+                </p>
 
-        <p><strong>What are Semantic Elements?</strong> Learn more in this video.
-            <iframe width="600" height="350" src="https://www.youtube.com/embed/RraBc7YJtr4"
-                title="The Importance of Semantic Tags in HTML" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </p>
-
-</body>
-</div>
-
-<footer>
-    <div class="nav-container">
-        <div class="nav-link">
-            <strong>← Previous</strong>
-            <a href="chapter1.html">Chapter 1</a><br>
-            <a href="index.html">Home</a>
-        </div>
-        <div class="nav-link">
-            <strong>📖 Current Chapter</strong>
-            <span>Chapter 2</span>
-        </div>
-        <div class="nav-link">
-            <strong>Next →</strong>
-            <a href="chapter3-1.html">Chapter 3</a>
-        </div>
+                <p><strong>What are Semantic Elements?</strong> Learn more in this video.</p>
+                <iframe width="600" height="350" src="https://www.youtube.com/embed/RraBc7YJtr4"
+                    title="The Importance of Semantic Tags in HTML" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width:100%;"></iframe>
+            </section>
+        </main>
     </div>
-</footer>
 
+    <footer>
+        <div class="nav-container">
+            <div class="nav-link">
+                <strong>← Previous</strong><br>
+                <a href="chapter1.html">Chapter 1</a><br>
+                <a href="index.html">Home</a>
+            </div>
+            <div class="nav-link" style="text-align: center;">
+                <strong>📖 Current Chapter</strong><br>
+                <span>Chapter 2</span>
+            </div>
+            <div class="nav-link" style="text-align: right;">
+                <strong>Next →</strong><br>
+                <a href="chapter3-1.html">Chapter 3</a>
+            </div>
+        </div>
+    </footer>
+</body>
 
 </html>
