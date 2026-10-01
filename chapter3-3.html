@@ -1,10 +1,23 @@
 <html lang="en">
+
 <head>
 	<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 	<title>Chapter 3: Working with Text and Links - Section 3</title>
 	<link rel="stylesheet" href="style.css">
-			
+	
+	<style>
+		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
+		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
+		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
+		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
+		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
+		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
+		.action-button:hover { background: #1d4ed8; }
+		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
+		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
 	</style>
+
 	<script>
 		// Function to run the HTML code
 		function runCode() {
@@ -20,6 +33,23 @@
 			`);
 
 			iframeDoc.close();
+		}
+
+		// Unified Self-Contained Client Grading Logic
+		function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+			const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+			const displayBox = document.getElementById(targetFeedbackId);
+
+			if (!checkedOption) {
+				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				return;
+			}
+
+			if (checkedOption.value === targetKey) {
+				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+			} else {
+				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+			}
 		}
 	</script>
 </head>
@@ -42,7 +72,7 @@
 		<h3>Linking to an Email Address</h3>
 
 		<p>You can create a link that opens the user’s default email client by using
-			the <code>>mailto:</code>
+			the <code>mailto:</code>
 			protocol in the <code>href</code>
 			attribute.</p>
 
@@ -87,12 +117,66 @@
 				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
 
 				<!-- Run code button -->
-				<button onclick="runCode()">Run Code</button>
+				<button onclick="runCode()" class="action-button" style="margin-top: 10px; margin-bottom: 10px;">Run Code</button>
 
 				<!-- Output iframe where the HTML is rendered -->
 				<iframe id="output" src="about:blank"></iframe>
 			</p>
 		</section>
+
+		<!-- ================================================================================= -->
+		<!-- START: Chapter 3.3 Quiz (Interactive & Accessible) -->
+		<!-- ================================================================================= -->
+		<section id="quiz-container-chapter3-3">
+			<div class="quiz-panel-wrapper">
+				<h3><strong>Chapter 3.3 Quiz</strong></h3>
+				
+				<form id="quizFormChapter3_3_1" onsubmit="event.preventDefault();">
+					<p><strong>1. Which protocol is used to create a link that opens the user's default email client?</strong></p>
+					<ul class="quiz-options-list">
+						<li>
+							<input type="radio" name="q1_chapter3_3" id="q1_opt_a" value="A">
+							<label for="q1_opt_a">a) mailto:</label>
+						</li>
+						<li>
+							<input type="radio" name="q1_chapter3_3" id="q1_opt_b" value="B">
+							<label for="q1_opt_b">b) tel:</label>
+						</li>
+						<li>
+							<input type="radio" name="q1_chapter3_3" id="q1_opt_c" value="C">
+							<label for="q1_opt_c">c) download:</label>
+						</li>
+					</ul>
+					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter3_3', 'A', 'q1_feedback', 'Correct! The mailto: protocol opens the default email client.', 'Incorrect. Review the Linking to an Email Address section.')">Submit Answer</button>
+				</form>
+				<div id="q1_feedback"></div>
+				
+				<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+
+				<form id="quizFormChapter3_3_2" onsubmit="event.preventDefault();">
+					<p><strong>2. What attribute forces the browser to download a linked file instead of displaying it?</strong></p>
+					<ul class="quiz-options-list">
+						<li>
+							<input type="radio" name="q2_chapter3_3" id="q2_opt_a" value="A">
+							<label for="q2_opt_a">a) download</label>
+						</li>
+						<li>
+							<input type="radio" name="q2_chapter3_3" id="q2_opt_b" value="B">
+							<label for="q2_opt_b">b) file-type</label>
+						</li>
+						<li>
+							<input type="radio" name="q2_chapter3_3" id="q2_opt_c" value="C">
+							<label for="q2_opt_c">c) href-download</label>
+						</li>
+					</ul>
+					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter3_3', 'A', 'q2_feedback', 'Perfect! The download attribute triggers a file download.', 'Incorrect. Review the File Download Links section.')">Submit Answer</button>
+				</form>
+				<div id="q2_feedback"></div>
+			</div>
+		</section>
+		<!-- ================================================================================= -->
+		<!-- END: Chapter 3.3 Quiz -->
+		<!-- ================================================================================= -->
 
 		<div class=MsoNormal align=center style='text-align:center'>
 
