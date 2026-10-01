@@ -5,21 +5,47 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Chapter 4: Visual Elements and Graphics - Section 1</title>
 	<link rel="stylesheet" href="style.css">
+	
+	<style>
+		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
+		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
+		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
+		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
+		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
+		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
+		.action-button:hover { background: #1d4ed8; }
+		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
+		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
+	</style>
+
 	<script>
-		// Function to run the HTML code
+		// Unified Code Runner
 		function runCode() {
 			var htmlCode = document.getElementById('htmlCode').value;
-
 			var iframe = document.getElementById('output');
 			var iframeDoc = iframe.contentWindow.document;
+			
 			iframeDoc.open();
-
-			// Write the HTML code to the iframe
-			iframeDoc.write(`
-				${htmlCode}
-			`);
-
+			iframeDoc.write(htmlCode);
 			iframeDoc.close();
+		}
+
+		// Unified Self-Contained Client Grading Logic
+		function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+			const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+			const displayBox = document.getElementById(targetFeedbackId);
+
+			if (!checkedOption) {
+				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				return;
+			}
+
+			if (checkedOption.value === targetKey) {
+				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+			} else {
+				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+			}
 		}
 	</script>
 </head>
@@ -30,7 +56,7 @@
 
 		<h1>Chapter 4: Visual Elements and Graphics</h1>
 		<h2>Overview</h2>
-		<p>In this chapter, we&rsquo;ll dive into how to integrate visual elements, such as images, videos, and audio,
+		<p>In this chapter, we’ll dive into how to integrate visual elements, such as images, videos, and audio,
 			into your website. Visual content is crucial for enhancing the user experience and making your web pages
 			more engaging. We'll also cover essential attributes that help make your images accessible and usable across
 			different devices. Lastly, we will explore different file types for images and when to use each.</p>
@@ -41,11 +67,21 @@
 			<li>Introduction to multimedia: Embedding videos and audio.</li>
 			<li>File types (JPEG, PNG, GIF, SVG) and when to use them.</li>
 		</ul>
+
+		<p>This video explains images in HTML, and offers advice on how to use them.
+
+			<iframe width="600" height="400"
+				src="https://www.youtube.com/embed/FmoYRiepmOE?list=PLP9IO4UYNF0VdAajP_5pYG-jG2JRrG72s"
+				title="HTML - Images - W3Schools.com" frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		</p>
+		
 		<h2>Section 1: Inserting Images Using the &lt;img&gt; Tag</h2>
 		<p>In HTML, images are an essential part of web content, making sites more engaging and visually appealing. One
 			of the most fundamental methods for inserting images into a webpage is by using the &lt;img&gt; tag. This
 			tag allows you to display various types of images, including photographs, illustrations, icons, and logos,
-			directly in your HTML document. Let&rsquo;s explore how you can use this tag and understand its key
+			directly in your HTML document. Let’s explore how you can use this tag and understand its key
 			attributes, as well as how to incorporate images efficiently into your web pages.</p>
 		<h4>Basic Syntax</h4>
 		<p>The &lt;img&gt; tag itself is an empty or self-closing tag, which means it doesn't require an end tag. The
@@ -56,14 +92,14 @@
 				can either be relative (pointing to a location on your server) or absolute (an external URL).</li>
 			<li>alt: The alt (alternative text) attribute is a crucial part of the &lt;img&gt; It provides a description
 				of the image in case the image is not loaded or for users with visual impairments who use screen
-				readers. For example, if you were displaying a photo of a dog, your alt text might be &ldquo;A cute dog
-				playing in the park.&rdquo;</li>
+				readers. For example, if you were displaying a photo of a dog, your alt text might be “A cute dog
+				playing in the park.”</li>
 		</ul>
-		<p>Here&rsquo;s a simple example:</p>
+		<p>Here’s a simple example:</p>
 		<pre><code>&lt;img src="dog.jpg" alt="A cute dog playing in the park"&gt;&nbsp;</code></pre>
 		<h4>Sizing Images</h4>
-		<p>Sometimes images may need resizing to fit into your webpage&rsquo;s layout. While you can resize an image
-			using CSS or HTML attributes, it&rsquo;s always best practice to ensure images are optimized for both
+		<p>Sometimes images may need resizing to fit into your webpage’s layout. While you can resize an image
+			using CSS or HTML attributes, it’s always best practice to ensure images are optimized for both
 			appearance and performance. You can specify the width and height of an image directly within the HTML tag:
 		</p>
 		<pre><code>&lt;img src="cat.jpg" alt="A playful cat" width="300" height="200"&gt;</code></pre>
@@ -91,35 +127,92 @@
 			<hr size=0 width="100%" align=center>
 
 		</div>
+		
 		<h4>Use the Interactive HTML Editor</h4>
-		<p>Now that you&rsquo;ve learned the basics, it's time to practice! Below is an interactive HTML code runner to
+		<p>Now that you’ve learned the basics, it's time to practice! Below is an interactive HTML code runner to
 			help you apply your knowledge of inserting images into a webpage.</p>
 		<p><strong>Instructions</strong>: Modify the code below by adding your own image source or adjusting the
 			attributes like size or alt text.</p>
-		<pre><code>&lt;h1&gt;Insert an Image!&lt;/h1&gt;<br />&lt;p&gt;Try changing the image's `src`, `alt`, or `width` attributes below:&lt;/p&gt;<br />&lt;img src="images/image2.png" alt="My Image" width="200", height=&rdquo;200&rdquo;&gt;</code></pre>
+		<pre><code>&lt;h1&gt;Insert an Image!&lt;/h1&gt;<br />&lt;p&gt;Try changing the image's `src`, `alt`, or `width` attributes below:&lt;/p&gt;<br />&lt;img src="images/image2.png" alt="My Image" width="200", height=”200”&gt;</code></pre>
 		<p>Feel free to experiment by modifying the src to link to different images or adjusting the width and height
 			attributes to see how the image scales.</p>
 		<ul>
-			<li>What happens if you src to something that doesn&rsquo;t exist?</li>
+			<li>What happens if you src to something that doesn’t exist?</li>
 			<li>What happens if you change the width or height?</li>
 			<li>Try changing alt and add a title.</li>
-			<li>For 5 points of extra credit: change src to &ldquo;images/image1.png&rdquo; and enter the answer in the
+			<li>For 5 points of extra credit: change src to “images/image1.png” and enter the answer in the
 				extra credit quiz.</li>
 		</ul>
-		<section id="coderunner">
-			<h4>Code Runner</h4>
-			<p>
-				<!-- Textarea for the user to input HTML -->
-				<label for="htmlCode">Enter HTML Code:</label>
+		
+		<section id="coderunner" style="margin-top: 30px; padding: 20px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff;">
+			<h4>Code Runner Sandbox</h4>
+			<div style="margin-top: 15px;">
+				<label for="htmlCode" style="font-weight: 700; display: block; margin-bottom: 6px;">Enter HTML Code Here:</label>
 				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
-
-				<!-- Run code button -->
-				<button onclick="runCode()">Run Code</button>
-
-				<!-- Output iframe where the HTML is rendered -->
+			</div>
+			
+			<button type="button" class="action-button" style="margin: 12px 0 20px 0; padding: 10px 24px;" onclick="runCode()">Run Code</button>
+			
+			<div>
+				<label style="font-weight: 700; display: block; margin-bottom: 6px;">Live Render Output:</label>
 				<iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
-			</p>
+			</div>
 		</section>
+
+		<!-- ================================================================================= -->
+		<!-- START: Chapter 4.1 Quiz (Interactive & Accessible) -->
+		<!-- ================================================================================= -->
+		<section id="quiz-container-chapter4-1">
+			<div class="quiz-panel-wrapper">
+				<h3><strong>Chapter 4.1 Quiz</strong></h3>
+				
+				<form id="quizFormChapter4_1_1" onsubmit="event.preventDefault();">
+					<p><strong>1. Which HTML tag is used to insert an image into a webpage?</strong></p>
+					<ul class="quiz-options-list">
+						<li>
+							<input type="radio" name="q1_chapter4_1" id="q1_opt_a" value="A">
+							<label for="q1_opt_a">a) &lt;img&gt;</label>
+						</li>
+						<li>
+							<input type="radio" name="q1_chapter4_1" id="q1_opt_b" value="B">
+							<label for="q1_opt_b">b) &lt;image&gt;</label>
+						</li>
+						<li>
+							<input type="radio" name="q1_chapter4_1" id="q1_opt_c" value="C">
+							<label for="q1_opt_c">c) &lt;picture&gt;</label>
+						</li>
+					</ul>
+					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter4_1', 'A', 'q1_feedback', 'Correct! The &lt;img&gt; tag is the proper self-closing element to display images.', 'Incorrect. Review the section on Inserting Images Using the &lt;img&gt; Tag.')">Submit Answer</button>
+				</form>
+				<div id="q1_feedback"></div>
+				
+				<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+
+				<form id="quizFormChapter4_1_2" onsubmit="event.preventDefault();">
+					<p><strong>2. Which attribute is essential for providing alternative text for screen readers or when an image fails to load?</strong></p>
+					<ul class="quiz-options-list">
+						<li>
+							<input type="radio" name="q2_chapter4_1" id="q2_opt_a" value="A">
+							<label for="q2_opt_a">a) src</label>
+						</li>
+						<li>
+							<input type="radio" name="q2_chapter4_1" id="q2_opt_b" value="B">
+							<label for="q2_opt_b">b) alt</label>
+						</li>
+						<li>
+							<input type="radio" name="q2_chapter4_1" id="q2_opt_c" value="C">
+							<label for="q2_opt_c">c) title</label>
+						</li>
+					</ul>
+					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter4_1', 'B', 'q2_feedback', 'Perfect! The alt attribute provides crucial descriptive text for accessibility.', 'Incorrect. Review the essential attributes of the &lt;img&gt; tag.')">Submit Answer</button>
+				</form>
+				<div id="q2_feedback"></div>
+			</div>
+		</section>
+		<!-- ================================================================================= -->
+		<!-- END: Chapter 4.1 Quiz -->
+		<!-- ================================================================================= -->
+
 		<div class=MsoNormal align=center style='margin-bottom:0in;text-align:center'>
 
 			<hr size=0 width="100%" align=center>
@@ -132,17 +225,10 @@
 			<li><strong>Optimize image file sizes</strong> to reduce loading times.</li>
 			<li><strong>Use responsive design</strong> principles, ensuring images adapt to various screen sizes.</li>
 		</ul>
-		<p>By mastering the use of the &lt;img&gt; tag and incorporating these best practices, you&rsquo;ll enhance the
+		<p>By mastering the use of the &lt;img&gt; tag and incorporating these best practices, you’ll enhance the
 			user experience of your website while ensuring your content is both visually engaging and accessible. </p>
 
-		<p>This video explains images in HTML, and offers advice on how to use them.
-
-			<iframe width="600" height="350"
-				src="https://www.youtube.com/embed/FmoYRiepmOE?list=PLP9IO4UYNF0VdAajP_5pYG-jG2JRrG72s"
-				title="HTML - Images - W3Schools.com" frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-		</p>
+		
 	</div>
 
 	<footer>

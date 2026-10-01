@@ -30,10 +30,13 @@
     <div class="container">
         <h1 data-pm-slice="0 0 []">Chapter 5: Publishing Your Website</h1>
         <h2>Introduction</h2>
-        <p>Publishing your website is the final step in web development, allowing you to share your work with the world.
+        <p>Publishing your website allows you to share your work with the world.
             In this chapter, you will learn about traditional and modern methods of website publishing, including FTP,
             cloud hosting services, and GitHub Pages. You will also get hands-on experience by publishing a simple
             website using GitHub Pages and verifying its functionality.</p>
+
+        
+
         <h2>Brief Overview of FTP and Secure FTP (SFTP)</h2>
         <h3>What is FTP?</h3>
         <p>File Transfer Protocol (FTP) is a standard network protocol used to transfer files from a local computer to a
@@ -129,6 +132,10 @@
         <p>By following these practices, you ensure that your website is structured efficiently, making it easier to
             update and expand over time.</p>
         <h2>Introduction to GitHub Pages for Free Hosting</h2>
+
+        Check out this video for a 30 second summary of how to publish your website using github.
+        <iframe width="692" height="1230" src="https://www.youtube.com/embed/WqOXxoGSpbs" alt="Video: Host a website using GitHub Pages" title="Host a website using GitHub Pages #Shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
         <p>GitHub Pages is a free service offered by GitHub that allows you to host static websites directly from a
             GitHub repository. It is particularly useful for personal projects, portfolios, documentation, and blogs.
             The service supports HTML, CSS, and JavaScript, and can also integrate with Jekyll, a static site generator,
@@ -215,6 +222,10 @@
                 <p>Ensure your webpage displays correctly.</p>
             </li>
         </ol>
+
+        If you need more help, check out this video for a guided tutorial on how to publish your website using GitHub Pages.
+        <iframe width="600" height="400" src="https://www.youtube.com/embed/b2r9Cdvssi0" title="Getting started with GitHub Pages for beginners | Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
         <h2>Conclusion</h2>
         <p>In this chapter, you learned various methods of publishing a website, including FTP, cloud hosting, and
             GitHub Pages. Additionally, you learned how to properly organize a website for maintainability. Finally, you
@@ -247,5 +258,173 @@
         </div>
     </div>
 </footer>
+
+<!-- ================================================================================= -->
+<!-- START: Chapter 5 Quiz (Interactive & Accessible) -->
+<!-- ================================================================================= -->
+<div id="quiz-container-chapter5"></div>
+<script>
+    // Data for Chapter 5 Quiz
+    const chapter5QuizData = {
+        questionName: "q5_chapter5",
+        correctAnswer: "A",
+        feedbackId: "feedback-chapter5",
+        successMsg: "You passed the Chapter 5 quiz! You are ready to deploy your site!",
+        failMsg: "Review the differences between FTP/SFTP and modern cloud deployment."
+    };
+    
+    // Quiz Questions (WCAG 2.1 AA Compliant Structure)
+    const chapter5QuizQuestions = [
+        {
+            question: "Which protocol is generally preferred for transferring website files due to encryption?",
+            options: [
+                { text: "SFTP (Secure FTP)", value: "A" },
+                { text: "FTP", value: "B" },
+                { text: "HTTP", value: "C" }
+            ],
+            questionName: "q5_chapter5"
+        },
+        {
+            question: "What is the primary benefit of using a modern cloud hosting service (like Netlify/Vercel)?",
+            options: [
+                { text: "It eliminates the need for a domain name.", value: "A" },
+                { text: "It automates deployment directly from a Git repository.", value: "B" },
+                { text: "It only supports static HTML files.", value: "C" }
+            ],
+            questionName: "q5_chapter5"
+        }
+    ];
+
+    // =================================================================================
+    // CORE QUIZ FUNCTIONS (Must be defined in script.js)
+    // =================================================================================
+
+    /**
+     * Renders the standardized, accessible quiz structure into the specified container element.
+     * @param {HTMLElement} containerElement - The DOM element where the quiz should be placed.
+     * @param {Object} quizConfig - Configuration object containing quiz metadata.
+     * @param {Array<Object>} quizQuestions - Array of quiz objects.
+     */
+    function renderQuiz(containerElement, quizConfig, quizQuestions) {
+        let quizHTML = `
+            <div class="quiz-panel-wrapper" role="form" aria-labelledby="quiz-title-${Date.now()}">
+                <h2 id="quiz-title-${Date.now()}">${quizConfig.title || 'Chapter Quiz'}</h2>
+                <p>Test your understanding of the concepts covered in this chapter. Select the best answer for each question.</p>
+                <form id="quiz-form-${Date.now()}" onsubmit="event.preventDefault(); checkAllQuizAnswers('${quizConfig.questionName}', ${quizQuestions.length}, ${JSON.stringify(quizQuestions)});">
+    `;
+
+        quizQuestions.forEach((q, index) => {
+            const questionId = `q${index}`;
+            const feedbackId = `feedback-${index}`;
+            
+            // Question structure
+            quizHTML += `
+                <div class="quiz-question-block" role="group" aria-labelledby="${questionId}-prompt">
+                    <h3 id="${questionId}-prompt">${index + 1}. ${q.question}</h3>
+                    <ul class="quiz-options-list" role="radiogroup" aria-labelledby="${questionId}-prompt">
+        `;
+
+            // Options structure
+            q.options.forEach((option, optIndex) => {
+                const optionId = `${questionId}-opt${optIndex}`;
+                quizHTML += `
+                    <li role="none">
+                        <input type="radio" id="${optionId}" name="${q.questionName}" value="${option.value}" required aria-describedby="${feedbackId}">
+                        <label for="${optionId}" role="none">${option.text}</label>
+                    </li>
+                `;
+            });
+
+            quizHTML += `
+                </ul >
+                <div id="${feedbackId}" class="feedback-area" aria-live="polite"></div>
+            </div>
+        `;
+        });
+
+        quizHTML += `
+            <button type="button" class="action-button" onclick="checkAllQuizAnswers('${quizConfig.questionName}', ${quizQuestions.length}, ${JSON.stringify(quizQuestions)});">
+                Submit Answers
+            </button>
+            <p style="margin-top: 20px; font-size: 0.9em; color: #666;">*Note: Quiz feedback is displayed above after submission.</p>
+        </div >
+    `;
+
+        quizHTML += `</form>`;
+        
+        containerElement.innerHTML = quizHTML;
+    }
+
+    /**
+     * Central function to check all quiz answers for a given chapter.
+     * This function is called by the button's onclick handler.
+     * @param {string} questionName - The name attribute for the radio buttons (must be unique per quiz).
+     * @param {number} totalQuestions - The total number of questions in the quiz.
+     * @param {Array<Object>} quizQuestions - The full array of quiz questions data.
+     */
+    function checkAllQuizAnswers(questionName, totalQuestions, quizQuestions) {
+        for (let i = 0; i < totalQuestions; i++) {
+            const questionBlock = document.querySelector('.quiz-question-block:nth-child(' + (i + 1) + ')');
+            if (!questionBlock) continue;
+
+            const feedbackDiv = questionBlock.querySelector('.feedback-area');
+            
+            // Get the correct answer for the current question index
+            const correctAnswer = quizQuestions[i].correctAnswer;
+            
+            // Find the selected radio button for the current question
+            const qChecked = document.querySelector(`input[name="${questionName}"]:checked`);
+            
+            if (qChecked) {
+                const isCorrect = (qChecked.value === correctAnswer);
+                
+                if (isCorrect) {
+                    feedbackDiv.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 Correct!</strong> ${'Correct!'}</div>`;
+                } else {
+                    feedbackDiv.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ Incorrect.</strong> ${'Incorrect. Please review the material.'}</div>`;
+                }
+            } else {
+                feedbackDiv.innerHTML = `<span style='color: #d97706; font-weight: bold;'>Please answer all questions to submit.</span>`;
+            }
+        }
+    }
+
+    // =================================================================================
+    // INITIALIZATION: Run setup functions for all chapters on page load
+    // =================================================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if the current page is a chapter page and run the corresponding setup function
+        const path = window.location.pathname;
+        if (path.includes('chapter1.html')) {
+            setupChapter1Quiz();
+        } else if (path.includes('chapter2.html')) {
+            setupChapter2Quiz();
+        } else if (path.includes('chapter3-1.html')) {
+            setupChapter3_1Quiz();
+        } else if (path.includes('chapter3-2.html')) {
+            setupChapter3_2Quiz();
+        } else if (path.includes('chapter3-3.html')) {
+            setupChapter3_3Quiz();
+        } else if (path.includes('chapter4-1.html')) {
+            setupChapter4_1Quiz();
+        } else if (path.includes('chapter4-2.html')) {
+            setupChapter4_2Quiz();
+        } else if (path.includes('chapter5.html')) {
+            setupChapter5Quiz();
+        } else if (path.includes('chapter6.html')) {
+            setupChapter6Quiz();
+        } else if (path.includes('chapter7.html')) {
+            setupChapter7Quiz();
+        } else if (path.includes('chapter8.html')) {
+            setupChapter8Quiz();
+        }
+    });
+    // =================================================================================
+    // END OF SCRIPT
+    // =================================================================================
+</script>
+<!-- ================================================================================= -->
+<!-- END: Chapter 5 Quiz -->
+<!-- ================================================================================= -->
 
 </html>

@@ -5,6 +5,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Chapter 4: Visual Elements and Graphics - Section 2</title>
 	<link rel="stylesheet" href="style.css">
+
+	<style>
+		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
+		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
+		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
+		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
+		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
+		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
+		.action-button:hover { background: #1d4ed8; }
+		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
+		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
+	</style>
+
 	<script>
 		// Function to run the HTML code
 		function runCode() {
@@ -20,6 +34,23 @@
 			`);
 
 			iframeDoc.close();
+		}
+
+		// Unified Self-Contained Client Grading Logic
+		function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+			const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+			const displayBox = document.getElementById(targetFeedbackId);
+
+			if (!checkedOption) {
+				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				return;
+			}
+
+			if (checkedOption.value === targetKey) {
+				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+			} else {
+				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+			}
 		}
 	</script>
 </head>
@@ -46,32 +77,9 @@
 			<li>controls: This optional attribute adds built-in controls such as play, pause, volume, and full-screen
 				options to the video player.</li>
 			<li><strong>Fallback Text</strong>: The content inside the &lt;video&gt; tag (like "Your browser does not
-				support the video tag") is displayed if the user's browser doesn&rsquo;t support the video element.</li>
+				support the video tag") is displayed if the user's browser doesn’t support the video element.</li>
 		</ul>
-		<h4>Interactive Activity:</h4>
-		<p>Try embedding a video in your HTML. Copy the code below into the code editor:</p>
-		<pre><code>&lt;video width="640" height="360" controls&gt;<br />&nbsp; &lt;source src="video/Apollo11_clip.mp4" type="video/mp4"&gt;<br />&nbsp; Your browser does not support the video tag.<br />&lt;/video&gt;</code></pre>
-		</p>
-		<ul>
-			<li>Try changing the height and width.</li>
-			<li>Try changing the name of the video.</li>
-			<li>Add or remove the controls attribute to see how it impacts the user interface for both video and audio.
-			</li>
-		</ul>
-		<section id="coderunner">
-			<h4>Code Runner</h4>
-			<p>
-				<!-- Textarea for the user to input HTML -->
-				<label for="htmlCode">Enter HTML Code:</label>
-				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
-
-				<!-- Run code button -->
-				<button onclick="runCode()">Run Code</button>
-
-				<!-- Output iframe where the HTML is rendered -->
-				<iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
-			</p>
-		</section>
+		
 
 		<iframe width="600" height="350" src="https://www.youtube.com/embed/h51jaPt5A5s"
 			title="How To Insert A Video Using HTML #shorts" frameborder="0"
@@ -88,7 +96,7 @@
 			<li><strong><code>controls</code></strong>: Displays the default audio controls (play, pause, volume, etc.).
 			</li>
 			<li><strong>Fallback text</strong>: The text between the <code>&lt;audio&gt;</code> tags will appear if the
-				browser doesn&rsquo;t support the audio element.</li>
+				browser doesn’t support the audio element.</li>
 		</ul>
 		<br>
 		<div class=MsoNormal align=center style='margin-bottom:0in;text-align:center'>
@@ -97,7 +105,7 @@
 
 		</div>
 		<h2>Image File Types and When to Use Them</h2>
-		<p>Choosing the right image file type is important for both performance and image quality. Let&rsquo;s explore
+		<p>Choosing the right image file type is important for both performance and image quality. Let’s explore
 			the most common image file formats used in web development.</p>
 		<h3>JPEG (Joint Photographic Experts Group)</h3>
 		<p>JPEG is the most widely used image format for photographs and complex images. It supports millions of colors
@@ -132,6 +140,31 @@
 				interactivity.</li>
 			<li><strong>Cons</strong>: Not suitable for complex images like photographs.</li>
 		</ul>
+		<h4>Interactive Activity:</h4>
+		<p>Try embedding a video in your HTML. Copy the code below into the code editor:</p>
+		<pre><code>&lt;video width="640" height="360" controls&gt;<br />&nbsp; &lt;source src="video/Apollo11_clip.mp4" type="video/mp4"&gt;<br />&nbsp; Your browser does not support the video tag.<br />&lt;/video&gt;</code></pre>
+		
+		<ul>
+			<li>Try changing the height and width.</li>
+			<li>Try changing the name of the video.</li>
+			<li>Add or remove the controls attribute to see how it impacts the user interface for both video and audio.
+			</li>
+		</ul>
+		<section id="coderunner" style="margin-top: 30px; padding: 20px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff;">
+			<h4>Code Runner Sandbox</h4>
+			<div style="margin-top: 15px;">
+				<label for="htmlCode" style="font-weight: 700; display: block; margin-bottom: 6px;">Enter HTML Code Here:</label>
+				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+			</div>
+			
+			<button type="button" class="action-button" style="margin: 12px 0 20px 0; padding: 10px 24px;" onclick="runCode()">Run Code</button>
+			
+			<div>
+				<label style="font-weight: 700; display: block; margin-bottom: 6px;">Live Render Output:</label>
+				<iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
+			</div>
+		</section>
+
 		<h2>Review and Summary</h2>
 		<p>In this chapter, you have learned how to:</p>
 		<ul>
@@ -145,6 +178,60 @@
 		<p>Images, videos, and audio are powerful tools for improving the user experience and making websites more
 			dynamic. Experiment with these elements and be mindful of accessibility considerations, such as providing
 			alternative text for images and ensuring media is easily accessible to all users.</p>
+
+		<!-- ================================================================================= -->
+		<!-- START: Chapter 4.2 Quiz (Interactive & Accessible) -->
+		<!-- ================================================================================= -->
+		<section id="quiz-container-chapter4-2">
+			<div class="quiz-panel-wrapper">
+				<h3><strong>Chapter 4.2 Quiz</strong></h3>
+				
+				<form id="quizFormChapter4_2_1" onsubmit="event.preventDefault();">
+					<p><strong>1. Which image format is best for logos and icons because it is resolution-independent?</strong></p>
+					<ul class="quiz-options-list">
+						<li>
+							<input type="radio" name="q1_chapter4_2" id="q1_opt_a" value="A">
+							<label for="q1_opt_a">a) SVG</label>
+						</li>
+						<li>
+							<input type="radio" name="q1_chapter4_2" id="q1_opt_b" value="B">
+							<label for="q1_opt_b">b) PNG</label>
+						</li>
+						<li>
+							<input type="radio" name="q1_chapter4_2" id="q1_opt_c" value="C">
+							<label for="q1_opt_c">c) JPEG</label>
+						</li>
+					</ul>
+					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter4_2', 'A', 'q1_feedback', 'Correct! SVG is a scalable vector graphics format that scales without loss of quality.', 'Incorrect. Review the image file types section.')">Submit Answer</button>
+				</form>
+				<div id="q1_feedback"></div>
+				
+				<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+
+				<form id="quizFormChapter4_2_2" onsubmit="event.preventDefault();">
+					<p><strong>2. Which attribute is required on &lt;video&gt; or &lt;audio&gt; tags to display standard playback features like play, pause, and volume?</strong></p>
+					<ul class="quiz-options-list">
+						<li>
+							<input type="radio" name="q2_chapter4_2" id="q2_opt_a" value="A">
+							<label for="q2_opt_a">a) src</label>
+						</li>
+						<li>
+							<input type="radio" name="q2_chapter4_2" id="q2_opt_b" value="B">
+							<label for="q2_opt_b">b) controls</label>
+						</li>
+						<li>
+							<input type="radio" name="q2_chapter4_2" id="q2_opt_c" value="C">
+							<label for="q2_opt_c">c) autoplay</label>
+						</li>
+					</ul>
+					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter4_2', 'B', 'q2_feedback', 'Correct! The controls attribute displays standard playback controls on media elements.', 'Incorrect. Review the section on Embedding Videos and Audio.')">Submit Answer</button>
+				</form>
+				<div id="q2_feedback"></div>
+			</div>
+		</section>
+		<!-- ================================================================================= -->
+		<!-- END: Chapter 4.2 Quiz -->
+		<!-- ================================================================================= -->
 
 	</div>
 
@@ -165,6 +252,7 @@
 			</div>
 		</div>
 	</footer>
+
 </body>
 
 </html>
