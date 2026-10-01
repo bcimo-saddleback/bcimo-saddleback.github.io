@@ -63,9 +63,9 @@
             }
 
             if (selectedOption.value === correctAnswer) {
-                feedbackDiv.innerHTML = `<span style='color: #16a34a; font-weight: bold;'>🎉 Correct! ${successMsg}</span>`;
+                feedbackDiv.innerHTML = `<span style='color: #16a34a; font-weight: bold;'>🎉 ${successMsg}</span>`;
             } else {
-                feedbackDiv.innerHTML = `<span style='color: #dc2626; font-weight: bold;'>❌ Incorrect. ${failMsg}</span>`;
+                feedbackDiv.innerHTML = `<span style='color: #dc2626; font-weight: bold;'>❌ ${failMsg}</span>`;
             }
         }
     </script>
@@ -482,13 +482,6 @@
                 <h4>Code Runner Sandbox Workspace</h4>
                 <p style="font-size: 0.9rem; color: #475569; margin-top: -5px;">Use the helper macros below to inject baseline code elements into the editor canvas canvas area instantly.</p>
                 
-                <div style="margin-bottom: 12px;">
-                    <span class="macro-container-title">Quick Injection Tools:</span>
-                    <button type="button" class="snippet-btn" onclick="insertSnippet('heading')">+ Add Heading</button>
-                <button type="button" class="snippet-btn" onclick="insertSnippet('link')">+ Add Link</button>
-                <button type="button" class="snippet-btn" onclick="insertSnippet('image')">+ Add Image</button>
-                </div>
-
                 <div style="margin-top: 15px;">
                     <label for="htmlCode" style="font-weight: 700; display: block; margin-bottom: 6px;">Enter HTML Target Code Structure Here:</label>
                     <textarea id="htmlCode" placeholder="Type or use macros to build your custom HTML layouts here..."></textarea>

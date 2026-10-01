@@ -7,14 +7,15 @@
     <title>Chapter 2: Introduction to HTML and Web Page Structure</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // Function to run the HTML code inside the iframe environment
+        // 1. Unified Code Runner
         function runCode() {
             var htmlCode = document.getElementById('htmlCode').value;
             var iframe = document.getElementById('output');
             var iframeDoc = iframe.contentWindow.document;
+            
             iframeDoc.open();
 
-            // Auto-inject document boilerplate structure if user just writes code fragments
+            // Auto-inject document boilerplate if user just writes code fragments
             if (!htmlCode.trim().toLowerCase().startsWith('<!doctype') && !htmlCode.trim().toLowerCase().startsWith('<html')) {
                 iframeDoc.write(`
                     <!DOCTYPE html>
@@ -35,13 +36,15 @@
             iframeDoc.close();
         }
 
-        // Programmatic Macro Snippet Tool Injector
+        // 2. Unified Macro Snippet Tool Injector
         function insertMacroSnippet(macroType) {
             const textarea = document.getElementById('htmlCode');
-            let snippetsMap = {
+            const snippetsMap = {
                 skeleton: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>My First Web Page</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>Welcome to your first HTML page.</p>\n</body>\n</html>",
                 semantic: "<section id=\"main-content\">\n    <h2>Understanding Inclusion</h2>\n    <p>Semantic tags help assistive technologies interpret page layout documents mapping out interfaces accurately.</p>\n</section>",
-                link: "<a href=\"https://www.saddleback.edu\" target=\"_blank\">Visit Saddleback College</a>"
+                link: "<a href=\"https://www.w3.org/standards/\" target=\"_blank\">Visit W3C Standards</a>",
+                heading: "<h1>This is a New Heading</h1>\n",
+                image: "<img src=\"https://picsum.photos/200/150\" alt=\"A random beautiful placeholder image\">\n"
             };
 
             const selectedText = snippetsMap[macroType];
@@ -58,20 +61,20 @@
             runCode(); // Trigger execution preview automatically
         }
 
-        // Self-Contained Client Grading Logic
+        // 3. Unified Self-Contained Client Grading Logic
         function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
             const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
             const displayBox = document.getElementById(targetFeedbackId);
 
             if (!checkedOption) {
-                displayBox.innerHTML = "<span style='color: #d97706; font-weight: bold;'>⚠️ Please make an explicit selection before submission.</span>";
+                displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
                 return;
             }
 
             if (checkedOption.value === targetKey) {
-                displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 Correct!</strong> ${textSuccess}</div>`;
+                displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
             } else {
-                displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ Incorrect.</strong> ${textFailure}</div>`;
+                displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
             }
         }
     </script>
@@ -213,7 +216,15 @@
             <section id="common-tags-deepdive">
                 <h3><strong>Common HTML Tags</strong></h3>
                 <hr>
-                
+                <p>This video is a nice introduction to some HTML Elements. After you watch it, you'll have a better understanding of how to use these tags in your own HTML documents. Then, read about some more below.</p>
+                <iframe width="600" height="350"
+                    src="https://www.youtube.com/embed/vIoO52MdZFE?list=PLP9IO4UYNF0VdAajP_5pYG-jG2JRrG72s"
+                    title="HTML - Elements - W3Schools.com" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width:100%; margin-bottom: 15px;"></iframe>
+
+                <hr>
+
                 <article style="margin: 20px 0;">
                     <h4><strong>1. </strong><span class="tag-block-title">&lt;html&gt;</span></h4>
                     <p>
@@ -447,7 +458,7 @@
 
                 <div class="quiz-panel-wrapper">
                     <form id="ethicsQuizForm" onsubmit="event.preventDefault();">
-                        <p><strong>Quiz 2.2: Ethics and Accessibility Compliance</strong></p>
+                        <p><strong>Quiz: Ethics and Accessibility Compliance</strong></p>
                         <p>Framing web accessibility strictly as a matter of digital inclusion and fundamental civil rights implies that clean semantic HTML structural code is:</p>
                         <ul class="quiz-options-list">
                             <li>
@@ -505,13 +516,6 @@
             <section id="coderunner" style="margin-top: 30px; padding: 20px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff;">
                 <h4>Code Runner Sandbox Workspace</h4>
                 <p style="font-size: 0.9rem; color: #475569; margin-top: -5px;">Use the helper macros below to inject baseline code elements into the editor canvas canvas area instantly.</p>
-                
-                <div style="margin-bottom: 12px;">
-                    <span class="macro-container-title">Quick Injection Tools:</span>
-                    <button type="button" class="macro-btn" onclick="insertMacroSnippet('skeleton')">+ HTML Document Base Structure</button>
-                    <button type="button" class="macro-btn" onclick="insertMacroSnippet('semantic')">+ Semantic Section Element</button>
-                    <button type="button" class="macro-btn" onclick="insertMacroSnippet('link')">+ Hyperlink Anchor Tag</button>
-                </div>
 
                 <div style="margin-top: 15px;">
                     <label for="htmlCode" style="font-weight: 700; display: block; margin-bottom: 6px;">Enter HTML Target Code Structure Here:</label>
@@ -538,23 +542,75 @@
 
             <section id="curated-resources" style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e2e8f0;">
                 <h3><strong>Additional Resources:</strong></h3>
-                <p>Watch this video that explains some HTML Elements.</p>
-                <iframe width="600" height="350"
-                    src="https://www.youtube.com/embed/vIoO52MdZFE?list=PLP9IO4UYNF0VdAajP_5pYG-jG2JRrG72s"
-                    title="HTML - Elements - W3Schools.com" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width:100%; margin-bottom: 15px;"></iframe>
-
-                <p>Element reference page, here you will find a reference to all of the HTML elements, from a to xmp: 
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a</a>
-                </p>
 
                 <p><strong>What are Semantic Elements?</strong> Learn more in this video.</p>
                 <iframe width="600" height="350" src="https://www.youtube.com/embed/RraBc7YJtr4"
                     title="The Importance of Semantic Tags in HTML" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width:100%;"></iframe>
+
+                <hr>
+                
+                <p>Element reference page, here you will find a reference to all of the HTML elements, from a to xmp: 
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a</a>
+                </p>
+
+                
             </section>
+
+            <!-- ================================================================================= -->
+            <!-- START: Chapter 2 Quiz (Interactive & Accessible) -->
+            <!-- ================================================================================= -->
+            <section id="quiz-container-chapter2">
+                <div class="quiz-panel-wrapper">
+                    <h3><strong>Chapter 2 Quiz</strong></h3>
+                    
+                    <form id="quizFormChapter2_1" onsubmit="event.preventDefault();">
+                        <p><strong>1. Which tag is best for defining the main, unique content area of a page?</strong></p>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q1_chapter2" id="q1_opt_a" value="A">
+                                <label for="q1_opt_a">a) &lt;div class='container'&gt;</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1_chapter2" id="q1_opt_b" value="B">
+                                <label for="q1_opt_b">b) &lt;main&gt;</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1_chapter2" id="q1_opt_c" value="C">
+                                <label for="q1_opt_c">c) &lt;section&gt;</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter2', 'B', 'q1_feedback', 'Excellent! The &lt;main&gt; tag correctly identifies the dominant content of the document.', 'Incorrect. Review semantic tags designed for unique page content.')">Submit Answer</button>
+                    </form>
+                    <div id="q1_feedback"></div>
+                    
+                    <hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+
+                    <form id="quizFormChapter2_2" onsubmit="event.preventDefault();">
+                        <p><strong>2. What is the primary benefit of using semantic HTML tags?</strong></p>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q2_chapter2" id="q2_opt_a" value="A">
+                                <label for="q2_opt_a">a) It makes the page look better.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2_chapter2" id="q2_opt_b" value="B">
+                                <label for="q2_opt_b">b) It helps assistive technologies (like screen readers) understand the content structure.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2_chapter2" id="q2_opt_c" value="C">
+                                <label for="q2_opt_c">c) It automatically adds CSS styling.</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter2', 'B', 'q2_feedback', 'Correct! Semantic tags are crucial for accessibility and assistive technologies.', 'Incorrect. Think about accessibility and screen readers.')">Submit Answer</button>
+                    </form>
+                    <div id="q2_feedback"></div>
+                </div>
+            </section>
+            <!-- ================================================================================= -->
+            <!-- END: Chapter 2 Quiz -->
+            <!-- ================================================================================= -->
         </main>
     </div>
 
@@ -571,7 +627,7 @@
             </div>
             <div class="nav-link" style="text-align: right;">
                 <strong>Next →</strong><br>
-                <a href="chapter3-1.html">Chapter 3</a>
+                <a href="chapter3-1.html">Chapter 3.1</a>
             </div>
         </div>
     </footer>
