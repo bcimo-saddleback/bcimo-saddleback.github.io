@@ -4,9 +4,20 @@
 	<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 	<title>Chapter 3: Working with Text and Links - Section 2</title>
 	<link rel="stylesheet" href="style.css">
-			
-
+	
+	<style>
+		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
+		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
+		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
+		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
+		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
+		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
+		.action-button:hover { background: #1d4ed8; }
+		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
+		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
 	</style>
+
 	<script>
 		// Function to run the HTML code
 		function runCode() {
@@ -22,6 +33,23 @@
 			`);
 
 			iframeDoc.close();
+		}
+
+		// Unified Self-Contained Client Grading Logic
+		function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+			const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+			const displayBox = document.getElementById(targetFeedbackId);
+
+			if (!checkedOption) {
+				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				return;
+			}
+
+			if (checkedOption.value === targetKey) {
+				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+			} else {
+				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+			}
 		}
 	</script>
 </head>
@@ -45,6 +73,10 @@
 				webpage to another or to other resources. In HTML, hyperlinks are created using
 				the <code>&lt;a&gt;</code>
 				tag.</p>
+
+			<p>The following video provides a basic overview of how to create hyperlinks in HTML. After watching the video, you will learn how to create basic hyperlinks, open links in a new tab, and use descriptive link text for better accessibility.</p>
+
+			<iframe width="600" height="400" src="https://www.youtube.com/embed/HA6bByKdAQM" title="HTML - Links - W3Schools.com" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 			<h3>Basic Hyperlinks</h3>
 
@@ -87,11 +119,11 @@
 			<h3>Your Turn</h3>
 
 			<p style='margin-left:.5in;text-indent:-.25in'>1.&nbsp;&nbsp;&nbsp;&nbsp;
-				</span>Write HTML code that has a link to your favorite website using a title
+				Write HTML code that has a link to your favorite website using a title
 				attribute.</p>
 
 			<p style='margin-left:.5in;text-indent:-.25in'>2.&nbsp;&nbsp;&nbsp;&nbsp;
-				</span>Now change the link to open in a new page. </p>
+				Now change the link to open in a new page. </p>
 
 			<section id="coderunner">
 				<p>
@@ -99,12 +131,88 @@
 					<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
 
 					<!-- Run code button -->
-					<button onclick="runCode()">Run Code</button>
+					<button onclick="runCode()" class="action-button" style="margin-top: 10px; margin-bottom: 10px;">Run Code</button>
 
 					<!-- Output iframe where the HTML is rendered -->
 					<iframe id="output" src="about:blank"></iframe>
 				</p>
 			</section>
+
+			<!-- ================================================================================= -->
+			<!-- START: Chapter 3.2 Quiz (Interactive & Accessible) -->
+			<!-- ================================================================================= -->
+			<section id="quiz-container-chapter3-2">
+				<div class="quiz-panel-wrapper">
+					<h3><strong>Chapter 3.2 Quiz</strong></h3>
+					
+					<form id="quizFormChapter3_2_1" onsubmit="event.preventDefault();">
+						<p><strong>1. Which attribute is required inside the &lt;a&gt; tag to specify the link's destination?</strong></p>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q1_chapter3_2" id="q1_opt_a" value="A">
+								<label for="q1_opt_a">a) src</label>
+							</li>
+							<li>
+								<input type="radio" name="q1_chapter3_2" id="q1_opt_b" value="B">
+								<label for="q1_opt_b">b) target</label>
+							</li>
+							<li>
+								<input type="radio" name="q1_chapter3_2" id="q1_opt_c" value="C">
+								<label for="q1_opt_c">c) href</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter3_2', 'C', 'q1_feedback_3_2', 'Correct! The href attribute specifies the destination URL.', 'Incorrect. Review the Basic Hyperlinks section.')">Submit Answer</button>
+					</form>
+					<div id="q1_feedback_3_2"></div>
+					
+					<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+
+					<form id="quizFormChapter3_2_2" onsubmit="event.preventDefault();">
+						<p><strong>2. How do you force a hyperlink to open in a new browser tab?</strong></p>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q2_chapter3_2" id="q2_opt_a" value="A">
+								<label for="q2_opt_a">a) By using target="_blank"</label>
+							</li>
+							<li>
+								<input type="radio" name="q2_chapter3_2" id="q2_opt_b" value="B">
+								<label for="q2_opt_b">b) By using window="new"</label>
+							</li>
+							<li>
+								<input type="radio" name="q2_chapter3_2" id="q2_opt_c" value="C">
+								<label for="q2_opt_c">c) By using title="new_tab"</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter3_2', 'A', 'q2_feedback_3_2', 'Correct! It opens the link in a new tab.', 'Incorrect. Check the &quot;Opening Links in a New Tab&quot; section.')">Submit Answer</button>
+					</form>
+					<div id="q2_feedback_3_2"></div>
+
+					<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+
+					<form id="quizFormChapter3_2_3" onsubmit="event.preventDefault();">
+						<p><strong>3. Why is it important to use descriptive link text instead of generic phrases like "Click Here"?</strong></p>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q3_chapter3_2" id="q3_opt_a" value="A">
+								<label for="q3_opt_a">a) It automatically applies a bold font style to the link.</label>
+							</li>
+							<li>
+								<input type="radio" name="q3_chapter3_2" id="q3_opt_b" value="B">
+								<label for="q3_opt_b">b) It improves accessibility by helping users understand where the link leads.</label>
+							</li>
+							<li>
+								<input type="radio" name="q3_chapter3_2" id="q3_opt_c" value="C">
+								<label for="q3_opt_c">c) It makes the webpage load faster.</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q3_chapter3_2', 'B', 'q3_feedback_3_2', 'Spot on! Descriptive links are critical for accessibility.', 'Incorrect. Review the &quot;Descriptive Link Text&quot; section.')">Submit Answer</button>
+					</form>
+					<div id="q3_feedback_3_2"></div>
+				</div>
+			</section>
+			<!-- ================================================================================= -->
+			<!-- END: Chapter 3.2 Quiz -->
+			<!-- ================================================================================= -->
 
 	</div>
 

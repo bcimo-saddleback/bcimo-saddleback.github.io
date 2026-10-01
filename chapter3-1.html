@@ -5,9 +5,19 @@
 	<title>Chapter 3: Working with Text and Links - Section 1</title>
 	<link rel="stylesheet" href="style.css">
 
-
-
+	<style>
+		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
+		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
+		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
+		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
+		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
+		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
+		.action-button:hover { background: #1d4ed8; }
+		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
+		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
 	</style>
+	
 	<script>
 		// Function to run the HTML code
 		function runCode() {
@@ -23,6 +33,23 @@
 			`);
 
 			iframeDoc.close();
+		}
+
+		// Unified Self-Contained Client Grading Logic
+		function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+			const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+			const displayBox = document.getElementById(targetFeedbackId);
+
+			if (!checkedOption) {
+				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				return;
+			}
+
+			if (checkedOption.value === targetKey) {
+				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+			} else {
+				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+			}
 		}
 	</script>
 </head>
@@ -51,7 +78,7 @@
 				<li class=MsoNormal>Formatting text in HTML (headings, paragraphs, bold,
 					italics, and lists).</li>
 				<li class=MsoNormal>Creating hyperlinks using the <code><span
-			style='font-size:10.0pt;line-height:115%'>&lt;a&gt;</code> tag.</li>
+			style='font-size:10.0pt;line-height:115%'>&lt;a&gt;</span></code> tag.</li>
 				<li class=MsoNormal>Other types of links and best practices for accessibility.</li>
 			</ul>
 
@@ -70,9 +97,9 @@
 
 			<p>Headings help organize content hierarchically, guiding users and search
 				engines to understand the structure of your page. In HTML, headings range from <code><span
-		style='font-size:10.0pt;line-height:115%'>&lt;h1&gt;</code> to <code><span
-		style='font-size:10.0pt;line-height:115%'>&lt;h6&gt;</code>, with <code><span
-		style='font-size:10.0pt;line-height:115%'>&lt;h1&gt;</code> being the
+		style='font-size:10.0pt;line-height:115%'>&lt;h1&gt;</span></code> to <code><span
+		style='font-size:10.0pt;line-height:115%'>&lt;h6&gt;</span></code>, with <code><span
+		style='font-size:10.0pt;line-height:115%'>&lt;h1&gt;</span></code> being the
 				highest level (typically the main title) and <code>&lt;h6&gt;</code> being the smallest.</p>
 
 			<pre><code>&lt;h1&gt;Main Heading&lt;/h1&gt;
@@ -161,7 +188,7 @@
 	&lt;li&gt;Apples&lt;/li&gt;
 	&lt;li&gt;Bananas&lt;/li&gt;
 	&lt;li&gt;Cherries&lt;/li&gt;
-&lt;/ul&gt;</pre></code>
+&lt;/ul&gt;</code></pre>
 
 			<p>This will display as:</p>
 
@@ -215,32 +242,87 @@
 					<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
 
 					<!-- Run code button -->
-					<button onclick="runCode()">Run Code</button>
+					<button onclick="runCode()" class="action-button" style="margin-top: 10px; margin-bottom: 10px;">Run Code</button>
 
 					<!-- Output iframe where the HTML is rendered -->
 					<iframe id="output" src="about:blank"></iframe>
 				</p>
 			</section>
 
-	</div>
-</div>
+		</div>
+	
 
-<footer>
-	<div class="nav-container">
-		<div class="nav-link">
-			<strong>← Previous</strong>
-			<a href="chapter2.html">Chapter 2</a><br>
-			<a href="index.html">Home</a>
+	<!-- ================================================================================= -->
+	<!-- START: Chapter 3.1 Quiz (Interactive & Accessible) -->
+	<!-- ================================================================================= -->
+	<section id="quiz-container-chapter3-1">
+		<div class="quiz-panel-wrapper">
+			<h3><strong>Chapter 3.1 Quiz</strong></h3>
+			
+			<form id="quizFormChapter3_1" onsubmit="event.preventDefault();">
+				<p><strong>1. Which heading level should be used for the main title of the entire document?</strong></p>
+				<ul class="quiz-options-list">
+					<li>
+						<input type="radio" name="q1_chapter3_1" id="q1_opt_a" value="A">
+						<label for="q1_opt_a">a) &lt;h1&gt;</label>
+					</li>
+					<li>
+						<input type="radio" name="q1_chapter3_1" id="q1_opt_b" value="B">
+						<label for="q1_opt_b">b) &lt;h2&gt;</label>
+					</li>
+					<li>
+						<input type="radio" name="q1_chapter3_1" id="q1_opt_c" value="C">
+						<label for="q1_opt_c">c) &lt;h3&gt;</label>
+					</li>
+				</ul>
+				<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter3_1', 'A', 'q1_feedback', 'Correct! You understand the hierarchy of HTML headings.', 'Incorrect. Remember that H1 is for the main title, and H6 is the smallest.')">Submit Answer</button>
+			</form>
+			<div id="q1_feedback"></div>
+			
+			<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+
+			<form id="quizFormChapter3_2" onsubmit="event.preventDefault();">
+				<p><strong>2. What is the primary purpose of the &lt;p&gt; tag?</strong></p>
+				<ul class="quiz-options-list">
+					<li>
+						<input type="radio" name="q2_chapter3_1" id="q2_opt_a" value="A">
+						<label for="q2_opt_a">a) To define a block of text as a paragraph.</label>
+					</li>
+					<li>
+						<input type="radio" name="q2_chapter3_1" id="q2_opt_b" value="B">
+						<label for="q2_opt_b">b) To make text bold.</label>
+					</li>
+					<li>
+						<input type="radio" name="q2_chapter3_1" id="q2_opt_c" value="C">
+						<label for="q2_opt_c">c) To create a list item.</label>
+					</li>
+				</ul>
+				<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter3_1', 'A', 'q2_feedback', 'Correct! The &lt;p&gt; tag defines a paragraph.', 'Incorrect. Review the section on paragraphs.')">Submit Answer</button>
+			</form>
+			<div id="q2_feedback"></div>
 		</div>
-		<div class="nav-link">
-			<strong>📖 Current Chapter</strong>
-			<span>Chapter 3.1</span>
-		</div>
-		<div class="nav-link">
-			<strong>Next →</strong>
-			<a href="chapter3-2.html">Chapter 3.2</a>
-		</div>
+	</section>
 	</div>
+	<!-- ================================================================================= -->
+	<!-- END: Chapter 3.1 Quiz -->
+	<!-- ================================================================================= -->
+	
+<footer>
+		<div class="nav-container">
+			<div class="nav-link">
+				<strong>← Previous</strong>
+				<a href="chapter2.html">Chapter 2</a><br>
+				<a href="index.html">Home</a>
+			</div>
+			<div class="nav-link">
+				<strong>📖 Current Chapter</strong>
+				<span>Chapter 3.1</span>
+			</div>
+			<div class="nav-link">
+				<strong>Next →</strong>
+				<a href="chapter3-2.html">Chapter 3.2</a>
+			</div>
+		</div>
 </footer>
 </body>
 
