@@ -6,6 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chapter 5: Publishing Your Website</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
+        .quiz-panel-wrapper {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .quiz-options-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 15px 0;
+        }
+
+        .quiz-options-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .quiz-options-list input[type="radio"] {
+            margin-right: 10px;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+
+        .quiz-options-list label {
+            cursor: pointer;
+            line-height: 1.4;
+            color: #334155;
+        }
+
+        .action-button {
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .action-button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+
     <script>
         // Function to run the HTML code
         function runCode() {
@@ -22,6 +75,40 @@
 
             iframeDoc.close();
         }
+
+        // Unified Self-Contained Client Grading Logic
+        function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+            const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+            const displayBox = document.getElementById(targetFeedbackId);
+
+            if (!checkedOption) {
+                displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+                return;
+            }
+
+            if (checkedOption.value === targetKey) {
+                displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+            } else {
+                displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+            }
+        }
+
+        // Unified Self-Contained Client Grading Logic
+        function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+            const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+            const displayBox = document.getElementById(targetFeedbackId);
+
+            if (!checkedOption) {
+                displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+                return;
+            }
+
+            if (checkedOption.value === targetKey) {
+                displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+            } else {
+                displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+            }
+        }
     </script>
 </head>
 
@@ -35,7 +122,7 @@
             cloud hosting services, and GitHub Pages. You will also get hands-on experience by publishing a simple
             website using GitHub Pages and verifying its functionality.</p>
 
-        
+
 
         <h2>Brief Overview of FTP and Secure FTP (SFTP)</h2>
         <h3>What is FTP?</h3>
@@ -70,11 +157,11 @@
         <p>While FTP/SFTP remains relevant, modern web development offers more streamlined and automated publishing
             methods:</p>
         <h3>1. <strong>Cloud Hosting Services</strong></h3>
-        <p>Cloud hosting services like AWS, Google Cloud, and Netlify simplify website deployment by offering automated
+        <p>Cloud hosting services like AWS, Google Cloud, and Azure simplify website deployment by offering automated
             tools, content delivery networks (CDNs), and scalable storage solutions. Many services integrate with Git
             for easy updates.</p>
         <h3>2. <strong>Static Site Hosting</strong></h3>
-        <p>Platforms like Vercel and Netlify allow developers to push updates to a Git repository, automatically
+        <p>Platforms like Github Pages allow developers to push updates to a Git repository, automatically
             deploying the latest version of a website.</p>
         <h3>3. <strong>CMS-Based Hosting</strong></h3>
         <p>For websites built with WordPress, Wix, or Squarespace, hosting and deployment are integrated within the
@@ -134,7 +221,11 @@
         <h2>Introduction to GitHub Pages for Free Hosting</h2>
 
         Check out this video for a 30 second summary of how to publish your website using github.
-        <iframe width="692" height="1230" src="https://www.youtube.com/embed/WqOXxoGSpbs" alt="Video: Host a website using GitHub Pages" title="Host a website using GitHub Pages #Shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe width="692" height="1230" src="https://www.youtube.com/embed/WqOXxoGSpbs"
+            alt="Video: Host a website using GitHub Pages" title="Host a website using GitHub Pages #Shorts"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
         <p>GitHub Pages is a free service offered by GitHub that allows you to host static websites directly from a
             GitHub repository. It is particularly useful for personal projects, portfolios, documentation, and blogs.
@@ -223,8 +314,12 @@
             </li>
         </ol>
 
-        If you need more help, check out this video for a guided tutorial on how to publish your website using GitHub Pages.
-        <iframe width="600" height="400" src="https://www.youtube.com/embed/b2r9Cdvssi0" title="Getting started with GitHub Pages for beginners | Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        If you need more help, check out this video for a guided tutorial on how to publish your website using GitHub
+        Pages.
+        <iframe width="600" height="400" src="https://www.youtube.com/embed/b2r9Cdvssi0"
+            title="Getting started with GitHub Pages for beginners | Tutorial" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
         <h2>Conclusion</h2>
         <p>In this chapter, you learned various methods of publishing a website, including FTP, cloud hosting, and
@@ -237,7 +332,68 @@
             More about how to use <a
                 href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">Github
                 Pages.</a></p>
+
+        <!-- ================================================================================= -->
+        <!-- START: Chapter 5 Quiz (Interactive & Accessible) -->
+        <!-- ================================================================================= -->
+        <section id="quiz-container-chapter5">
+            <div class="quiz-panel-wrapper">
+                <h3><strong>Chapter 5 Quiz</strong></h3>
+
+                <form id="quizFormChapter5_1" onsubmit="event.preventDefault();">
+                    <p><strong>1. Which protocol is generally preferred for transferring website files due to
+                            encryption?</strong></p>
+                    <ul class="quiz-options-list">
+                        <li>
+                            <input type="radio" name="q1_chapter5" id="q1_opt_a" value="A">
+                            <label for="q1_opt_a">a) SFTP (Secure FTP)</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="q1_chapter5" id="q1_opt_b" value="B">
+                            <label for="q1_opt_b">b) FTP</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="q1_chapter5" id="q1_opt_c" value="C">
+                            <label for="q1_opt_c">c) HTTP</label>
+                        </li>
+                    </ul>
+                    <button type="button" class="action-button"
+                        onclick="evaluateInteractiveQuiz('q1_chapter5', 'A', 'q1_feedback', 'Correct! SFTP uses SSH encryption to secure file transfers.', 'Incorrect. SFTP encrypts file transfers using SSH, making it the preferred choice for security.')">Submit
+                        Answer</button>
+                </form>
+                <div id="q1_feedback"></div>
+
+                <hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+
+                <form id="quizFormChapter5_2" onsubmit="event.preventDefault();">
+                    <p><strong>2. What is the primary benefit of using a modern cloud hosting service (like GitHub
+                            Pages)?</strong></p>
+                    <ul class="quiz-options-list">
+                        <li>
+                            <input type="radio" name="q2_chapter5" id="q2_opt_a" value="A">
+                            <label for="q2_opt_a">a) It eliminates the need for a domain name.</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="q2_chapter5" id="q2_opt_b" value="B">
+                            <label for="q2_opt_b">b) It automates deployment directly from a Git repository.</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="q2_chapter5" id="q2_opt_c" value="C">
+                            <label for="q2_opt_c">c) It only supports static HTML files.</label>
+                        </li>
+                    </ul>
+                    <button type="button" class="action-button"
+                        onclick="evaluateInteractiveQuiz('q2_chapter5', 'B', 'q2_feedback', 'Correct! Modern platforms integrate with Git for easy, automated updates.', 'Incorrect. Modern cloud hosting automates deployment from a Git repository.')">Submit
+                        Answer</button>
+                </form>
+                <div id="q2_feedback"></div>
+            </div>
+        </section>
+        <!-- ================================================================================= -->
+        <!-- END: Chapter 5 Quiz -->
+        <!-- ================================================================================= -->
     </div>
+
 
 </body>
 
@@ -272,7 +428,7 @@
         successMsg: "You passed the Chapter 5 quiz! You are ready to deploy your site!",
         failMsg: "Review the differences between FTP/SFTP and modern cloud deployment."
     };
-    
+
     // Quiz Questions (WCAG 2.1 AA Compliant Structure)
     const chapter5QuizQuestions = [
         {
@@ -285,7 +441,7 @@
             questionName: "q5_chapter5"
         },
         {
-            question: "What is the primary benefit of using a modern cloud hosting service (like Netlify/Vercel)?",
+            question: "What is the primary benefit of using a modern cloud hosting service (like GitHub Pages)?",
             options: [
                 { text: "It eliminates the need for a domain name.", value: "A" },
                 { text: "It automates deployment directly from a Git repository.", value: "B" },
@@ -316,7 +472,7 @@
         quizQuestions.forEach((q, index) => {
             const questionId = `q${index}`;
             const feedbackId = `feedback-${index}`;
-            
+
             // Question structure
             quizHTML += `
                 <div class="quiz-question-block" role="group" aria-labelledby="${questionId}-prompt">
@@ -351,7 +507,7 @@
     `;
 
         quizHTML += `</form>`;
-        
+
         containerElement.innerHTML = quizHTML;
     }
 
@@ -368,16 +524,16 @@
             if (!questionBlock) continue;
 
             const feedbackDiv = questionBlock.querySelector('.feedback-area');
-            
+
             // Get the correct answer for the current question index
             const correctAnswer = quizQuestions[i].correctAnswer;
-            
+
             // Find the selected radio button for the current question
             const qChecked = document.querySelector(`input[name="${questionName}"]:checked`);
-            
+
             if (qChecked) {
                 const isCorrect = (qChecked.value === correctAnswer);
-                
+
                 if (isCorrect) {
                     feedbackDiv.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 Correct!</strong> ${'Correct!'}</div>`;
                 } else {
@@ -392,7 +548,7 @@
     // =================================================================================
     // INITIALIZATION: Run setup functions for all chapters on page load
     // =================================================================================
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Check if the current page is a chapter page and run the corresponding setup function
         const path = window.location.pathname;
         if (path.includes('chapter1.html')) {
@@ -423,8 +579,6 @@
     // END OF SCRIPT
     // =================================================================================
 </script>
-<!-- ================================================================================= -->
-<!-- END: Chapter 5 Quiz -->
-<!-- ================================================================================= -->
+
 
 </html>
