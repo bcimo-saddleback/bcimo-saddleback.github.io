@@ -1,37 +1,30 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Chapter 3: Working with Text and Links - Section 1</title>
 	<link rel="stylesheet" href="style.css">
-
-	<style>
-		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
-		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
-		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
-		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
-		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
-		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
-		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
-		.action-button:hover { background: #1d4ed8; }
-		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
-		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
-	</style>
-	
 	<script>
 		// Function to run the HTML code
 		function runCode() {
 			var htmlCode = document.getElementById('htmlCode').value;
-
 			var iframe = document.getElementById('output');
 			var iframeDoc = iframe.contentWindow.document;
 			iframeDoc.open();
-
-			// Write the HTML code to the iframe
 			iframeDoc.write(`
-				${htmlCode}
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<title>Live Preview</title>
+				</head>
+				<body>
+					${htmlCode}
+				</body>
+				</html>
 			`);
-
 			iframeDoc.close();
 		}
 
@@ -41,66 +34,51 @@
 			const displayBox = document.getElementById(targetFeedbackId);
 
 			if (!checkedOption) {
-				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				displayBox.className = "feedback-area feedback-warning";
+				displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
 				return;
 			}
 
 			if (checkedOption.value === targetKey) {
-				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+				displayBox.className = "feedback-area feedback-success";
+				displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
 			} else {
-				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+				displayBox.className = "feedback-area feedback-error";
+				displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
 			}
 		}
 	</script>
 </head>
 
-<body lang=EN-US link=blue vlink="#96607D" style='word-wrap:break-word'>
-	<div class="container">
-		<div class=WordSection1>
+<body>
+	<a href="#main-content" class="skip-link">Skip to main content</a>
 
-			<div style='border:none;border-bottom:solid #156082 1.0pt;padding:0in 0in 4.0pt 0in'>
+	<main class="container" id="main-content">
+		<header class="header-centered">
+			<h1>Chapter 3: Working with Text and Links</h1>
+			<h2>Section 1: Formatting Text in HTML</h2>
+		</header>
 
-				<h1>Chapter 3: Working with Text and Links</h1>
-
-			</div>
-
+		<section id="overview">
 			<h2>Overview</h2>
-
-			<p>In this chapter, we will explore how to format text in HTML and how to
-				create and work with hyperlinks. Text formatting is a fundamental skill in web
-				development, as it allows you to structure and style content in a readable and
-				engaging way. Hyperlinks, on the other hand, are the core feature of the web,
-				allowing users to navigate between pages and access different resources.</p>
+			<p>In this chapter, we will explore how to format text in HTML and how to create and work with hyperlinks. Text formatting is a fundamental skill in web development, as it allows you to structure and style content in a readable and engaging way. Hyperlinks, on the other hand, are the core feature of the web, allowing users to navigate between pages and access different resources.</p>
 
 			<h3>Key Topics:</h3>
-
-			<ul type=disc>
-				<li class=MsoNormal>Formatting text in HTML (headings, paragraphs, bold,
-					italics, and lists).</li>
-				<li class=MsoNormal>Creating hyperlinks using the <code><span
-			style='font-size:10.0pt;line-height:115%'>&lt;a&gt;</span></code> tag.</li>
-				<li class=MsoNormal>Other types of links and best practices for accessibility.</li>
+			<ul class="disc-list">
+				<li>Formatting text in HTML (headings, paragraphs, bold, italics, and lists).</li>
+				<li>Creating hyperlinks using the <code>&lt;a&gt;</code> tag.</li>
+				<li>Other types of links and best practices for accessibility.</li>
 			</ul>
+		</section>
 
-			<div class=MsoNormal align=center style='margin-bottom:0in;text-align:center'>
+		<hr>
 
-				<hr size=0 width="100%" align=center>
-
-			</div>
-
+		<section id="formatting-text">
 			<h2>Section 1: Formatting Text in HTML</h2>
-
-			<p>HTML offers several tags to structure text content on a webpage. Here’s how
-				you can use them:</p>
+			<p>HTML offers several tags to structure text content on a webpage. Here’s how you can use them:</p>
 
 			<h3>Headings</h3>
-
-			<p>Headings help organize content hierarchically, guiding users and search
-				engines to understand the structure of your page. In HTML, headings range from <code><span
-		style='font-size:10.0pt;line-height:115%'>&lt;h1&gt;</span></code> to <code><span
-		style='font-size:10.0pt;line-height:115%'>&lt;h6&gt;</span></code>, with <code><span
-		style='font-size:10.0pt;line-height:115%'>&lt;h1&gt;</span></code> being the
-				highest level (typically the main title) and <code>&lt;h6&gt;</code> being the smallest.</p>
+			<p>Headings help organize content hierarchically, guiding users and search engines to understand the structure of your page. In HTML, headings range from <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>, with <code>&lt;h1&gt;</code> being the highest level (typically the main title) and <code>&lt;h6&gt;</code> being the smallest.</p>
 
 			<pre><code>&lt;h1&gt;Main Heading&lt;/h1&gt;
 &lt;h2&gt;Subheading&lt;/h2&gt;
@@ -109,62 +87,28 @@
 &lt;h5&gt;Even Smaller Subheading&lt;/h5&gt;
 &lt;h6&gt;Smallest Subheading&lt;/h6&gt;</code></pre>
 
-			<p>In this example, &lt;h1&gt; is used for the main heading of the document,
-				indicating its primary importance. As you move down the hierarchy to &lt;h6&gt;,
-				the headings become less significant. This hierarchical structure not only aids
-				in visual organization but also improves search engine optimization (SEO) by
-				helping search engines understand the content's structure.</p>
+			<p>In this example, &lt;h1&gt; is used for the main heading of the document, indicating its primary importance. As you move down the hierarchy to &lt;h6&gt;, the headings become less significant. This hierarchical structure not only aids in visual organization but also improves search engine optimization (SEO) by helping search engines understand the content's structure.</p>
 
-			<p>Headings are not just about aesthetics; they play a vital role in
-				accessibility. Screen readers, which assist visually impaired users, rely on
-				headings to navigate through a webpage efficiently. Proper use of headings
-				ensures that all users can access and understand the content.</p>
+			<p>Headings are not just about aesthetics; they play a vital role in accessibility. Screen readers, which assist visually impaired users, rely on headings to navigate through a webpage efficiently. Proper use of headings ensures that all users can access and understand the content.</p>
 
 			<h3>Paragraphs</h3>
-
-			<p>Paragraphs are created using the <code>&lt;p&gt;</code> tag. This tag defines a block of text
-				as a paragraph, which is automatically separated from other elements with a
-				margin, making it easier for readers to distinguish between different sections
-				of text. For example, to create a simple paragraph, you would write:</p>
+			<p>Paragraphs are created using the <code>&lt;p&gt;</code> tag. This tag defines a block of text as a paragraph, which is automatically separated from other elements with a margin, making it easier for readers to distinguish between different sections of text. For example, to create a simple paragraph, you would write:</p>
 
 			<pre><code>&lt;p&gt;This is a paragraph of text. Paragraphs allow for better readability and spacing between sections.&lt;/p&gt;</code></pre>
 
 			<h3>Bold and Italics</h3>
+			<p>To make text bold, the &lt;strong&gt; or &lt;b&gt; tags are used. The &lt;strong&gt; tag not only makes the text bold but also indicates that the text is of strong importance. For example, <code>&lt;strong&gt;This is important text&lt;/strong&gt;</code> will render as <strong>This is important text</strong>. Alternatively, <code>&lt;b&gt;This text is bold&lt;/b&gt;</code> will also produce <b>This text is bold</b>, but without the semantic emphasis.</p>
 
-			<p>To make text bold, the &lt;strong&gt; or &lt;b&gt; tags are used. The &lt;strong&gt;
-				tag not only makes the text bold but also indicates that the text is of strong
-				importance. For example, &lt;strong&gt;This is important text&lt;/strong&gt;
-				will render as <b>This is important text</b>. Alternatively, &lt;b&gt;This text
-				is bold&lt;/b&gt; will also produce <b>This text is bold</b>, but without the
-				semantic emphasis.</p>
+			<p>Italics are used to emphasize text in a subtle way, often for titles, foreign words, or phrases. The &lt;em&gt; or &lt;i&gt; tags are employed for this purpose. The &lt;em&gt; tag implies emphasis and is semantically meaningful, while &lt;i&gt; simply italicizes the text without additional meaning. For instance, <code>&lt;em&gt;This text is emphasized&lt;/em&gt;</code> will appear as <em>This text is emphasized</em>, and <code>&lt;i&gt;This text is italicized&lt;/i&gt;</code> will display as <i>This text is italicized</i>.</p>
 
-			<p>Italics are used to emphasize text in a subtle way, often for titles,
-				foreign words, or phrases. The &lt;em&gt; or &lt;i&gt; tags are employed for
-				this purpose. The &lt;em&gt; tag implies emphasis and is semantically
-				meaningful, while &lt;i&gt; simply italicizes the text without additional
-				meaning. For instance, &lt;em&gt;This text is emphasized&lt;/em&gt; will appear
-				as <i>This text is emphasized</i>, and &lt;i&gt;This text is
-				italicized&lt;/i&gt; will display as <i>This text is italicized</i>.</p>
-
-			<pre><code>&lt;p&gt;This is &lt;strong&gt;bold text&lt;/strong&gt; and this is &lt;em&gt;italic text&lt;/em&gt;.&lt;p&gt;</code></pre>
+			<pre><code>&lt;p&gt;This is &lt;strong&gt;bold text&lt;/strong&gt; and this is &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;</code></pre>
 
 			<h3>Lists</h3>
+			<p>HTML supports both ordered (numbered) and unordered (bulleted) lists. These are created using the <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> tag for the container and <code>&lt;li&gt;</code> tags for each list item.</p>
 
-			<p>HTML supports both ordered (numbered) and unordered (bulleted) lists. These
-				are created using the <code>&lt;ul&gt;</code>
-				or <code>&lt;ol&gt;</code>
-				tag for the container and <code>&lt;li&gt;</code>
-				tags for each list item.</p>
+			<p>When it comes to formatting HTML text lists, understanding the different types of lists and how to implement them is crucial for creating organized and readable web content. HTML provides three primary types of lists: ordered lists, unordered lists, and description lists.</p>
 
-			<p>When it comes to formatting HTML text lists, understanding the different
-				types of lists and how to implement them is crucial for creating organized and
-				readable web content. HTML provides three primary types of lists: ordered
-				lists, unordered lists, and description lists.</p>
-
-			<p><b>Ordered Lists</b>: These are used when the sequence of items is
-				important. Ordered lists are created using the &lt;ol&gt; tag, and each item
-				within the list is marked with the &lt;li&gt; tag. By default, ordered lists
-				are numbered. For example:</p>
+			<p><strong>Ordered Lists</strong>: These are used when the sequence of items is important. Ordered lists are created using the <code>&lt;ol&gt;</code> tag, and each item within the list is marked with the <code>&lt;li&gt;</code> tag. By default, ordered lists are numbered. For example:</p>
 
 			<pre><code>&lt;ol&gt;
 	&lt;li&gt;First item&lt;/li&gt;
@@ -174,15 +118,13 @@
 
 			<p>This will display as:</p>
 
-			<ol>
+			<ol class="ordered-list">
 				<li>First item</li>
 				<li>Second item</li>
 				<li>Third item</li>
 			</ol>
 
-			<p><b>Unordered Lists</b>: These lists are used when the order of items does
-				not matter. Unordered lists use the &lt;ul&gt; tag, with each item also marked
-				by the &lt;li&gt; tag. The items are typically displayed with bullet points:</p>
+			<p><strong>Unordered Lists</strong>: These lists are used when the order of items does not matter. Unordered lists use the <code>&lt;ul&gt;</code> tag, with each item also marked by the <code>&lt;li&gt;</code> tag. The items are typically displayed with bullet points:</p>
 
 			<pre><code>&lt;ul&gt;
 	&lt;li&gt;Apples&lt;/li&gt;
@@ -192,16 +134,13 @@
 
 			<p>This will display as:</p>
 
-			<ul>
+			<ul class="disc-list">
 				<li>Apples</li>
 				<li>Bananas</li>
 				<li>Cherries</li>
 			</ul>
 
-			<p><b>Description Lists</b>: These are used for pairs of terms and
-				descriptions, such as glossaries or question-and-answer formats. Description
-				lists are created using the &lt;dl&gt; tag, with each term marked by &lt;dt&gt;
-				and each description by &lt;dd&gt;:</p>
+			<p><strong>Description Lists</strong>: These are used for pairs of terms and descriptions, such as glossaries or question-and-answer formats. Description lists are created using the <code>&lt;dl&gt;</code> tag, with each term marked by <code>&lt;dt&gt;</code> and each description by <code>&lt;dd&gt;</code>:</p>
 
 			<pre><code>&lt;dl&gt;
 	&lt;dt&gt;HTML&lt;/dt&gt;
@@ -210,120 +149,110 @@
 	&lt;dd&gt;Cascading Style Sheets&lt;/dd&gt;
 &lt;/dl&gt;</code></pre>
 
-			<p>This will display as:<br>
-			<dl>
+			<p>This will display as:</p>
+
+			<dl class="description-list">
 				<dt>HTML</dt>
 				<dd>Hypertext Markup Language</dd>
 				<dt>CSS</dt>
 				<dd>Cascading Style Sheets</dd>
 			</dl>
-			</p>
 
-			<p>Understanding these list types and their appropriate usage is essential for
-				web developers. Properly formatted lists enhance the readability and
-				accessibility of web pages, making it easier for users to navigate and
-				comprehend the content.</p>
+			<p>Understanding these list types and their appropriate usage is essential for web developers. Properly formatted lists enhance the readability and accessibility of web pages, making it easier for users to navigate and comprehend the content.</p>
 
 			<h3>Your Turn</h3>
+			<ol class="ordered-list">
+				<li>Write some HTML that contains one heading, one paragraph, and some bold text.</li>
+				<li>Add text using italics, and other text that uses emphasis.</li>
+				<li>Add an ordered list of your top 3 favorite songs or movies.</li>
+			</ol>
 
-			<p style='margin-left:.5in;text-indent:-.25in'>1.&nbsp;&nbsp;&nbsp;&nbsp;
-				Write some HTML that contains one heading, one paragraph and some bold
-				text.</p>
-
-			<p style='margin-left:.5in;text-indent:-.25in'>2.&nbsp;&nbsp;&nbsp;&nbsp;
-				Add text using italics, and other text that uses emphasize.</p>
-
-			<p style='margin-left:.5in;text-indent:-.25in'>3.&nbsp;&nbsp;&nbsp;&nbsp;
-				Add an ordered list of your top 3 favorite songs or movies.</p>
-
-			<section id="coderunner">
-				<p>
-					<!-- Textarea for the user to input HTML -->
+			<section id="coderunner" class="coderunner-box">
+				<h2>Code Runner Sandbox Workspace</h2>
+				<div class="form-group">
+					<label for="htmlCode" class="form-label">Write HTML Code Here:</label>
 					<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+				</div>
 
-					<!-- Run code button -->
-					<button onclick="runCode()" class="action-button" style="margin-top: 10px; margin-bottom: 10px;">Run Code</button>
+				<button type="button" onclick="runCode()" class="action-button">Run Code</button>
 
-					<!-- Output iframe where the HTML is rendered -->
-					<iframe id="output" src="about:blank"></iframe>
-				</p>
+				<div class="form-group">
+					<label for="output" class="form-label">Live Output Window:</label>
+					<iframe id="output" src="about:blank" title="HTML Code Output Preview"></iframe>
+				</div>
 			</section>
+		</section>
 
-		</div>
+		<section id="quiz-container-chapter3-1">
+			<div class="quiz-panel-wrapper">
+				<h2>Chapter 3.1 Quiz</h2>
+				
+				<form id="quizFormChapter3_1" onsubmit="event.preventDefault();">
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">1. Which heading level should be used for the main title of the entire document?</legend>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q1_chapter3_1" id="q1_opt_a" value="A">
+								<label for="q1_opt_a">a) &lt;h1&gt;</label>
+							</li>
+							<li>
+								<input type="radio" name="q1_chapter3_1" id="q1_opt_b" value="B">
+								<label for="q1_opt_b">b) &lt;h2&gt;</label>
+							</li>
+							<li>
+								<input type="radio" name="q1_chapter3_1" id="q1_opt_c" value="C">
+								<label for="q1_opt_c">c) &lt;h3&gt;</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter3_1', 'A', 'q1_feedback', 'Correct! You understand the hierarchy of HTML headings.', 'Incorrect. Remember that H1 is for the main title, and H6 is the smallest.')">Submit Answer</button>
+					</fieldset>
+				</form>
+				<div id="q1_feedback" class="feedback-area" role="status" aria-live="polite"></div>
+				
+				<hr class="quiz-divider">
+
+				<form id="quizFormChapter3_2" onsubmit="event.preventDefault();">
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">2. What is the primary purpose of the &lt;p&gt; tag?</legend>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q2_chapter3_1" id="q2_opt_a" value="A">
+								<label for="q2_opt_a">a) To define a block of text as a paragraph.</label>
+							</li>
+							<li>
+								<input type="radio" name="q2_chapter3_1" id="q2_opt_b" value="B">
+								<label for="q2_opt_b">b) To make text bold.</label>
+							</li>
+							<li>
+								<input type="radio" name="q2_chapter3_1" id="q2_opt_c" value="C">
+								<label for="q2_opt_c">c) To create a list item.</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter3_1', 'A', 'q2_feedback', 'Correct! The &lt;p&gt; tag defines a paragraph.', 'Incorrect. Review the section on paragraphs.')">Submit Answer</button>
+					</fieldset>
+				</form>
+				<div id="q2_feedback" class="feedback-area" role="status" aria-live="polite"></div>
+			</div>
+		</section>
+	</main>
 	
-
-	<!-- ================================================================================= -->
-	<!-- START: Chapter 3.1 Quiz (Interactive & Accessible) -->
-	<!-- ================================================================================= -->
-	<section id="quiz-container-chapter3-1">
-		<div class="quiz-panel-wrapper">
-			<h3><strong>Chapter 3.1 Quiz</strong></h3>
-			
-			<form id="quizFormChapter3_1" onsubmit="event.preventDefault();">
-				<p><strong>1. Which heading level should be used for the main title of the entire document?</strong></p>
-				<ul class="quiz-options-list">
-					<li>
-						<input type="radio" name="q1_chapter3_1" id="q1_opt_a" value="A">
-						<label for="q1_opt_a">a) &lt;h1&gt;</label>
-					</li>
-					<li>
-						<input type="radio" name="q1_chapter3_1" id="q1_opt_b" value="B">
-						<label for="q1_opt_b">b) &lt;h2&gt;</label>
-					</li>
-					<li>
-						<input type="radio" name="q1_chapter3_1" id="q1_opt_c" value="C">
-						<label for="q1_opt_c">c) &lt;h3&gt;</label>
-					</li>
-				</ul>
-				<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter3_1', 'A', 'q1_feedback', 'Correct! You understand the hierarchy of HTML headings.', 'Incorrect. Remember that H1 is for the main title, and H6 is the smallest.')">Submit Answer</button>
-			</form>
-			<div id="q1_feedback"></div>
-			
-			<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
-
-			<form id="quizFormChapter3_2" onsubmit="event.preventDefault();">
-				<p><strong>2. What is the primary purpose of the &lt;p&gt; tag?</strong></p>
-				<ul class="quiz-options-list">
-					<li>
-						<input type="radio" name="q2_chapter3_1" id="q2_opt_a" value="A">
-						<label for="q2_opt_a">a) To define a block of text as a paragraph.</label>
-					</li>
-					<li>
-						<input type="radio" name="q2_chapter3_1" id="q2_opt_b" value="B">
-						<label for="q2_opt_b">b) To make text bold.</label>
-					</li>
-					<li>
-						<input type="radio" name="q2_chapter3_1" id="q2_opt_c" value="C">
-						<label for="q2_opt_c">c) To create a list item.</label>
-					</li>
-				</ul>
-				<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter3_1', 'A', 'q2_feedback', 'Correct! The &lt;p&gt; tag defines a paragraph.', 'Incorrect. Review the section on paragraphs.')">Submit Answer</button>
-			</form>
-			<div id="q2_feedback"></div>
-		</div>
-	</section>
-	</div>
-	<!-- ================================================================================= -->
-	<!-- END: Chapter 3.1 Quiz -->
-	<!-- ================================================================================= -->
-	
-<footer>
-		<div class="nav-container">
+	<footer>
+		<nav class="nav-container" aria-label="Chapter Navigation">
 			<div class="nav-link">
-				<strong>← Previous</strong>
+				<strong>← Previous</strong><br>
 				<a href="chapter2.html">Chapter 2</a><br>
 				<a href="index.html">Home</a>
 			</div>
-			<div class="nav-link">
-				<strong>📖 Current Chapter</strong>
+			<div class="nav-link nav-link-center">
+				<strong>📖 Current Chapter</strong><br>
 				<span>Chapter 3.1</span>
 			</div>
-			<div class="nav-link">
-				<strong>Next →</strong>
+			<div class="nav-link nav-link-right">
+				<strong>Next →</strong><br>
 				<a href="chapter3-2.html">Chapter 3.2</a>
 			</div>
-		</div>
-</footer>
+		</nav>
+	</footer>
 </body>
 
 </html>
