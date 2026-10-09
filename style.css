@@ -270,7 +270,7 @@ iframe.video-iframe {
 }
 
 /* ================== BUTTONS ================== */
-button, .action-button, .quiz-btn, .snippet-btn, .macro-btn {
+button, .action-button, .quiz-btn, .macro-btn {
 	display: inline-block;
 	font-size: 0.95rem;
 	font-weight: 700;
@@ -294,14 +294,14 @@ button:hover, .action-button:hover, .quiz-btn:hover {
 	font-size: 1rem;
 }
 
-.snippet-btn, .macro-btn {
-	background-color: #0d9488;
+.macro-btn {
+	background-color: #09645d;
 	margin-right: 8px;
 	margin-bottom: 8px;
 }
 
-.snippet-btn:hover, .macro-btn:hover {
-	background-color: #115e59;
+.macro-btn:hover {
+	background-color: #0b3b38;
 }
 
 .macro-button-group {
