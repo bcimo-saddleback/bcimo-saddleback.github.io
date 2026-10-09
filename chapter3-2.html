@@ -1,37 +1,30 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Chapter 3: Working with Text and Links - Section 2</title>
 	<link rel="stylesheet" href="style.css">
-	
-	<style>
-		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
-		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
-		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
-		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
-		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
-		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
-		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
-		.action-button:hover { background: #1d4ed8; }
-		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
-		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
-	</style>
-
 	<script>
 		// Function to run the HTML code
 		function runCode() {
 			var htmlCode = document.getElementById('htmlCode').value;
-
 			var iframe = document.getElementById('output');
 			var iframeDoc = iframe.contentWindow.document;
 			iframeDoc.open();
-
-			// Write the HTML code to the iframe
 			iframeDoc.write(`
-				${htmlCode}
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<title>Live Preview</title>
+				</head>
+				<body>
+					${htmlCode}
+				</body>
+				</html>
 			`);
-
 			iframeDoc.close();
 		}
 
@@ -41,112 +34,88 @@
 			const displayBox = document.getElementById(targetFeedbackId);
 
 			if (!checkedOption) {
-				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				displayBox.className = "feedback-area feedback-warning";
+				displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
 				return;
 			}
 
 			if (checkedOption.value === targetKey) {
-				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+				displayBox.className = "feedback-area feedback-success";
+				displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
 			} else {
-				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+				displayBox.className = "feedback-area feedback-error";
+				displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
 			}
 		}
 	</script>
 </head>
 
-<body lang=EN-US link=blue vlink="#96607D" style='word-wrap:break-word'>
+<body>
+	<a href="#main-content" class="skip-link">Skip to main content</a>
 
-	<div class="container">
-
+	<main class="container" id="main-content">
+		<header class="header-centered">
 			<h1>Chapter 3: Working with Text and Links</h1>
+			<h2>Section 2: Creating Hyperlinks Using the &lt;a&gt; Tag</h2>
+		</header>
 
-			<div class=MsoNormal align=center style='text-align:center'>
+		<p>Hyperlinks are the backbone of the web, enabling users to navigate from one webpage to another or to other resources.</p>
 
-				<hr size=0 width="100%" align=center>
+		<p>The following video provides a basic overview of how to create hyperlinks in HTML. After watching the video, you will learn how to create basic hyperlinks, open links in a new tab, and use descriptive link text for better accessibility.</p>
 
+		<iframe src="https://www.youtube.com/embed/HA6bByKdAQM" 
+			title="Video tutorial: HTML Links by W3Schools" 
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+			referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
+
+		<h3>Basic Hyperlinks</h3>
+		<p>The <code>&lt;a&gt;</code> tag requires the <code>href</code> attribute, which specifies the destination of the link. A basic example looks like this:</p>
+
+		<pre><code>&lt;a href="https://www.example.com"&gt;Visit Example Website&lt;/a&gt;</code></pre>
+
+		<p>When a user clicks on this link, they will be directed to "<a href="https://www.example.com" target="_blank" rel="noopener">https://www.example.com (opens in new tab)</a>".</p>
+
+		<h3>Opening Links in a New Tab</h3>
+		<p>By default, links open in the same tab. If you want a link to open in a new tab, you can add the <code>target="_blank"</code> attribute:</p>
+
+		<pre><code>&lt;a href="https://www.example.com" target="_blank" rel="noopener"&gt;Visit Example Website (opens in new tab)&lt;/a&gt;</code></pre>
+
+		<h3>Descriptive Link Text</h3>
+		<p>For accessibility reasons, always make sure your link text is descriptive and meaningful. Avoid generic link texts like "Click Here" or "Read More". Instead, describe what the link leads to, e.g., "Visit the Web Development Tutorial" or "Download the User Manual."</p>
+
+		<h3>Adding Title Attribute</h3>
+		<p>You can add a <code>title</code> attribute to links, which will display additional information when the user hovers over the link. While this can be useful, it should not be relied on as the sole way to convey important information.</p>
+
+		<pre><code>&lt;a href="https://www.example.com" title="Visit the Example Website"&gt;Visit Example Website&lt;/a&gt;</code></pre>
+
+		<h3>Your Turn</h3>
+		<ol class="ordered-list">
+			<li>Write HTML code that has a link to your favorite website using a title attribute.</li>
+			<li>Now change the link to open in a new page.</li>
+		</ol>
+
+		<section id="coderunner" class="coderunner-box">
+			<h2>Code Runner Sandbox Workspace</h2>
+			<div class="form-group">
+				<label for="htmlCode" class="form-label">Write HTML Code Here:</label>
+				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
 			</div>
 
-			<h2>Section 2: Creating Hyperlinks Using the <code>&lt;a&gt;</code>
-				Tag</h2>
+			<button type="button" onclick="runCode()" class="action-button">Run Code</button>
 
-			<p>Hyperlinks are the backbone of the web, enabling users to navigate from one
-				webpage to another or to other resources. In HTML, hyperlinks are created using
-				the <code>&lt;a&gt;</code>
-				tag.</p>
+			<div class="form-group">
+				<label for="output" class="form-label">Live Output Window:</label>
+				<iframe id="output" src="about:blank" title="HTML Code Output Preview"></iframe>
+			</div>
+		</section>
 
-			<p>The following video provides a basic overview of how to create hyperlinks in HTML. After watching the video, you will learn how to create basic hyperlinks, open links in a new tab, and use descriptive link text for better accessibility.</p>
-
-			<iframe width="600" height="400" src="https://www.youtube.com/embed/HA6bByKdAQM" title="HTML - Links - W3Schools.com" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-			<h3>Basic Hyperlinks</h3>
-
-			<p>The <code>&lt;a&gt;</code>
-				tag requires the <code>href</code>
-				attribute, which specifies the destination of the link. A basic example looks
-				like this:</p>
-
-			<pre><code>&lt;a href=&quot;https://www.example.com&quot;&gt;Visit Example Website&lt;/a&gt;</code></pre>
-
-			<p>When a user clicks on this link, they will be directed to &quot;<a
-					href="https://www.example.com">https://www.example.com</a>&quot;.</p>
-
-			<h3>Opening Links in a New Tab</h3>
-
-			<p>By default, links open in the same tab. If you want a link to open in a new
-				tab, you can add the
-				<code>target=&quot;_blank&quot;</code>
-				attribute:</p>
-
-			<pre><code>&lt;a href=&quot;https://www.example.com&quot; target=&quot;_blank&quot;&gt;Visit Example Website&lt;/a&gt;</code></pre>
-
-			<h3>Descriptive Link Text</h3>
-
-			<p>For accessibility reasons, always make sure your link text is descriptive
-				and meaningful. Avoid generic link texts like &quot;Click Here&quot; or
-				&quot;Read More&quot;. Instead, describe what the link leads to, e.g.,
-				&quot;Visit the Web Development Tutorial&quot; or &quot;Download the User
-				Manual.&quot;</p>
-
-			<h3>Adding Title Attribute</h3>
-
-			<p>You can add a <code>title</code>
-				attribute to links, which will display additional information when the user
-				hovers over the link. While this can be useful, it should not be relied on as
-				the sole way to convey important information.</p>
-
-			<pre><code>&lt;a href=&quot;https://www.example.com&quot; title=&quot;Visit the Example Website&quot;&gt;Visit Example Website&lt;/a&gt;</code></pre>
-
-			<h3>Your Turn</h3>
-
-			<p style='margin-left:.5in;text-indent:-.25in'>1.&nbsp;&nbsp;&nbsp;&nbsp;
-				Write HTML code that has a link to your favorite website using a title
-				attribute.</p>
-
-			<p style='margin-left:.5in;text-indent:-.25in'>2.&nbsp;&nbsp;&nbsp;&nbsp;
-				Now change the link to open in a new page. </p>
-
-			<section id="coderunner">
-				<p>
-					<!-- Textarea for the user to input HTML -->
-					<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
-
-					<!-- Run code button -->
-					<button onclick="runCode()" class="action-button" style="margin-top: 10px; margin-bottom: 10px;">Run Code</button>
-
-					<!-- Output iframe where the HTML is rendered -->
-					<iframe id="output" src="about:blank"></iframe>
-				</p>
-			</section>
-
-			<!-- ================================================================================= -->
-			<!-- START: Chapter 3.2 Quiz (Interactive & Accessible) -->
-			<!-- ================================================================================= -->
-			<section id="quiz-container-chapter3-2">
-				<div class="quiz-panel-wrapper">
-					<h3><strong>Chapter 3.2 Quiz</strong></h3>
-					
-					<form id="quizFormChapter3_2_1" onsubmit="event.preventDefault();">
-						<p><strong>1. Which attribute is required inside the &lt;a&gt; tag to specify the link's destination?</strong></p>
+		<section id="quiz-container-chapter3-2">
+			<div class="quiz-panel-wrapper">
+				<h2>Chapter 3.2 Quiz</h2>
+				
+				<form id="quizFormChapter3_2_1" onsubmit="event.preventDefault();">
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">1. Which attribute is required inside the &lt;a&gt; tag to specify the link's destination?</legend>
 						<ul class="quiz-options-list">
 							<li>
 								<input type="radio" name="q1_chapter3_2" id="q1_opt_a" value="A">
@@ -162,13 +131,15 @@
 							</li>
 						</ul>
 						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter3_2', 'C', 'q1_feedback_3_2', 'Correct! The href attribute specifies the destination URL.', 'Incorrect. Review the Basic Hyperlinks section.')">Submit Answer</button>
-					</form>
-					<div id="q1_feedback_3_2"></div>
-					
-					<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+					</fieldset>
+				</form>
+				<div id="q1_feedback_3_2" class="feedback-area" role="status" aria-live="polite"></div>
+				
+				<hr class="quiz-divider">
 
-					<form id="quizFormChapter3_2_2" onsubmit="event.preventDefault();">
-						<p><strong>2. How do you force a hyperlink to open in a new browser tab?</strong></p>
+				<form id="quizFormChapter3_2_2" onsubmit="event.preventDefault();">
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">2. How do you force a hyperlink to open in a new browser tab?</legend>
 						<ul class="quiz-options-list">
 							<li>
 								<input type="radio" name="q2_chapter3_2" id="q2_opt_a" value="A">
@@ -184,13 +155,15 @@
 							</li>
 						</ul>
 						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter3_2', 'A', 'q2_feedback_3_2', 'Correct! It opens the link in a new tab.', 'Incorrect. Check the &quot;Opening Links in a New Tab&quot; section.')">Submit Answer</button>
-					</form>
-					<div id="q2_feedback_3_2"></div>
+					</fieldset>
+				</form>
+				<div id="q2_feedback_3_2" class="feedback-area" role="status" aria-live="polite"></div>
 
-					<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+				<hr class="quiz-divider">
 
-					<form id="quizFormChapter3_2_3" onsubmit="event.preventDefault();">
-						<p><strong>3. Why is it important to use descriptive link text instead of generic phrases like "Click Here"?</strong></p>
+				<form id="quizFormChapter3_2_3" onsubmit="event.preventDefault();">
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">3. Why is it important to use descriptive link text instead of generic phrases like "Click Here"?</legend>
 						<ul class="quiz-options-list">
 							<li>
 								<input type="radio" name="q3_chapter3_2" id="q3_opt_a" value="A">
@@ -206,33 +179,30 @@
 							</li>
 						</ul>
 						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q3_chapter3_2', 'B', 'q3_feedback_3_2', 'Spot on! Descriptive links are critical for accessibility.', 'Incorrect. Review the &quot;Descriptive Link Text&quot; section.')">Submit Answer</button>
-					</form>
-					<div id="q3_feedback_3_2"></div>
-				</div>
-			</section>
-			<!-- ================================================================================= -->
-			<!-- END: Chapter 3.2 Quiz -->
-			<!-- ================================================================================= -->
+					</fieldset>
+				</form>
+				<div id="q3_feedback_3_2" class="feedback-area" role="status" aria-live="polite"></div>
+			</div>
+		</section>
+	</main>
 
-	</div>
-
-<footer>
-	<div class="nav-container">
-		<div class="nav-link">
-			<strong>← Previous</strong>
-			<a href="chapter3-1.html">Chapter 3.1</a><br>
-			<a href="index.html">Home</a>
-		</div>
-		<div class="nav-link">
-			<strong>📖 Current Chapter</strong>
-			<span>Chapter 3.2</span>
-		</div>
-		<div class="nav-link">
-			<strong>Next →</strong>
-			<a href="chapter3-3.html">Chapter 3.3</a>
-		</div>
-	</div>
-</footer>
+	<footer>
+		<nav class="nav-container" aria-label="Chapter Navigation">
+			<div class="nav-link">
+				<strong>← Previous</strong><br>
+				<a href="chapter3-1.html">Chapter 3.1</a><br>
+				<a href="index.html">Home</a>
+			</div>
+			<div class="nav-link nav-link-center">
+				<strong>📖 Current Chapter</strong><br>
+				<span>Chapter 3.2</span>
+			</div>
+			<div class="nav-link nav-link-right">
+				<strong>Next →</strong><br>
+				<a href="chapter3-3.html">Chapter 3.3</a>
+			</div>
+		</nav>
+	</footer>
 </body>
 
 </html>

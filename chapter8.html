@@ -10,226 +10,233 @@
         // Function to run the HTML code
         function runCode() {
             var htmlCode = document.getElementById('htmlCode').value;
-
             var iframe = document.getElementById('output');
             var iframeDoc = iframe.contentWindow.document;
             iframeDoc.open();
-
-            // Write the HTML code to the iframe
             iframeDoc.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Live Preview</title>
+                </head>
+                <body>
                     ${htmlCode}
-                `);
-
+                </body>
+                </html>
+            `);
             iframeDoc.close();
+        }
+
+        // Unified Self-Contained Client Grading Logic
+        function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
+            const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
+            const displayBox = document.getElementById(targetFeedbackId);
+
+            if (!checkedOption) {
+                displayBox.className = "feedback-area feedback-warning";
+                displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
+                return;
+            }
+
+            if (checkedOption.value === targetKey) {
+                displayBox.className = "feedback-area feedback-success";
+                displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
+            } else {
+                displayBox.className = "feedback-area feedback-error";
+                displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
+            }
         }
     </script>
 </head>
 
-<body lang=EN-US style='word-wrap:break-word'>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <div class="container">
-        <h1>Chapter 8: Best Practices for Web Development</h1>
-        <p>In this chapter, we will focus on the essential best practices for web development with an emphasis on
-            <a href="chapter7.html">Chapter 7</a><br>
-            <a href="index.html">Home</a>
-            clean, well-structured HTML. Additionally, we&rsquo;ll touch on performance optimization, security
-            considerations, and the importance of keeping up with web development trends. By following these guidelines,
-            you'll develop websites that are easy to maintain, perform well, and are secure.
-        </p>
-        <span>Chapter 8</span>
-        <ol>
-            <li><strong>Writing Clean, Well-Structured HTML</strong></li>
-        </ol>
-        <p>Writing clean and well-organized HTML is crucial for creating maintainable websites. It's important to
-            structure
-            your code in a way that&rsquo;s easy to read and understand, which will save time in the long run when
-            working
-            with others or revisiting your code.</p>
-        <p><strong>Key Practices for Clean HTML:</strong></p>
-        <ul>
-            <li><strong>Indentation</strong>: Always use consistent indentation for nested elements. This helps make
-                your
-                code readable and easy to follow.</li>
-            <li><strong>Consistent Tag Closure</strong>: Make sure all HTML tags are properly closed to avoid errors.
-                This
-                includes both single and self-closing tags like &lt;img&gt; and &lt;br&gt;.</li>
-            <li><strong>Use Meaningful Names</strong>: For class names and IDs, use names that are descriptive and help
-                identify their purpose.</li>
-            <li><strong>Commenting Your Code</strong>: Use comments to describe sections of your HTML, especially if
-                it&rsquo;s not immediately clear what a section does. This is particularly helpful in larger projects.
-            </li>
+    <main class="container" id="main-content">
+        <header class="header-centered">
+            <h1>Chapter 8: Best Practices for Web Development</h1>
+            <h2>Introduction</h2>
+        </header>
+
+        <p>In this chapter, we will focus on essential best practices for web development with an emphasis on clean, well-structured HTML. Additionally, we&rsquo;ll touch on performance optimization, security considerations, and the importance of keeping up with web development trends. By following these guidelines, you'll develop websites that are easy to maintain, perform well, and are secure.</p>
+
+        <h2>Writing Clean, Well-Structured HTML</h2>
+        <p>Writing clean and well-organized HTML is crucial for creating maintainable websites. It's important to structure your code in a way that&rsquo;s easy to read and understand, which will save time in the long run when working with others or revisiting your code.</p>
+
+        <h3>Key Practices for Clean HTML:</h3>
+        <ul class="disc-list">
+            <li><strong>Indentation</strong>: Always use consistent indentation for nested elements to make code readable.</li>
+            <li><strong>Consistent Tag Closure</strong>: Ensure all HTML tags are properly closed to avoid rendering errors.</li>
+            <li><strong>Use Meaningful Names</strong>: For class names and IDs, use names that are descriptive and identify their purpose.</li>
+            <li><strong>Commenting Your Code</strong>: Use comments to describe sections of your HTML, especially in larger projects.</li>
         </ul>
-        <p><strong>Example of Clean, Well-Formatted HTML:</strong></p>
 
-        <code><pre>
-&lt;!DOCTYPE html&gt;
+        <h3>Example of Clean, Well-Formatted HTML:</h3>
+        <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
- &lt;meta charset="UTF-8"&gt;
- &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
- &lt;title&gt;Best Practices Example&lt;/title&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Best Practices Example&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
- &lt;header&gt;
-  &lt;h1&gt;Welcome to Our Website&lt;/h1&gt;
-  &lt;nav&gt;
-   &lt;ul&gt;
-    &lt;li&gt;&lt;a href="#home"&gt;Home&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
-   &lt;/ul&gt;
-  &lt;/nav&gt;
- &lt;/header&gt;
-&nbsp;
- &lt;main&gt;
-  &lt;section id="home"&gt;
-   &lt;h2&gt;Home Section&lt;/h2&gt;
-   &lt;p&gt;Welcome to our site. Here&rsquo;s an overview of what we do.&lt;/p&gt;
-  &lt;/section&gt;
-&nbsp;
-  &lt;section id="about"&gt;
-   &lt;h2&gt;About Us&lt;/h2&gt;
-   &lt;p&gt;We are a web development company focused on building clean, fast websites.&lt;/p&gt;
-  &lt;/section&gt;
-&nbsp;
-  &lt;section id="contact"&gt;
-   &lt;h2&gt;Contact Us&lt;/h2&gt;
-   &lt;p&gt;You can reach us through email or social media.&lt;/p&gt;
-  &lt;/section&gt;
- &lt;/main&gt;
-&nbsp;
- &lt;footer&gt;
-  &lt;p&gt;&amp;copy; 2025 Web Dev Co.&lt;/p&gt;
- &lt;/footer&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Welcome to Our Website&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#home"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section id="home"&gt;
+      &lt;h2&gt;Home Section&lt;/h2&gt;
+      &lt;p&gt;Welcome to our site. Here is an overview of what we do.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&amp;copy; 2026 Web Dev Co.&lt;/p&gt;
+  &lt;/footer&gt;
 &lt;/body&gt;
-&lt;/html&gt;
-&nbsp;</pre></code>
+&lt;/html&gt;</code></pre>
 
-        <p><strong>Key Points:</strong></p>
-        <ul>
-            <li><strong>Indentation</strong>: Each nested element is indented with two spaces, making the structure easy
-                to
-                follow.</li>
-            <li><strong>Clear Structure</strong>: The page is broken into distinct sections with appropriate headers
-                (&lt;header&gt;, &lt;main&gt;, and &lt;footer&gt;).</li>
-            <li><strong>Consistent Tag Closure</strong>: Every tag is correctly closed, ensuring the page renders
-                properly.
-            </li>
-        </ul>
-        <p><strong>Common Pitfalls to Avoid:</strong></p>
-        <ul>
-            <li><strong>Improper Nesting</strong>: Make sure that you close your tags properly and in the correct order.
-                For
-                example, a &lt;div&gt; tag should not be closed before its child tags are fully closed.</li>
-            <li><strong>Missing Tags</strong>: Forgetting to close tags like &lt;a&gt; or &lt;ul&gt; can cause rendering
-                issues and unexpected behavior.</li>
-            <li><strong>Overuse of Inline Styles</strong>: It's a good practice to keep styles in external CSS files,
-                not
-                inline in HTML, to separate structure from presentation.</li>
-        </ul>
-        <br>
         <hr>
+
         <h2>Basic Website Optimization</h2>
-        <p>Once you have a basic understanding of HTML, the next step is to optimize your website for better performance
-            and
-            user experience. Website optimization involves several strategies to improve the speed, accessibility, and
-            search engine ranking of your site.</p>
-        <ol>
-            <li><strong>HTML Code Minification</strong></li>
+        <p>Website optimization involves several strategies to improve the speed, accessibility, and search engine ranking of your site.</p>
 
-            <p>One of the simplest ways to optimize a website is by minimizing the HTML code. This means removing
-                unnecessary
-                spaces, comments, and redundant code. Minification reduces the file size, allowing the page to load
-                faster.
-                For
-                example, instead of writing:</p>
-            <p>&lt;p&gt; This is a paragraph. &lt;/p&gt;</p>
-            <p>You can write:</p>
-            <p>&lt;p&gt;This is a paragraph.&lt;/p&gt;</p>
-            <li><strong>Use Semantic HTML</strong></li>
-            <p>Semantic HTML involves using HTML tags that convey the meaning of the content. This practice improves
-                accessibility and SEO (Search Engine Optimization). For instance, using &lt;header&gt;, &lt;footer&gt;,
-                and
-                &lt;article&gt; tags instead of generic &lt;div&gt; tags helps search engines and screen readers
-                understand
-                the
-                structure of your page.</p>
-            <li><strong>Optimize Images</strong></li>
-
-            <p>Images can significantly slow down a website if not optimized properly. Use the appropriate image format
-                (JPEG,
-                PNG, SVG) and compress images to reduce their size without compromising quality. Additionally, specify
-                image
-                dimensions in the HTML to prevent layout shifts during loading.</p>
-            <p>Example:</p>
-            <p>&lt;img src="image.jpg" alt="Description of image" width="600" height="400"&gt;</p>
-
-            <li><strong>Use External Stylesheets and Scripts</strong></li>
-
-            <p>Instead of embedding CSS and JavaScript directly in HTML, link to external files. This practice separates
-                content
-                from design and behavior, making the HTML cleaner and easier to maintain.</p>
-            <p>Example:</p>
-            <p>&lt;link rel="stylesheet" href="styles.css"&gt;</p>
-            <p>&lt;script src="script.js"&gt;&lt;/script&gt;</p>
+        <ol class="ordered-list">
+            <li><strong>HTML Code Minification</strong>: Removing unnecessary spaces, comments, and redundant code to reduce file size.</li>
+            <li><strong>Use Semantic HTML</strong>: Using meaningful tags like <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, and <code>&lt;article&gt;</code> to aid screen readers and SEO.</li>
+            <li><strong>Optimize Images</strong>: Compressing image files and defining dimensions to prevent layout shifts.</li>
+            <li><strong>Use External Stylesheets and Scripts</strong>: Linking external CSS and JS files to keep HTML clean.</li>
         </ol>
+
         <hr>
-        <h3>Ongoing Learning and Keeping Up with Web Trends</h3>
-        <p>Web development is a constantly evolving field. To stay ahead of the curve, you need to continuously learn
-            about
-            new technologies, tools, and best practices.</p>
-        <p><strong>Key Areas to Explore:</strong></p>
-        <ul>
-            <li><strong>JavaScript Frameworks</strong>: Frameworks like React, Angular, and Vue.js are popular for
-                building
-                dynamic websites. Explore them as you gain more experience.</li>
-            <li><strong>Responsive Design</strong>: With so many devices out there, it&rsquo;s crucial to design
-                websites
-                that work well on all screen sizes. Tools like Flexbox and CSS Grid can help with this.</li>
-        </ul>
-        <p><strong>Communities to Join:</strong></p>
-        <ul>
-            <li><strong>Web Development Communities</strong>: Platforms like Stack Overflow, GitHub, and Reddit's web
-                development subreddits are great places to ask questions, share knowledge, and collaborate.</li>
-            <li><strong>Stay Updated with Blogs and Podcasts</strong>: Follow blogs like <a
-                    href="https://css-tricks.com/">CSS-Tricks</a> and <a
-                    href="https://www.smashingmagazine.com/">Smashing
-                    Magazine</a>, or listen to podcasts for the latest trends.</li>
-        </ul>
-        <p><strong>Interactive Learning Path:</strong> Explore these platforms and watch videos for ongoing learning in
-            web
-            development:</p>
-        <p><strong>Summary:</strong></p>
-        <ul>
-            <li>Writing clean, structured HTML with consistent indentation and proper tag closure makes your code easy
-                to
-                maintain.</li>
-            <li>Performance optimization through image compression and minification ensures faster loading times.</li>
-            <li>Ongoing learning about new technologies and tools keeps you at the forefront of web development.</li>
-        </ul>
-        <p>By following these best practices, you&rsquo;ll be able to build websites that are easy to work with and
-            perform
-            well.</p>
 
-    </div>
+        <h2>Ongoing Learning and Keeping Up with Web Trends</h2>
+        <p>Web development is a constantly evolving field. To stay ahead of the curve, you need to continuously learn about new technologies, tools, and best practices.</p>
 
+        <h3>Communities &amp; Resources to Follow:</h3>
+        <ul class="disc-list">
+            <li><strong>CSS-Tricks</strong>: <a href="https://css-tricks.com/" target="_blank" rel="noopener">Visit CSS-Tricks (opens in new tab)</a></li>
+            <li><strong>Smashing Magazine</strong>: <a href="https://www.smashingmagazine.com/" target="_blank" rel="noopener">Visit Smashing Magazine (opens in new tab)</a></li>
+        </ul>
+
+        <section id="coderunner" class="coderunner-box">
+            <h2>Code Runner Sandbox Workspace</h2>
+            <div class="form-group">
+                <label for="htmlCode" class="form-label">Enter HTML Code Here:</label>
+                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+            </div>
+
+            <button type="button" class="action-button" onclick="runCode()">Run Code</button>
+
+            <div class="form-group">
+                <label for="output" class="form-label">Live Output Window:</label>
+                <iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
+            </div>
+        </section>
+
+        <section id="quiz-container-chapter8">
+            <div class="quiz-panel-wrapper">
+                <h2>Chapter 8 Quiz</h2>
+
+                <form id="quizFormChapter8_1" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">1. Why is consistent indentation and proper tag closure crucial when writing HTML?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q1_chapter8" id="q1_ch8_opt_a" value="A">
+                                <label for="q1_ch8_opt_a">a) It automatically reduces server hosting costs.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1_chapter8" id="q1_ch8_opt_b" value="B">
+                                <label for="q1_ch8_opt_b">b) It ensures code is readable, maintainable, and prevents rendering errors.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1_chapter8" id="q1_ch8_opt_c" value="C">
+                                <label for="q1_ch8_opt_c">c) It replaces the need to write external CSS files.</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter8', 'B', 'q1_feedback_8_1', 'Correct! Clean code structure avoids syntax errors and eases maintenance.', 'Incorrect. Clean code improves readability and prevents rendering bugs.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q1_feedback_8_1" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider">
+
+                <form id="quizFormChapter8_2" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">2. What optimization practice involves removing extra white space, comments, and line breaks to shrink file size?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q2_chapter8" id="q2_ch8_opt_a" value="A">
+                                <label for="q2_ch8_opt_a">a) Minification</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2_chapter8" id="q2_ch8_opt_b" value="B">
+                                <label for="q2_ch8_opt_b">b) Flexbox Wrapping</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2_chapter8" id="q2_ch8_opt_c" value="C">
+                                <label for="q2_ch8_opt_c">c) Transpilation</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter8', 'A', 'q2_feedback_8_2', 'Spot on! Minification trims code size to speed up download times.', 'Incorrect. Review the Website Optimization section.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q2_feedback_8_2" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider">
+
+                <form id="quizFormChapter8_3" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">3. Why should CSS styles be kept in external stylesheets rather than inline inside HTML elements?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q3_chapter8" id="q3_ch8_opt_a" value="A">
+                                <label for="q3_ch8_opt_a">a) Inline styles are no longer supported in modern browsers.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3_chapter8" id="q3_ch8_opt_b" value="B">
+                                <label for="q3_ch8_opt_b">b) It separates structure from presentation, making the site cleaner and easier to manage.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3_chapter8" id="q3_ch8_opt_c" value="C">
+                                <label for="q3_ch8_opt_c">c) External stylesheets bypass accessibility rules.</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q3_chapter8', 'B', 'q3_feedback_8_3', 'Perfect! Separating structure from presentation is a core web development principle.', 'Incorrect. Review External Stylesheets and Scripts.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q3_feedback_8_3" class="feedback-area" role="status" aria-live="polite"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <nav class="nav-container" aria-label="Chapter Navigation">
+            <div class="nav-link">
+                <strong>← Previous</strong><br>
+                <a href="chapter7.html">Chapter 7</a><br>
+                <a href="index.html">Home</a>
+            </div>
+            <div class="nav-link nav-link-center">
+                <strong>📖 Current Chapter</strong><br>
+                <span>Chapter 8</span>
+            </div>
+            <div class="nav-link nav-link-right">
+                <strong>Next →</strong><br>
+                <a href="index.html">Back to Table of Contents</a>
+            </div>
+        </nav>
+    </footer>
 </body>
-
-<footer>
-    <div class="nav-container">
-        <div class="nav-link">
-            <strong>← Previous</strong>
-            <a href="chapter7.html">Chapter 7</a>
-        </div>
-        <div class="nav-link">
-            <strong>📖 Current Chapter</strong>
-            Chapter 8
-        </div>
-        <div class="nav-link">
-            <strong>Next →</strong>
-            <a href="index.html">Back to Home</a>
-        </div>
-    </div>
-</footer>
 
 </html>

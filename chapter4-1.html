@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -5,20 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Chapter 4: Visual Elements and Graphics - Section 1</title>
 	<link rel="stylesheet" href="style.css">
-	
-	<style>
-		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
-		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
-		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
-		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
-		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
-		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
-		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
-		.action-button:hover { background: #1d4ed8; }
-		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
-		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
-	</style>
-
 	<script>
 		// Unified Code Runner
 		function runCode() {
@@ -27,7 +14,18 @@
 			var iframeDoc = iframe.contentWindow.document;
 			
 			iframeDoc.open();
-			iframeDoc.write(htmlCode);
+			iframeDoc.write(`
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<title>Live Preview</title>
+				</head>
+				<body>
+					${htmlCode}
+				</body>
+				</html>
+			`);
 			iframeDoc.close();
 		}
 
@@ -37,216 +35,203 @@
 			const displayBox = document.getElementById(targetFeedbackId);
 
 			if (!checkedOption) {
-				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				displayBox.className = "feedback-area feedback-warning";
+				displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
 				return;
 			}
 
 			if (checkedOption.value === targetKey) {
-				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+				displayBox.className = "feedback-area feedback-success";
+				displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
 			} else {
-				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+				displayBox.className = "feedback-area feedback-error";
+				displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
 			}
 		}
 	</script>
 </head>
 
-<body lang=EN-US link=blue vlink="#96607D" style='word-wrap:break-word'>
+<body>
+	<a href="#main-content" class="skip-link">Skip to main content</a>
 
-	<div class="container">
+	<main class="container" id="main-content">
+		<header class="header-centered">
+			<h1>Chapter 4: Visual Elements and Graphics</h1>
+			<h2>Overview</h2>
+		</header>
 
-		<h1>Chapter 4: Visual Elements and Graphics</h1>
-		<h2>Overview</h2>
-		<p>In this chapter, we’ll dive into how to integrate visual elements, such as images, videos, and audio,
-			into your website. Visual content is crucial for enhancing the user experience and making your web pages
-			more engaging. We'll also cover essential attributes that help make your images accessible and usable across
-			different devices. Lastly, we will explore different file types for images and when to use each.</p>
+		<p>In this chapter, we’ll dive into how to integrate visual elements, such as images, videos, and audio, into your website. Visual content is crucial for enhancing the user experience and making your web pages more engaging. We'll also cover essential attributes that help make your images accessible and usable across different devices. Lastly, we will explore different file types for images and when to use each.</p>
+		
 		<h3>Key Topics:</h3>
-		<ul>
+		<ul class="disc-list">
 			<li>Inserting images using the &lt;img&gt; tag.</li>
 			<li>Understanding essential attributes: src, alt, and title.</li>
 			<li>Introduction to multimedia: Embedding videos and audio.</li>
 			<li>File types (JPEG, PNG, GIF, SVG) and when to use them.</li>
 		</ul>
 
-		<p>This video explains images in HTML, and offers advice on how to use them.
+		<p>This video explains images in HTML and offers advice on how to use them:</p>
 
-			<iframe width="600" height="400"
-				src="https://www.youtube.com/embed/FmoYRiepmOE?list=PLP9IO4UYNF0VdAajP_5pYG-jG2JRrG72s"
-				title="HTML - Images - W3Schools.com" frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-		</p>
+		<iframe src="https://www.youtube.com/embed/FmoYRiepmOE?list=PLP9IO4UYNF0VdAajP_5pYG-jG2JRrG72s"
+			title="Video tutorial: HTML Images by W3Schools" 
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+			referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
 		
 		<h2>Section 1: Inserting Images Using the &lt;img&gt; Tag</h2>
-		<p>In HTML, images are an essential part of web content, making sites more engaging and visually appealing. One
-			of the most fundamental methods for inserting images into a webpage is by using the &lt;img&gt; tag. This
-			tag allows you to display various types of images, including photographs, illustrations, icons, and logos,
-			directly in your HTML document. Let’s explore how you can use this tag and understand its key
-			attributes, as well as how to incorporate images efficiently into your web pages.</p>
-		<h4>Basic Syntax</h4>
-		<p>The &lt;img&gt; tag itself is an empty or self-closing tag, which means it doesn't require an end tag. The
-			basic syntax for using the &lt;img&gt; tag is:</p>
+		<p>In HTML, images are an essential part of web content, making sites more engaging and visually appealing. One of the most fundamental methods for inserting images into a webpage is by using the &lt;img&gt; tag. This tag allows you to display various types of images, including photographs, illustrations, icons, and logos, directly in your HTML document. Let’s explore how you can use this tag and understand its key attributes, as well as how to incorporate images efficiently into your web pages.</p>
+		
+		<h3>Basic Syntax</h3>
+		<p>The &lt;img&gt; tag itself is an empty or self-closing tag, which means it doesn't require an end tag. The basic syntax for using the &lt;img&gt; tag is:</p>
+		
 		<pre><code>&lt;img src="image-source.jpg" alt="description of image"&gt;</code></pre>
-		<ul>
-			<li>src: The src (source) attribute is used to specify the path to the image you want to display. This path
-				can either be relative (pointing to a location on your server) or absolute (an external URL).</li>
-			<li>alt: The alt (alternative text) attribute is a crucial part of the &lt;img&gt; It provides a description
-				of the image in case the image is not loaded or for users with visual impairments who use screen
-				readers. For example, if you were displaying a photo of a dog, your alt text might be “A cute dog
-				playing in the park.”</li>
+		
+		<ul class="disc-list">
+			<li><strong>src</strong>: The src (source) attribute is used to specify the path to the image you want to display. This path can either be relative (pointing to a location on your server) or absolute (an external URL).</li>
+			<li><strong>alt</strong>: The alt (alternative text) attribute is a crucial part of the &lt;img&gt; tag. It provides a description of the image in case the image is not loaded or for users with visual impairments who use screen readers. For example, if you were displaying a photo of a dog, your alt text might be “A cute dog playing in the park.”</li>
 		</ul>
+		
 		<p>Here’s a simple example:</p>
-		<pre><code>&lt;img src="dog.jpg" alt="A cute dog playing in the park"&gt;&nbsp;</code></pre>
-		<h4>Sizing Images</h4>
-		<p>Sometimes images may need resizing to fit into your webpage’s layout. While you can resize an image
-			using CSS or HTML attributes, it’s always best practice to ensure images are optimized for both
-			appearance and performance. You can specify the width and height of an image directly within the HTML tag:
-		</p>
+		<pre><code>&lt;img src="dog.jpg" alt="A cute dog playing in the park"&gt;</code></pre>
+		
+		<h3>Sizing Images</h3>
+		<p>Sometimes images may need resizing to fit into your webpage’s layout. While you can resize an image using CSS or HTML attributes, it’s always best practice to ensure images are optimized for both appearance and performance. You can specify the width and height of an image directly within the HTML tag:</p>
+		
 		<pre><code>&lt;img src="cat.jpg" alt="A playful cat" width="300" height="200"&gt;</code></pre>
-		<p>This will display the image with a width of 300 pixels and a height of 200 pixels. Be careful not to distort
-			the image by forcing a non-proportional size.</p>
-		<h4>Image Formats</h4>
+		
+		<p>This will display the image with a width of 300 pixels and a height of 200 pixels. Be careful not to distort the image by forcing a non-proportional size.</p>
+		
+		<h3>Image Formats</h3>
 		<p>Common image formats supported by web browsers include:</p>
-		<ul>
+		<ul class="disc-list">
 			<li><strong>JPEG/JPG</strong>: Best for photographs, with high compression and small file sizes.</li>
 			<li><strong>PNG</strong>: Supports transparency and is great for graphics like logos and icons.</li>
 			<li><strong>GIF</strong>: Best for animations and simple graphics.</li>
-			<li><strong>SVG</strong>: Scalable vector graphics that are resolution-independent and ideal for logos and
-				icons.</li>
+			<li><strong>SVG</strong>: Scalable vector graphics that are resolution-independent and ideal for logos and icons.</li>
 		</ul>
-		<p>To insert an image, simply use the correct file format in the src attribute:</p>
-		<pre><code>&lt;img src="logo.svg" alt="Company Logo"&gt;&nbsp;</code></pre>
-		<h4>The title Attribute</h4>
-		<p>The title attribute can be added to the &lt;img&gt; tag to provide additional information about the image.
-			This will appear when the user hovers over the image. Although it's not essential for functionality, it can
-			improve the user experience.</p>
-		<pre><code>&lt;img src="images/photo.jpg" alt="A beautiful sunset over the ocean" title="Sunset at the beach"&gt;</code></pre>
-		<p>This will show a tooltip with the text "Sunset at the beach" when the user hovers over the image.</p>
-		<div class=MsoNormal align=center style='margin-bottom:0in;text-align:center'>
-
-			<hr size=0 width="100%" align=center>
-
-		</div>
 		
-		<h4>Use the Interactive HTML Editor</h4>
-		<p>Now that you’ve learned the basics, it's time to practice! Below is an interactive HTML code runner to
-			help you apply your knowledge of inserting images into a webpage.</p>
-		<p><strong>Instructions</strong>: Modify the code below by adding your own image source or adjusting the
-			attributes like size or alt text.</p>
-		<pre><code>&lt;h1&gt;Insert an Image!&lt;/h1&gt;<br />&lt;p&gt;Try changing the image's `src`, `alt`, or `width` attributes below:&lt;/p&gt;<br />&lt;img src="images/image2.png" alt="My Image" width="200", height=”200”&gt;</code></pre>
-		<p>Feel free to experiment by modifying the src to link to different images or adjusting the width and height
-			attributes to see how the image scales.</p>
-		<ul>
-			<li>What happens if you src to something that doesn’t exist?</li>
+		<p>To insert an image, simply use the correct file format in the src attribute:</p>
+		<pre><code>&lt;img src="logo.svg" alt="Company Logo"&gt;</code></pre>
+		
+		<h3>The title Attribute</h3>
+		<p>The title attribute can be added to the &lt;img&gt; tag to provide additional information about the image. This will appear when the user hovers over the image. Although it's not essential for functionality, it can improve the user experience.</p>
+		
+		<pre><code>&lt;img src="images/photo.jpg" alt="A beautiful sunset over the ocean" title="Sunset at the beach"&gt;</code></pre>
+		
+		<p>This will show a tooltip with the text "Sunset at the beach" when the user hovers over the image.</p>
+		
+		<hr>
+		
+		<h3>Use the Interactive HTML Editor</h3>
+		<p>Now that you’ve learned the basics, it's time to practice! Below is an interactive HTML code runner to help you apply your knowledge of inserting images into a webpage.</p>
+		<p><strong>Instructions</strong>: Modify the code below by adding your own image source or adjusting the attributes like size or alt text.</p>
+		
+		<pre><code>&lt;h1&gt;Insert an Image!&lt;/h1&gt;
+&lt;p&gt;Try changing the image's \`src\`, \`alt\`, or \`width\` attributes below:&lt;/p&gt;
+&lt;img src="images/image2.png" alt="My Image" width="200" height="200"&gt;</code></pre>
+		
+		<p>Feel free to experiment by modifying the src to link to different images or adjusting the width and height attributes to see how the image scales.</p>
+		<ul class="disc-list">
+			<li>What happens if you set src to something that doesn’t exist?</li>
 			<li>What happens if you change the width or height?</li>
 			<li>Try changing alt and add a title.</li>
-			<li>For 5 points of extra credit: change src to “images/image1.png” and enter the answer in the
-				extra credit quiz.</li>
+			<li>For 5 points of extra credit: change src to “images/image1.png” and enter the answer in the extra credit quiz.</li>
 		</ul>
 		
-		<section id="coderunner" style="margin-top: 30px; padding: 20px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff;">
-			<h4>Code Runner Sandbox</h4>
-			<div style="margin-top: 15px;">
-				<label for="htmlCode" style="font-weight: 700; display: block; margin-bottom: 6px;">Enter HTML Code Here:</label>
+		<section id="coderunner" class="coderunner-box">
+			<h2>Code Runner Sandbox Workspace</h2>
+			<div class="form-group">
+				<label for="htmlCode" class="form-label">Enter HTML Code Here:</label>
 				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
 			</div>
 			
-			<button type="button" class="action-button" style="margin: 12px 0 20px 0; padding: 10px 24px;" onclick="runCode()">Run Code</button>
+			<button type="button" class="action-button" onclick="runCode()">Run Code</button>
 			
-			<div>
-				<label style="font-weight: 700; display: block; margin-bottom: 6px;">Live Render Output:</label>
+			<div class="form-group">
+				<label for="output" class="form-label">Live Render Output:</label>
 				<iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
 			</div>
 		</section>
 
-		<!-- ================================================================================= -->
-		<!-- START: Chapter 4.1 Quiz (Interactive & Accessible) -->
-		<!-- ================================================================================= -->
 		<section id="quiz-container-chapter4-1">
 			<div class="quiz-panel-wrapper">
-				<h3><strong>Chapter 4.1 Quiz</strong></h3>
+				<h2>Chapter 4.1 Quiz</h2>
 				
 				<form id="quizFormChapter4_1_1" onsubmit="event.preventDefault();">
-					<p><strong>1. Which HTML tag is used to insert an image into a webpage?</strong></p>
-					<ul class="quiz-options-list">
-						<li>
-							<input type="radio" name="q1_chapter4_1" id="q1_opt_a" value="A">
-							<label for="q1_opt_a">a) &lt;img&gt;</label>
-						</li>
-						<li>
-							<input type="radio" name="q1_chapter4_1" id="q1_opt_b" value="B">
-							<label for="q1_opt_b">b) &lt;image&gt;</label>
-						</li>
-						<li>
-							<input type="radio" name="q1_chapter4_1" id="q1_opt_c" value="C">
-							<label for="q1_opt_c">c) &lt;picture&gt;</label>
-						</li>
-					</ul>
-					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter4_1', 'A', 'q1_feedback', 'Correct! The &lt;img&gt; tag is the proper self-closing element to display images.', 'Incorrect. Review the section on Inserting Images Using the &lt;img&gt; Tag.')">Submit Answer</button>
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">1. Which HTML tag is used to insert an image into a webpage?</legend>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q1_chapter4_1" id="q1_opt_a" value="A">
+								<label for="q1_opt_a">a) &lt;img&gt;</label>
+							</li>
+							<li>
+								<input type="radio" name="q1_chapter4_1" id="q1_opt_b" value="B">
+								<label for="q1_opt_b">b) &lt;image&gt;</label>
+							</li>
+							<li>
+								<input type="radio" name="q1_chapter4_1" id="q1_opt_c" value="C">
+								<label for="q1_opt_c">c) &lt;picture&gt;</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter4_1', 'A', 'q1_feedback_4_1_1', 'Correct! The &lt;img&gt; tag is the proper self-closing element to display images.', 'Incorrect. Review the section on Inserting Images Using the &lt;img&gt; Tag.')">Submit Answer</button>
+					</fieldset>
 				</form>
-				<div id="q1_feedback"></div>
+				<div id="q1_feedback_4_1_1" class="feedback-area" role="status" aria-live="polite"></div>
 				
-				<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+				<hr class="quiz-divider">
 
 				<form id="quizFormChapter4_1_2" onsubmit="event.preventDefault();">
-					<p><strong>2. Which attribute is essential for providing alternative text for screen readers or when an image fails to load?</strong></p>
-					<ul class="quiz-options-list">
-						<li>
-							<input type="radio" name="q2_chapter4_1" id="q2_opt_a" value="A">
-							<label for="q2_opt_a">a) src</label>
-						</li>
-						<li>
-							<input type="radio" name="q2_chapter4_1" id="q2_opt_b" value="B">
-							<label for="q2_opt_b">b) alt</label>
-						</li>
-						<li>
-							<input type="radio" name="q2_chapter4_1" id="q2_opt_c" value="C">
-							<label for="q2_opt_c">c) title</label>
-						</li>
-					</ul>
-					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter4_1', 'B', 'q2_feedback', 'Perfect! The alt attribute provides crucial descriptive text for accessibility.', 'Incorrect. Review the essential attributes of the &lt;img&gt; tag.')">Submit Answer</button>
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">2. Which attribute is essential for providing alternative text for screen readers or when an image fails to load?</legend>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q2_chapter4_1" id="q2_opt_a" value="A">
+								<label for="q2_opt_a">a) src</label>
+							</li>
+							<li>
+								<input type="radio" name="q2_chapter4_1" id="q2_opt_b" value="B">
+								<label for="q2_opt_b">b) alt</label>
+							</li>
+							<li>
+								<input type="radio" name="q2_chapter4_1" id="q2_opt_c" value="C">
+								<label for="q2_opt_c">c) title</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter4_1', 'B', 'q2_feedback_4_1_2', 'Perfect! The alt attribute provides crucial descriptive text for accessibility.', 'Incorrect. Review the essential attributes of the &lt;img&gt; tag.')">Submit Answer</button>
+					</fieldset>
 				</form>
-				<div id="q2_feedback"></div>
+				<div id="q2_feedback_4_1_2" class="feedback-area" role="status" aria-live="polite"></div>
 			</div>
 		</section>
-		<!-- ================================================================================= -->
-		<!-- END: Chapter 4.1 Quiz -->
-		<!-- ================================================================================= -->
 
-		<div class=MsoNormal align=center style='margin-bottom:0in;text-align:center'>
+		<hr>
 
-			<hr size=0 width="100%" align=center>
-
-		</div>
-		<h4>Best Practices for Images</h4>
+		<h3>Best Practices for Images</h3>
 		<p>When inserting images into your webpage, remember to:</p>
-		<ul>
+		<ul class="disc-list">
 			<li><strong>Use descriptive alt text</strong> for accessibility and SEO.</li>
 			<li><strong>Optimize image file sizes</strong> to reduce loading times.</li>
 			<li><strong>Use responsive design</strong> principles, ensuring images adapt to various screen sizes.</li>
 		</ul>
-		<p>By mastering the use of the &lt;img&gt; tag and incorporating these best practices, you’ll enhance the
-			user experience of your website while ensuring your content is both visually engaging and accessible. </p>
-
-		
-	</div>
+		<p>By mastering the use of the &lt;img&gt; tag and incorporating these best practices, you’ll enhance the user experience of your website while ensuring your content is both visually engaging and accessible.</p>
+	</main>
 
 	<footer>
-		<div class="nav-container">
+		<nav class="nav-container" aria-label="Chapter Navigation">
 			<div class="nav-link">
-				<strong>← Previous</strong>
-				<a href="chapter3-3.html">Chapter 3</a><br>
+				<strong>← Previous</strong><br>
+				<a href="chapter3-3.html">Chapter 3.3</a><br>
 				<a href="index.html">Home</a>
 			</div>
-			<div class="nav-link">
-				<strong>📖 Current Chapter</strong>
+			<div class="nav-link nav-link-center">
+				<strong>📖 Current Chapter</strong><br>
 				<span>Chapter 4.1</span>
 			</div>
-			<div class="nav-link">
-				<strong>Next →</strong>
+			<div class="nav-link nav-link-right">
+				<strong>Next →</strong><br>
 				<a href="chapter4-2.html">Chapter 4.2</a>
 			</div>
-		</div>
+		</nav>
 	</footer>
 </body>
 

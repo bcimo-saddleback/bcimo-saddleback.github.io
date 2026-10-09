@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -5,34 +6,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Chapter 4: Visual Elements and Graphics - Section 2</title>
 	<link rel="stylesheet" href="style.css">
-
-	<style>
-		/* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
-		.quiz-panel-wrapper { background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
-		.quiz-options-list { list-style: none; padding-left: 0; margin: 15px 0; }
-		.quiz-options-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
-		.quiz-options-list input[type="radio"] { margin-right: 10px; margin-top: 4px; cursor: pointer; }
-		.quiz-options-list label { cursor: pointer; line-height: 1.4; color: #334155; }
-		.action-button { background: #2563eb; color: #ffffff; border: none; padding: 8px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s ease; font-size: 0.9rem; }
-		.action-button:hover { background: #1d4ed8; }
-		textarea#htmlCode { width: 100%; min-height: 180px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #fafafa; color: #1e293b; resize: vertical; }
-		iframe#output { width: 100%; min-height: 220px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
-	</style>
-
 	<script>
 		// Function to run the HTML code
 		function runCode() {
 			var htmlCode = document.getElementById('htmlCode').value;
-
 			var iframe = document.getElementById('output');
 			var iframeDoc = iframe.contentWindow.document;
 			iframeDoc.open();
-
-			// Write the HTML code to the iframe
 			iframeDoc.write(`
-				${htmlCode}
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<title>Live Preview</title>
+				</head>
+				<body>
+					${htmlCode}
+				</body>
+				</html>
 			`);
-
 			iframeDoc.close();
 		}
 
@@ -42,217 +34,212 @@
 			const displayBox = document.getElementById(targetFeedbackId);
 
 			if (!checkedOption) {
-				displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+				displayBox.className = "feedback-area feedback-warning";
+				displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
 				return;
 			}
 
 			if (checkedOption.value === targetKey) {
-				displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+				displayBox.className = "feedback-area feedback-success";
+				displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
 			} else {
-				displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+				displayBox.className = "feedback-area feedback-error";
+				displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
 			}
 		}
 	</script>
 </head>
 
-<body lang=EN-US link=blue vlink="#96607D" style='word-wrap:break-word'>
+<body>
+	<a href="#main-content" class="skip-link">Skip to main content</a>
 
-	<div class="container">
+	<main class="container" id="main-content">
+		<header class="header-centered">
+			<h1>Chapter 4: Visual Elements and Graphics</h1>
+			<h2>Section 2: Introduction to Multimedia: Embedding Videos and Audio</h2>
+		</header>
 
-		<h1>Chapter 4: Visual Elements and Graphics</h1>
+		<p>While images enhance the visual appeal of a website, videos and audio are essential for creating more interactive and engaging experiences. HTML provides simple tags to embed video and audio files directly into a webpage.</p>
 
-		<h2>Section 2: Introduction to Multimedia: Embedding Videos and Audio</h2>
-		<p>While images enhance the visual appeal of a website, videos and audio are essential for creating more
-			interactive and engaging experiences. HTML provides simple tags to embed video and audio files directly into
-			a webpage.</p>
 		<h3>Embedding Videos with the &lt;video&gt; Tag</h3>
-		<p>The &lt;video&gt; tag allows you to embed video files. You can specify multiple video sources for better
-			compatibility across browsers, and add controls to allow users to play, pause, or adjust the volume.</p>
-		<pre><code>&lt;video src="video.mp4" controls&gt;&nbsp; Your browser does not support the video tag.&lt;/video&gt;</code></pre>
-		<p>In this example, the video file will be displayed. The controls attribute adds the standard video controls,
-			such as play, pause, and volume.</p>
-		<ul>
-			<li>src: This attribute specifies the video file you want to embed. You can use relative paths (if the video
-				is hosted on the same server) or absolute URLs (if the video is hosted externally).</li>
-			<li>controls: This optional attribute adds built-in controls such as play, pause, volume, and full-screen
-				options to the video player.</li>
-			<li><strong>Fallback Text</strong>: The content inside the &lt;video&gt; tag (like "Your browser does not
-				support the video tag") is displayed if the user's browser doesn’t support the video element.</li>
-		</ul>
-		
+		<p>The &lt;video&gt; tag allows you to embed video files. You can specify multiple video sources for better compatibility across browsers, and add controls to allow users to play, pause, or adjust the volume.</p>
 
-		<iframe width="600" height="350" src="https://www.youtube.com/embed/h51jaPt5A5s"
-			title="How To Insert A Video Using HTML #shorts" frameborder="0"
+		<pre><code>&lt;video src="video.mp4" controls&gt;
+  Your browser does not support the video tag.
+&lt;/video&gt;</code></pre>
+
+		<p>In this example, the video file will be displayed. The controls attribute adds the standard video controls, such as play, pause, and volume.</p>
+		
+		<ul class="disc-list">
+			<li><strong>src</strong>: This attribute specifies the video file you want to embed. You can use relative paths (if the video is hosted on the same server) or absolute URLs (if the video is hosted externally).</li>
+			<li><strong>controls</strong>: This optional attribute adds built-in controls such as play, pause, volume, and full-screen options to the video player.</li>
+			<li><strong>Fallback Text</strong>: The content inside the &lt;video&gt; tag (like "Your browser does not support the video tag") is displayed if the user's browser doesn’t support the video element.</li>
+		</ul>
+
+		<iframe src="https://www.youtube.com/embed/h51jaPt5A5s"
+			title="Video tutorial: How To Insert A Video Using HTML" 
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-			referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
 
 		<h3>Embedding Audio with the &lt;audio&gt; Tag</h3>
 		<p>The &lt;audio&gt; tag is similar to the &lt;video&gt; tag but for audio files, see the example below.</p>
-		<pre><code>&lt;audio src="audio.mp3" controls&gt;<br />&nbsp; Your browser does not support the audio tag.<br />&lt;/audio&gt;</code></pre>
+
+		<pre><code>&lt;audio src="audio.mp3" controls&gt;
+  Your browser does not support the audio tag.
+&lt;/audio&gt;</code></pre>
+
 		<p>This will embed an audio player that allows users to play the file.</p>
-		<ul>
-			<li><strong><code>src</code></strong>: Specifies the path to the audio file. It can be a relative or
-				absolute URL.</li>
-			<li><strong><code>controls</code></strong>: Displays the default audio controls (play, pause, volume, etc.).
-			</li>
-			<li><strong>Fallback text</strong>: The text between the <code>&lt;audio&gt;</code> tags will appear if the
-				browser doesn’t support the audio element.</li>
+		<ul class="disc-list">
+			<li><strong>src</strong>: Specifies the path to the audio file. It can be a relative or absolute URL.</li>
+			<li><strong>controls</strong>: Displays the default audio controls (play, pause, volume, etc.).</li>
+			<li><strong>Fallback text</strong>: The text between the <code>&lt;audio&gt;</code> tags will appear if the browser doesn’t support the audio element.</li>
 		</ul>
-		<br>
-		<div class=MsoNormal align=center style='margin-bottom:0in;text-align:center'>
 
-			<hr size=0 width="100%" align=center>
+		<hr>
 
-		</div>
 		<h2>Image File Types and When to Use Them</h2>
-		<p>Choosing the right image file type is important for both performance and image quality. Let’s explore
-			the most common image file formats used in web development.</p>
+		<p>Choosing the right image file type is important for both performance and image quality. Let’s explore the most common image file formats used in web development.</p>
+
 		<h3>JPEG (Joint Photographic Experts Group)</h3>
-		<p>JPEG is the most widely used image format for photographs and complex images. It supports millions of colors
-			and provides high compression rates, making it ideal for images with subtle color variations.</p>
-		<ul>
+		<p>JPEG is the most widely used image format for photographs and complex images. It supports millions of colors and provides high compression rates, making it ideal for images with subtle color variations.</p>
+		<ul class="disc-list">
 			<li><strong>When to use</strong>: Photographs, images with gradients, or detailed artwork.</li>
 			<li><strong>Pros</strong>: Smaller file sizes with high-quality images.</li>
 			<li><strong>Cons</strong>: Lossy compression (some quality is lost when saving).</li>
 		</ul>
+
 		<h3>PNG (Portable Network Graphics)</h3>
-		<p>PNG is a lossless image format, meaning no data is lost during compression. It supports transparency, which
-			is useful for images that need to blend seamlessly with the background.</p>
-		<ul>
+		<p>PNG is a lossless image format, meaning no data is lost during compression. It supports transparency, which is useful for images that need to blend seamlessly with the background.</p>
+		<ul class="disc-list">
 			<li><strong>When to use</strong>: Logos, icons, images with transparency, or sharp-edged graphics.</li>
 			<li><strong>Pros</strong>: Lossless quality, supports transparency.</li>
 			<li><strong>Cons</strong>: Larger file sizes compared to JPEG.</li>
 		</ul>
+
 		<h3>GIF (Graphics Interchange Format)</h3>
-		<p>GIF is often used for simple animations and images with few colors. It supports transparency but only allows
-			one color to be fully transparent.</p>
-		<ul>
+		<p>GIF is often used for simple animations and images with few colors. It supports transparency but only allows one color to be fully transparent.</p>
+		<ul class="disc-list">
 			<li><strong>When to use</strong>: Simple animations, low-resolution images, or pixel art.</li>
 			<li><strong>Pros</strong>: Supports animation, supports transparency.</li>
 			<li><strong>Cons</strong>: Limited to 256 colors, not suitable for high-quality images.</li>
 		</ul>
+
 		<h3>SVG (Scalable Vector Graphics)</h3>
-		<p>SVG is a vector-based image format, meaning it uses mathematical equations to draw images. This makes SVG
-			images infinitely scalable without losing quality.</p>
-		<ul>
+		<p>SVG is a vector-based image format, meaning it uses mathematical equations to draw images. This makes SVG images infinitely scalable without losing quality.</p>
+		<ul class="disc-list">
 			<li><strong>When to use</strong>: Logos, icons, and illustrations that need to scale across devices.</li>
-			<li><strong>Pros</strong>: Scalable, smaller file sizes for simple graphics, and supports animation and
-				interactivity.</li>
+			<li><strong>Pros</strong>: Scalable, smaller file sizes for simple graphics, and supports animation and interactivity.</li>
 			<li><strong>Cons</strong>: Not suitable for complex images like photographs.</li>
 		</ul>
-		<h4>Interactive Activity:</h4>
+
+		<h3>Interactive Activity</h3>
 		<p>Try embedding a video in your HTML. Copy the code below into the code editor:</p>
-		<pre><code>&lt;video width="640" height="360" controls&gt;<br />&nbsp; &lt;source src="video/Apollo11_clip.mp4" type="video/mp4"&gt;<br />&nbsp; Your browser does not support the video tag.<br />&lt;/video&gt;</code></pre>
+
+		<pre><code>&lt;video width="640" height="360" controls&gt;
+  &lt;source src="video/Apollo11_clip.mp4" type="video/mp4"&gt;
+  Your browser does not support the video tag.
+&lt;/video&gt;</code></pre>
 		
-		<ul>
+		<ul class="disc-list">
 			<li>Try changing the height and width.</li>
 			<li>Try changing the name of the video.</li>
-			<li>Add or remove the controls attribute to see how it impacts the user interface for both video and audio.
-			</li>
+			<li>Add or remove the controls attribute to see how it impacts the user interface for both video and audio.</li>
 		</ul>
-		<section id="coderunner" style="margin-top: 30px; padding: 20px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff;">
-			<h4>Code Runner Sandbox</h4>
-			<div style="margin-top: 15px;">
-				<label for="htmlCode" style="font-weight: 700; display: block; margin-bottom: 6px;">Enter HTML Code Here:</label>
+
+		<section id="coderunner" class="coderunner-box">
+			<h2>Code Runner Sandbox Workspace</h2>
+			<div class="form-group">
+				<label for="htmlCode" class="form-label">Enter HTML Code Here:</label>
 				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
 			</div>
 			
-			<button type="button" class="action-button" style="margin: 12px 0 20px 0; padding: 10px 24px;" onclick="runCode()">Run Code</button>
+			<button type="button" class="action-button" onclick="runCode()">Run Code</button>
 			
-			<div>
-				<label style="font-weight: 700; display: block; margin-bottom: 6px;">Live Render Output:</label>
+			<div class="form-group">
+				<label for="output" class="form-label">Live Render Output:</label>
 				<iframe id="output" src="about:blank" title="HTML Output Result"></iframe>
 			</div>
 		</section>
 
 		<h2>Review and Summary</h2>
 		<p>In this chapter, you have learned how to:</p>
-		<ul>
-			<li>Insert images using the &lt;img&gt; tag and understand the essential attributes like src, alt, and
-				title.</li>
-			<li>Embed videos and audio using the &lt;video&gt; and &lt;audio&gt; tags, making your website more
-				interactive and engaging.</li>
-			<li>Understand the different image file formats (JPEG, PNG, GIF, SVG) and when to use each based on the type
-				of content you are displaying.</li>
+		<ul class="disc-list">
+			<li>Insert images using the &lt;img&gt; tag and understand the essential attributes like src, alt, and title.</li>
+			<li>Embed videos and audio using the &lt;video&gt; and &lt;audio&gt; tags, making your website more interactive and engaging.</li>
+			<li>Understand the different image file formats (JPEG, PNG, GIF, SVG) and when to use each based on the type of content you are displaying.</li>
 		</ul>
-		<p>Images, videos, and audio are powerful tools for improving the user experience and making websites more
-			dynamic. Experiment with these elements and be mindful of accessibility considerations, such as providing
-			alternative text for images and ensuring media is easily accessible to all users.</p>
+		<p>Images, videos, and audio are powerful tools for improving the user experience and making websites more dynamic. Experiment with these elements and be mindful of accessibility considerations, such as providing alternative text for images and ensuring media is easily accessible to all users.</p>
 
-		<!-- ================================================================================= -->
-		<!-- START: Chapter 4.2 Quiz (Interactive & Accessible) -->
-		<!-- ================================================================================= -->
 		<section id="quiz-container-chapter4-2">
 			<div class="quiz-panel-wrapper">
-				<h3><strong>Chapter 4.2 Quiz</strong></h3>
+				<h2>Chapter 4.2 Quiz</h2>
 				
 				<form id="quizFormChapter4_2_1" onsubmit="event.preventDefault();">
-					<p><strong>1. Which image format is best for logos and icons because it is resolution-independent?</strong></p>
-					<ul class="quiz-options-list">
-						<li>
-							<input type="radio" name="q1_chapter4_2" id="q1_opt_a" value="A">
-							<label for="q1_opt_a">a) SVG</label>
-						</li>
-						<li>
-							<input type="radio" name="q1_chapter4_2" id="q1_opt_b" value="B">
-							<label for="q1_opt_b">b) PNG</label>
-						</li>
-						<li>
-							<input type="radio" name="q1_chapter4_2" id="q1_opt_c" value="C">
-							<label for="q1_opt_c">c) JPEG</label>
-						</li>
-					</ul>
-					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter4_2', 'A', 'q1_feedback', 'Correct! SVG is a scalable vector graphics format that scales without loss of quality.', 'Incorrect. Review the image file types section.')">Submit Answer</button>
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">1. Which image format is best for logos and icons because it is resolution-independent?</legend>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q1_chapter4_2" id="q1_opt_a" value="A">
+								<label for="q1_opt_a">a) SVG</label>
+							</li>
+							<li>
+								<input type="radio" name="q1_chapter4_2" id="q1_opt_b" value="B">
+								<label for="q1_opt_b">b) PNG</label>
+							</li>
+							<li>
+								<input type="radio" name="q1_chapter4_2" id="q1_opt_c" value="C">
+								<label for="q1_opt_c">c) JPEG</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter4_2', 'A', 'q1_feedback_4_2_1', 'Correct! SVG is a scalable vector graphics format that scales without loss of quality.', 'Incorrect. Review the image file types section.')">Submit Answer</button>
+					</fieldset>
 				</form>
-				<div id="q1_feedback"></div>
+				<div id="q1_feedback_4_2_1" class="feedback-area" role="status" aria-live="polite"></div>
 				
-				<hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+				<hr class="quiz-divider">
 
 				<form id="quizFormChapter4_2_2" onsubmit="event.preventDefault();">
-					<p><strong>2. Which attribute is required on &lt;video&gt; or &lt;audio&gt; tags to display standard playback features like play, pause, and volume?</strong></p>
-					<ul class="quiz-options-list">
-						<li>
-							<input type="radio" name="q2_chapter4_2" id="q2_opt_a" value="A">
-							<label for="q2_opt_a">a) src</label>
-						</li>
-						<li>
-							<input type="radio" name="q2_chapter4_2" id="q2_opt_b" value="B">
-							<label for="q2_opt_b">b) controls</label>
-						</li>
-						<li>
-							<input type="radio" name="q2_chapter4_2" id="q2_opt_c" value="C">
-							<label for="q2_opt_c">c) autoplay</label>
-						</li>
-					</ul>
-					<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter4_2', 'B', 'q2_feedback', 'Correct! The controls attribute displays standard playback controls on media elements.', 'Incorrect. Review the section on Embedding Videos and Audio.')">Submit Answer</button>
+					<fieldset class="quiz-fieldset">
+						<legend class="quiz-legend">2. Which attribute is required on &lt;video&gt; or &lt;audio&gt; tags to display standard playback features like play, pause, and volume?</legend>
+						<ul class="quiz-options-list">
+							<li>
+								<input type="radio" name="q2_chapter4_2" id="q2_opt_a" value="A">
+								<label for="q2_opt_a">a) src</label>
+							</li>
+							<li>
+								<input type="radio" name="q2_chapter4_2" id="q2_opt_b" value="B">
+								<label for="q2_opt_b">b) controls</label>
+							</li>
+							<li>
+								<input type="radio" name="q2_chapter4_2" id="q2_opt_c" value="C">
+								<label for="q2_opt_c">c) autoplay</label>
+							</li>
+						</ul>
+						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter4_2', 'B', 'q2_feedback_4_2_2', 'Correct! The controls attribute displays standard playback controls on media elements.', 'Incorrect. Review the section on Embedding Videos and Audio.')">Submit Answer</button>
+					</fieldset>
 				</form>
-				<div id="q2_feedback"></div>
+				<div id="q2_feedback_4_2_2" class="feedback-area" role="status" aria-live="polite"></div>
 			</div>
 		</section>
-		<!-- ================================================================================= -->
-		<!-- END: Chapter 4.2 Quiz -->
-		<!-- ================================================================================= -->
-
-	</div>
+	</main>
 
 	<footer>
-		<div class="nav-container">
+		<nav class="nav-container" aria-label="Chapter Navigation">
 			<div class="nav-link">
-				<strong>← Previous</strong>
+				<strong>← Previous</strong><br>
 				<a href="chapter4-1.html">Chapter 4.1</a><br>
 				<a href="index.html">Home</a>
 			</div>
-			<div class="nav-link">
-				<strong>📖 Current Chapter</strong>
+			<div class="nav-link nav-link-center">
+				<strong>📖 Current Chapter</strong><br>
 				<span>Chapter 4.2</span>
 			</div>
-			<div class="nav-link">
-				<strong>Next →</strong>
+			<div class="nav-link nav-link-right">
+				<strong>Next →</strong><br>
 				<a href="chapter5.html">Chapter 5</a>
 			</div>
-		</div>
+		</nav>
 	</footer>
-
 </body>
 
 </html>

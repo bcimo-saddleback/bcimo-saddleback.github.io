@@ -6,73 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chapter 5: Publishing Your Website</title>
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        /* Scoped styles ensuring layout presentation standards and interactive elements perform beautifully */
-        .quiz-panel-wrapper {
-            background: #f8fafc;
-            border-left: 4px solid #2563eb;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
-        }
-
-        .quiz-options-list {
-            list-style: none;
-            padding-left: 0;
-            margin: 15px 0;
-        }
-
-        .quiz-options-list li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: flex-start;
-        }
-
-        .quiz-options-list input[type="radio"] {
-            margin-right: 10px;
-            margin-top: 4px;
-            cursor: pointer;
-        }
-
-        .quiz-options-list label {
-            cursor: pointer;
-            line-height: 1.4;
-            color: #334155;
-        }
-
-        .action-button {
-            background: #2563eb;
-            color: #ffffff;
-            border: none;
-            padding: 8px 16px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .action-button:hover {
-            background: #1d4ed8;
-        }
-    </style>
-
     <script>
         // Function to run the HTML code
         function runCode() {
             var htmlCode = document.getElementById('htmlCode').value;
-
             var iframe = document.getElementById('output');
             var iframeDoc = iframe.contentWindow.document;
             iframeDoc.open();
-
-            // Write the HTML code to the iframe
             iframeDoc.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Live Preview</title>
+                </head>
+                <body>
                     ${htmlCode}
-                `);
-
+                </body>
+                </html>
+            `);
             iframeDoc.close();
         }
 
@@ -82,184 +34,131 @@
             const displayBox = document.getElementById(targetFeedbackId);
 
             if (!checkedOption) {
-                displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
+                displayBox.className = "feedback-area feedback-warning";
+                displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
                 return;
             }
 
             if (checkedOption.value === targetKey) {
-                displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
+                displayBox.className = "feedback-area feedback-success";
+                displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
             } else {
-                displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
-            }
-        }
-
-        // Unified Self-Contained Client Grading Logic
-        function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
-            const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
-            const displayBox = document.getElementById(targetFeedbackId);
-
-            if (!checkedOption) {
-                displayBox.innerHTML = "<div style='color: #d97706; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>⚠️ Please make a selection before submitting.</strong></div>";
-                return;
-            }
-
-            if (checkedOption.value === targetKey) {
-                displayBox.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 </strong> ${textSuccess}</div>`;
-            } else {
-                displayBox.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ </strong> ${textFailure}</div>`;
+                displayBox.className = "feedback-area feedback-error";
+                displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
             }
         }
     </script>
 </head>
 
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <div class="container">
-        <h1 data-pm-slice="0 0 []">Chapter 5: Publishing Your Website</h1>
-        <h2>Introduction</h2>
-        <p>Publishing your website allows you to share your work with the world.
-            In this chapter, you will learn about traditional and modern methods of website publishing, including FTP,
-            cloud hosting services, and GitHub Pages. You will also get hands-on experience by publishing a simple
-            website using GitHub Pages and verifying its functionality.</p>
+    <main class="container" id="main-content">
+        <header class="header-centered">
+            <h1>Chapter 5: Publishing Your Website</h1>
+            <h2>Introduction</h2>
+        </header>
 
+        <p>Publishing your website allows you to share your work with the world. In this chapter, you will learn about traditional and modern methods of website publishing, including FTP, cloud hosting services, and GitHub Pages. You will also get hands-on experience by publishing a simple website using GitHub Pages and verifying its functionality.</p>
 
-
-        <h2>Brief Overview of FTP and Secure FTP (SFTP)</h2>
+        <h2>Overview of FTP and Secure FTP (SFTP)</h2>
         <h3>What is FTP?</h3>
-        <p>File Transfer Protocol (FTP) is a standard network protocol used to transfer files from a local computer to a
-            web server. It has been a fundamental tool for website publishing since the early days of the internet.
-            However, FTP lacks security features, making it vulnerable to unauthorized access.</p>
+        <p>File Transfer Protocol (FTP) is a standard network protocol used to transfer files from a local computer to a web server. It has been a fundamental tool for website publishing since the early days of the internet. However, FTP lacks security features, making it vulnerable to unauthorized access.</p>
+
         <h3>Secure FTP (SFTP)</h3>
-        <p>SFTP (Secure File Transfer Protocol) is a more secure version of FTP that encrypts file transfers using
-            Secure Shell (SSH). This prevents unauthorized interception of data, making SFTP the preferred choice for
-            transferring website files securely.</p>
+        <p>SFTP (Secure File Transfer Protocol) is a more secure version of FTP that encrypts file transfers using Secure Shell (SSH). This prevents unauthorized interception of data, making SFTP the preferred choice for transferring website files securely.</p>
+
         <h3>Using FTP/SFTP to Upload a Website</h3>
         <p>To upload a website using FTP or SFTP, follow these steps:</p>
-        <ol start="1" data-spread="false">
-            <li>
-                <p><strong>Choose an FTP Client:</strong> Software like FileZilla or Cyberduck can connect to your web
-                    server.</p>
-            </li>
-            <li>
-                <p><strong>Connect to Your Web Host:</strong> Enter your hosting provider&rsquo;s FTP/SFTP credentials.
-                </p>
-            </li>
-            <li>
-                <p><strong>Upload Your Files:</strong> Drag and drop your website files into the public directory
-                    (usually named <code>public_html</code> or <code>www</code>).</p>
-            </li>
-            <li>
-                <p><strong>Verify Your Website:</strong> Open a browser and enter your domain name to check if your site
-                    is live.</p>
-            </li>
+        <ol class="ordered-list">
+            <li><strong>Choose an FTP Client:</strong> Software like FileZilla or Cyberduck can connect to your web server.</li>
+            <li><strong>Connect to Your Web Host:</strong> Enter your hosting provider&rsquo;s FTP/SFTP credentials.</li>
+            <li><strong>Upload Your Files:</strong> Drag and drop your website files into the public directory (usually named <code>public_html</code> or <code>www</code>).</li>
+            <li><strong>Verify Your Website:</strong> Open a browser and enter your domain name to check if your site is live.</li>
         </ol>
+
         <h2>Modern Methods for Publishing a Website</h2>
-        <p>While FTP/SFTP remains relevant, modern web development offers more streamlined and automated publishing
-            methods:</p>
-        <h3>1. <strong>Cloud Hosting Services</strong></h3>
-        <p>Cloud hosting services like AWS, Google Cloud, and Azure simplify website deployment by offering automated
-            tools, content delivery networks (CDNs), and scalable storage solutions. Many services integrate with Git
-            for easy updates.</p>
-        <h3>2. <strong>Static Site Hosting</strong></h3>
-        <p>Platforms like Github Pages allow developers to push updates to a Git repository, automatically
-            deploying the latest version of a website.</p>
-        <h3>3. <strong>CMS-Based Hosting</strong></h3>
-        <p>For websites built with WordPress, Wix, or Squarespace, hosting and deployment are integrated within the
-            platform, eliminating the need for manual file transfers.</p>
+        <p>While FTP/SFTP remains relevant, modern web development offers more streamlined and automated publishing methods:</p>
+
+        <h3>1. Cloud Hosting Services</h3>
+        <p>Cloud hosting services like AWS, Google Cloud, and Azure simplify website deployment by offering automated tools, content delivery networks (CDNs), and scalable storage solutions. Many services integrate with Git for easy updates.</p>
+
+        <h3>2. Static Site Hosting</h3>
+        <p>Platforms like GitHub Pages allow developers to push updates to a Git repository, automatically deploying the latest version of a website.</p>
+
+        <h3>3. CMS-Based Hosting</h3>
+        <p>For websites built with WordPress, Wix, or Squarespace, hosting and deployment are integrated within the platform, eliminating the need for manual file transfers.</p>
+
         <h3>What is Git?</h3>
-        Git is a distributed version control system (VCS) that helps developers track changes to files and collaborate
-        on projects. It was created by Linus Torvalds in 2005 and is widely used in software development, including web
-        development. Git allows multiple people to work on the same project simultaneously without overwriting each
-        other's work, and it keeps a history of all changes made to the project over time.
+        <p>Git is a distributed version control system (VCS) that helps developers track changes to files and collaborate on projects. It was created by Linus Torvalds in 2005 and is widely used in software development, including web development. Git allows multiple people to work on the same project simultaneously without overwriting each other's work, and it keeps a history of all changes made to the project over time.</p>
+
         <h2>Organizing Your Website</h2>
-        <p>A well-organized website is essential for easy navigation, maintainability, and scalability. Here are some
-            key principles for structuring your website files effectively:</p>
-        <h3>1. <strong>Use a Clear Folder Structure</strong></h3>
-        <ul data-spread="false">
-            <li>
-                <p>Store HTML files in the root directory (e.g., <code>index.html</code>).</p>
-            </li>
-            <li>
-                <p>Keep styles in a <code>css/</code> folder.</p>
-            </li>
-            <li>
-                <p>Store JavaScript files in a <code>js/</code> folder.</p>
-            </li>
-            <li>
-                <p>Place images and media files in an <code>images/</code> folder.</p>
-            </li>
+        <p>A well-organized website is essential for easy navigation, maintainability, and scalability. Here are some key principles for structuring your website files effectively:</p>
+
+        <h3>1. Use a Clear Folder Structure</h3>
+        <ul class="disc-list">
+            <li>Store HTML files in the root directory (e.g., <code>index.html</code>).</li>
+            <li>Keep styles in a <code>css/</code> folder.</li>
+            <li>Store JavaScript files in a <code>js/</code> folder.</li>
+            <li>Place images and media files in an <code>images/</code> folder.</li>
         </ul>
-        <h3>2. <strong>Follow Naming Conventions</strong></h3>
-        <ul data-spread="false">
-            <li>
-                <p>Use lowercase letters and hyphens instead of spaces (e.g., <code>about-us.html</code>).</p>
-            </li>
-            <li>
-                <p>Keep file and folder names descriptive and meaningful.</p>
-            </li>
+
+        <h3>2. Follow Naming Conventions</h3>
+        <ul class="disc-list">
+            <li>Use lowercase letters and hyphens instead of spaces (e.g., <code>about-us.html</code>).</li>
+            <li>Keep file and folder names descriptive and meaningful.</li>
         </ul>
-        <h3>3. <strong>Use External Stylesheets and Scripts</strong></h3>
-        <ul data-spread="false">
-            <li>
-                <p>Avoid inline CSS and JavaScript; instead, link to external files.</p>
-            </li>
-            <li>
-                <p>This improves readability and makes maintenance easier.</p>
-            </li>
+
+        <h3>3. Use External Stylesheets and Scripts</h3>
+        <ul class="disc-list">
+            <li>Avoid inline CSS and JavaScript; instead, link to external files.</li>
+            <li>This improves readability and makes maintenance easier.</li>
         </ul>
-        <h3>4. <strong>Organize Content Logically</strong></h3>
-        <ul data-spread="false">
-            <li>
-                <p>Use a consistent navigation structure across pages.</p>
-            </li>
-            <li>
-                <p>Group related files together to improve clarity.</p>
-            </li>
+
+        <h3>4. Organize Content Logically</h3>
+        <ul class="disc-list">
+            <li>Use a consistent navigation structure across pages.</li>
+            <li>Group related files together to improve clarity.</li>
         </ul>
-        <p>By following these practices, you ensure that your website is structured efficiently, making it easier to
-            update and expand over time.</p>
+
+        <p>By following these practices, you ensure that your website is structured efficiently, making it easier to update and expand over time.</p>
+
         <h2>Introduction to GitHub Pages for Free Hosting</h2>
+        <p>Check out this video for a 30-second summary of how to publish your website using GitHub:</p>
 
-        Check out this video for a 30 second summary of how to publish your website using github.
-        <iframe width="692" height="1230" src="https://www.youtube.com/embed/WqOXxoGSpbs"
-            alt="Video: Host a website using GitHub Pages" title="Host a website using GitHub Pages #Shorts"
-            frameborder="0"
+        <iframe src="https://www.youtube.com/embed/WqOXxoGSpbs"
+            title="Video summary: Host a website using GitHub Pages"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
 
-        <p>GitHub Pages is a free service offered by GitHub that allows you to host static websites directly from a
-            GitHub repository. It is particularly useful for personal projects, portfolios, documentation, and blogs.
-            The service supports HTML, CSS, and JavaScript, and can also integrate with Jekyll, a static site generator,
-            to simplify the process of creating and maintaining a website.</p>
+        <p>GitHub Pages is a free service offered by GitHub that allows you to host static websites directly from a GitHub repository. It is particularly useful for personal projects, portfolios, documentation, and blogs. The service supports HTML, CSS, and JavaScript, and can also integrate with Jekyll, a static site generator, to simplify the process of creating and maintaining a website.</p>
+
         <h3>Step-by-Step Guide to Publishing a Web Page</h3>
+
         <h3>Step 1: Create a GitHub Account</h3>
-        <p>Before you can publish a web page, you need a GitHub account. If you don't have one, go to <a
-                href="https://github.com/">GitHub's website</a> and sign up for a free account. Follow the instructions
-            to complete the registration process.</p>
+        <p>Before you can publish a web page, you need a GitHub account. If you don't have one, go to <a href="https://github.com/" target="_blank" rel="noopener">GitHub's website (opens in new tab)</a> and sign up for a free account. Follow the instructions to complete the registration process.</p>
+
         <h3>Step 2: Create a New Repository</h3>
-        <p>Once you have a GitHub account, you need to create a new repository to host your web page. Follow these
-            steps:</p>
-        <ol>
+        <p>Once you have a GitHub account, you need to create a new repository to host your web page. Follow these steps:</p>
+        <ol class="ordered-list">
             <li>Log in to your GitHub account.</li>
             <li>Click on the "+" icon in the upper-right corner and select "New repository."</li>
-            <li>Enter a repository name. For a personal website, it is recommended to name it
-                &lt;your-username&gt;.github.io.</li>
+            <li>Enter a repository name. For a personal website, it is recommended to name it <code>&lt;your-username&gt;.github.io</code>.</li>
             <li>Add a description if desired.</li>
-            <li>Choose the repository visibility: public or private. Public repositories are accessible to everyone,
-                while private ones are restricted to you and collaborators.</li>
+            <li>Choose the repository visibility: public or private. Public repositories are accessible to everyone, while private ones are restricted to you and collaborators.</li>
             <li>Initialize the repository with a README file if you wish.</li>
             <li>Click "Create repository."</li>
         </ol>
+
         <h3>Step 3: Add Your Web Page Files</h3>
-        <p>With your repository created, you need to add the files that make up your web page. You can do this in
-            several ways:</p>
-        <ul>
-            <li><strong>Directly on GitHub:</strong> Navigate to your repository, click "Add file," and select "Upload
-                files." Drag and drop your HTML, CSS, and JavaScript files into the upload area.</li>
+        <p>With your repository created, you need to add the files that make up your web page. You can do this in several ways:</p>
+        <ul class="disc-list">
+            <li><strong>Directly on GitHub:</strong> Navigate to your repository, click "Add file," and select "Upload files." Drag and drop your HTML, CSS, and JavaScript files into the upload area.</li>
         </ul>
+
         <h3>Step 4: Enable GitHub Pages</h3>
         <p>To publish your web page, you need to enable GitHub Pages for your repository:</p>
-        <ol>
+        <ol class="ordered-list">
             <li>Go to your repository on GitHub.</li>
             <li>Click on "Settings."</li>
             <li>Scroll down to the "Pages" section.</li>
@@ -267,318 +166,127 @@
             <li>If your files are in a specific folder, select it under the "Folder" dropdown.</li>
             <li>Click "Save."</li>
         </ol>
-        <p>GitHub will now build your site and provide a URL where it can be accessed, typically
-            https://&lt;your-username&gt;.github.io/&lt;repository-name&gt;/.</p>
+        <p>GitHub will now build your site and provide a URL where it can be accessed, typically <code>https://&lt;your-username&gt;.github.io/&lt;repository-name&gt;/</code>.</p>
+
         <h3>Step 5: Customize Your Web Page</h3>
         <p>Once your web page is live, you can customize it further:</p>
-        <ul>
-            <li><strong>Themes:</strong> If you are using Jekyll, you can apply themes to your site. Navigate to the
-                "Settings" tab, scroll to the "Pages" section, and select a theme from the "Theme Chooser."</li>
-            <li><strong>Custom Domain:</strong> You can use a custom domain by adding a CNAME file to your repository
-                with your domain name and configuring your DNS settings to point to GitHub's servers.</li>
+        <ul class="disc-list">
+            <li><strong>Themes:</strong> If you are using Jekyll, you can apply themes to your site. Navigate to the "Settings" tab, scroll to the "Pages" section, and select a theme from the "Theme Chooser."</li>
+            <li><strong>Custom Domain:</strong> You can use a custom domain by adding a CNAME file to your repository with your domain name and configuring your DNS settings to point to GitHub's servers.</li>
         </ul>
+
         <h2>Your Turn: Publish a Simple Website Using GitHub Pages</h2>
-        <p>Follow these steps to complete your hands-on learning task.</p>
+        <p>Follow these steps to complete your hands-on learning task:</p>
+
         <h3>Step 1: Create and Upload Your Website</h3>
-        <ol start="1" data-spread="false">
-            <li>
-                <p>Open VS Code and create a file named <code>index.html</code> and insert the following:</p>
-            </li>
+        <ol class="ordered-list">
+            <li>Open VS Code, create a file named <code>index.html</code>, and insert the following:</li>
         </ol>
-        <pre>&lt;!DOCTYPE html&gt;
+
+        <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
-    &lt;head&gt;
+  &lt;head&gt;
     &lt;title&gt;My Github Web Page&lt;/title&gt;
-    &lt;/head&gt;
-&lt;body&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
     &lt;h1&gt;Hello!&lt;/h1&gt;
     &lt;p&gt;Welcome to my website.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-        <ol start="2" data-spread="false">
-            <li>
-                <p>Save the file and upload it to your GitHub repository following the earlier steps.</p>
-            </li>
-        </ol>
-        <h3>Step 2: Verify Your Website</h3>
-        <ol start="1" data-spread="false">
-            <li>
-                <p>Wait a few minutes for GitHub Pages to process the deployment.</p>
-            </li>
-            <li>
-                <p>Open a browser and visit <code>https://yourusername.github.io/my-website/</code>.</p>
-            </li>
-            <li>
-                <p>Ensure your webpage displays correctly.</p>
-            </li>
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <ol start="2" class="ordered-list">
+            <li>Save the file and upload it to your GitHub repository following the earlier steps.</li>
         </ol>
 
-        If you need more help, check out this video for a guided tutorial on how to publish your website using GitHub
-        Pages.
-        <iframe width="600" height="400" src="https://www.youtube.com/embed/b2r9Cdvssi0"
-            title="Getting started with GitHub Pages for beginners | Tutorial" frameborder="0"
+        <h3>Step 2: Verify Your Website</h3>
+        <ol class="ordered-list">
+            <li>Wait a few minutes for GitHub Pages to process the deployment.</li>
+            <li>Open a browser and visit <code>https://yourusername.github.io/my-website/</code>.</li>
+            <li>Ensure your webpage displays correctly.</li>
+        </ol>
+
+        <p>If you need more help, check out this video for a guided tutorial on how to publish your website using GitHub Pages:</p>
+        <iframe src="https://www.youtube.com/embed/b2r9Cdvssi0"
+            title="Video tutorial: Getting started with GitHub Pages for beginners"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
 
         <h2>Conclusion</h2>
-        <p>In this chapter, you learned various methods of publishing a website, including FTP, cloud hosting, and
-            GitHub Pages. Additionally, you learned how to properly organize a website for maintainability. Finally, you
-            completed a hands-on activity by publishing a simple website on GitHub Pages. This experience prepares you
-            for deploying more complex web projects in the future.</p>
-        <h3>Learn more</h3>
-        <p>If you are interested in learning more about git, check out <a
-                href="https://www.geeksforgeeks.org/what-is-git/">https://www.geeksforgeeks.org/what-is-git/</a>. <br />
-            More about how to use <a
-                href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">Github
-                Pages.</a></p>
+        <p>In this chapter, you learned various methods of publishing a website, including FTP, cloud hosting, and GitHub Pages. Additionally, you learned how to properly organize a website for maintainability. Finally, you completed a hands-on activity by publishing a simple website on GitHub Pages. This experience prepares you for deploying more complex web projects in the future.</p>
 
-        <!-- ================================================================================= -->
-        <!-- START: Chapter 5 Quiz (Interactive & Accessible) -->
-        <!-- ================================================================================= -->
+        <h3>Learn More</h3>
+        <p>If you are interested in learning more about Git, check out <a href="https://www.geeksforgeeks.org/what-is-git/" target="_blank" rel="noopener">GeeksforGeeks Git Guide (opens in new tab)</a>. Learn more about how to use <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">GitHub Pages Documentation (opens in new tab)</a>.</p>
+
         <section id="quiz-container-chapter5">
             <div class="quiz-panel-wrapper">
-                <h3><strong>Chapter 5 Quiz</strong></h3>
+                <h2>Chapter 5 Quiz</h2>
 
                 <form id="quizFormChapter5_1" onsubmit="event.preventDefault();">
-                    <p><strong>1. Which protocol is generally preferred for transferring website files due to
-                            encryption?</strong></p>
-                    <ul class="quiz-options-list">
-                        <li>
-                            <input type="radio" name="q1_chapter5" id="q1_opt_a" value="A">
-                            <label for="q1_opt_a">a) SFTP (Secure FTP)</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="q1_chapter5" id="q1_opt_b" value="B">
-                            <label for="q1_opt_b">b) FTP</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="q1_chapter5" id="q1_opt_c" value="C">
-                            <label for="q1_opt_c">c) HTTP</label>
-                        </li>
-                    </ul>
-                    <button type="button" class="action-button"
-                        onclick="evaluateInteractiveQuiz('q1_chapter5', 'A', 'q1_feedback', 'Correct! SFTP uses SSH encryption to secure file transfers.', 'Incorrect. SFTP encrypts file transfers using SSH, making it the preferred choice for security.')">Submit
-                        Answer</button>
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">1. Which protocol is generally preferred for transferring website files due to encryption?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q1_chapter5" id="q1_opt_a" value="A">
+                                <label for="q1_opt_a">a) SFTP (Secure FTP)</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1_chapter5" id="q1_opt_b" value="B">
+                                <label for="q1_opt_b">b) FTP</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1_chapter5" id="q1_opt_c" value="C">
+                                <label for="q1_opt_c">c) HTTP</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter5', 'A', 'q1_feedback_5_1', 'Correct! SFTP uses SSH encryption to secure file transfers.', 'Incorrect. SFTP encrypts file transfers using SSH, making it the preferred choice for security.')">Submit Answer</button>
+                    </fieldset>
                 </form>
-                <div id="q1_feedback"></div>
+                <div id="q1_feedback_5_1" class="feedback-area" role="status" aria-live="polite"></div>
 
-                <hr style="margin: 25px 0; border: 0; border-top: 1px solid #cbd5e1;">
+                <hr class="quiz-divider">
 
                 <form id="quizFormChapter5_2" onsubmit="event.preventDefault();">
-                    <p><strong>2. What is the primary benefit of using a modern cloud hosting service (like GitHub
-                            Pages)?</strong></p>
-                    <ul class="quiz-options-list">
-                        <li>
-                            <input type="radio" name="q2_chapter5" id="q2_opt_a" value="A">
-                            <label for="q2_opt_a">a) It eliminates the need for a domain name.</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="q2_chapter5" id="q2_opt_b" value="B">
-                            <label for="q2_opt_b">b) It automates deployment directly from a Git repository.</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="q2_chapter5" id="q2_opt_c" value="C">
-                            <label for="q2_opt_c">c) It only supports static HTML files.</label>
-                        </li>
-                    </ul>
-                    <button type="button" class="action-button"
-                        onclick="evaluateInteractiveQuiz('q2_chapter5', 'B', 'q2_feedback', 'Correct! Modern platforms integrate with Git for easy, automated updates.', 'Incorrect. Modern cloud hosting automates deployment from a Git repository.')">Submit
-                        Answer</button>
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">2. What is the primary benefit of using a modern cloud hosting service (like GitHub Pages)?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q2_chapter5" id="q2_opt_a" value="A">
+                                <label for="q2_opt_a">a) It eliminates the need for a domain name.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2_chapter5" id="q2_opt_b" value="B">
+                                <label for="q2_opt_b">b) It automates deployment directly from a Git repository.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2_chapter5" id="q2_opt_c" value="C">
+                                <label for="q2_opt_c">c) It only supports static HTML files.</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter5', 'B', 'q2_feedback_5_2', 'Correct! Modern platforms integrate with Git for easy, automated updates.', 'Incorrect. Modern cloud hosting automates deployment from a Git repository.')">Submit Answer</button>
+                    </fieldset>
                 </form>
-                <div id="q2_feedback"></div>
+                <div id="q2_feedback_5_2" class="feedback-area" role="status" aria-live="polite"></div>
             </div>
         </section>
-        <!-- ================================================================================= -->
-        <!-- END: Chapter 5 Quiz -->
-        <!-- ================================================================================= -->
-    </div>
+    </main>
 
-
-</body>
-
-<footer>
-    <div class="nav-container">
-        <div class="nav-link">
-            <strong>← Previous</strong>
-            <a href="chapter4-2.html">Chapter 4</a><br>
-            <a href="index.html">Home</a>
-        </div>
-        <div class="nav-link">
-            <strong>📖 Current Chapter</strong>
-            <span>Chapter 5</span>
-        </div>
-        <div class="nav-link">
-            <strong>Next →</strong>
-            <a href="chapter6.html">Chapter 6</a>
-        </div>
-    </div>
-</footer>
-
-<!-- ================================================================================= -->
-<!-- START: Chapter 5 Quiz (Interactive & Accessible) -->
-<!-- ================================================================================= -->
-<div id="quiz-container-chapter5"></div>
-<script>
-    // Data for Chapter 5 Quiz
-    const chapter5QuizData = {
-        questionName: "q5_chapter5",
-        correctAnswer: "A",
-        feedbackId: "feedback-chapter5",
-        successMsg: "You passed the Chapter 5 quiz! You are ready to deploy your site!",
-        failMsg: "Review the differences between FTP/SFTP and modern cloud deployment."
-    };
-
-    // Quiz Questions (WCAG 2.1 AA Compliant Structure)
-    const chapter5QuizQuestions = [
-        {
-            question: "Which protocol is generally preferred for transferring website files due to encryption?",
-            options: [
-                { text: "SFTP (Secure FTP)", value: "A" },
-                { text: "FTP", value: "B" },
-                { text: "HTTP", value: "C" }
-            ],
-            questionName: "q5_chapter5"
-        },
-        {
-            question: "What is the primary benefit of using a modern cloud hosting service (like GitHub Pages)?",
-            options: [
-                { text: "It eliminates the need for a domain name.", value: "A" },
-                { text: "It automates deployment directly from a Git repository.", value: "B" },
-                { text: "It only supports static HTML files.", value: "C" }
-            ],
-            questionName: "q5_chapter5"
-        }
-    ];
-
-    // =================================================================================
-    // CORE QUIZ FUNCTIONS (Must be defined in script.js)
-    // =================================================================================
-
-    /**
-     * Renders the standardized, accessible quiz structure into the specified container element.
-     * @param {HTMLElement} containerElement - The DOM element where the quiz should be placed.
-     * @param {Object} quizConfig - Configuration object containing quiz metadata.
-     * @param {Array<Object>} quizQuestions - Array of quiz objects.
-     */
-    function renderQuiz(containerElement, quizConfig, quizQuestions) {
-        let quizHTML = `
-            <div class="quiz-panel-wrapper" role="form" aria-labelledby="quiz-title-${Date.now()}">
-                <h2 id="quiz-title-${Date.now()}">${quizConfig.title || 'Chapter Quiz'}</h2>
-                <p>Test your understanding of the concepts covered in this chapter. Select the best answer for each question.</p>
-                <form id="quiz-form-${Date.now()}" onsubmit="event.preventDefault(); checkAllQuizAnswers('${quizConfig.questionName}', ${quizQuestions.length}, ${JSON.stringify(quizQuestions)});">
-    `;
-
-        quizQuestions.forEach((q, index) => {
-            const questionId = `q${index}`;
-            const feedbackId = `feedback-${index}`;
-
-            // Question structure
-            quizHTML += `
-                <div class="quiz-question-block" role="group" aria-labelledby="${questionId}-prompt">
-                    <h3 id="${questionId}-prompt">${index + 1}. ${q.question}</h3>
-                    <ul class="quiz-options-list" role="radiogroup" aria-labelledby="${questionId}-prompt">
-        `;
-
-            // Options structure
-            q.options.forEach((option, optIndex) => {
-                const optionId = `${questionId}-opt${optIndex}`;
-                quizHTML += `
-                    <li role="none">
-                        <input type="radio" id="${optionId}" name="${q.questionName}" value="${option.value}" required aria-describedby="${feedbackId}">
-                        <label for="${optionId}" role="none">${option.text}</label>
-                    </li>
-                `;
-            });
-
-            quizHTML += `
-                </ul >
-                <div id="${feedbackId}" class="feedback-area" aria-live="polite"></div>
+    <footer>
+        <nav class="nav-container" aria-label="Chapter Navigation">
+            <div class="nav-link">
+                <strong>← Previous</strong><br>
+                <a href="chapter4-2.html">Chapter 4.2</a><br>
+                <a href="index.html">Home</a>
             </div>
-        `;
-        });
-
-        quizHTML += `
-            <button type="button" class="action-button" onclick="checkAllQuizAnswers('${quizConfig.questionName}', ${quizQuestions.length}, ${JSON.stringify(quizQuestions)});">
-                Submit Answers
-            </button>
-            <p style="margin-top: 20px; font-size: 0.9em; color: #666;">*Note: Quiz feedback is displayed above after submission.</p>
-        </div >
-    `;
-
-        quizHTML += `</form>`;
-
-        containerElement.innerHTML = quizHTML;
-    }
-
-    /**
-     * Central function to check all quiz answers for a given chapter.
-     * This function is called by the button's onclick handler.
-     * @param {string} questionName - The name attribute for the radio buttons (must be unique per quiz).
-     * @param {number} totalQuestions - The total number of questions in the quiz.
-     * @param {Array<Object>} quizQuestions - The full array of quiz questions data.
-     */
-    function checkAllQuizAnswers(questionName, totalQuestions, quizQuestions) {
-        for (let i = 0; i < totalQuestions; i++) {
-            const questionBlock = document.querySelector('.quiz-question-block:nth-child(' + (i + 1) + ')');
-            if (!questionBlock) continue;
-
-            const feedbackDiv = questionBlock.querySelector('.feedback-area');
-
-            // Get the correct answer for the current question index
-            const correctAnswer = quizQuestions[i].correctAnswer;
-
-            // Find the selected radio button for the current question
-            const qChecked = document.querySelector(`input[name="${questionName}"]:checked`);
-
-            if (qChecked) {
-                const isCorrect = (qChecked.value === correctAnswer);
-
-                if (isCorrect) {
-                    feedbackDiv.innerHTML = `<div style='color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>🎉 Correct!</strong> ${'Correct!'}</div>`;
-                } else {
-                    feedbackDiv.innerHTML = `<div style='color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; margin-top: 10px; border-radius: 6px;'><strong>❌ Incorrect.</strong> ${'Incorrect. Please review the material.'}</div>`;
-                }
-            } else {
-                feedbackDiv.innerHTML = `<span style='color: #d97706; font-weight: bold;'>Please answer all questions to submit.</span>`;
-            }
-        }
-    }
-
-    // =================================================================================
-    // INITIALIZATION: Run setup functions for all chapters on page load
-    // =================================================================================
-    document.addEventListener('DOMContentLoaded', function () {
-        // Check if the current page is a chapter page and run the corresponding setup function
-        const path = window.location.pathname;
-        if (path.includes('chapter1.html')) {
-            setupChapter1Quiz();
-        } else if (path.includes('chapter2.html')) {
-            setupChapter2Quiz();
-        } else if (path.includes('chapter3-1.html')) {
-            setupChapter3_1Quiz();
-        } else if (path.includes('chapter3-2.html')) {
-            setupChapter3_2Quiz();
-        } else if (path.includes('chapter3-3.html')) {
-            setupChapter3_3Quiz();
-        } else if (path.includes('chapter4-1.html')) {
-            setupChapter4_1Quiz();
-        } else if (path.includes('chapter4-2.html')) {
-            setupChapter4_2Quiz();
-        } else if (path.includes('chapter5.html')) {
-            setupChapter5Quiz();
-        } else if (path.includes('chapter6.html')) {
-            setupChapter6Quiz();
-        } else if (path.includes('chapter7.html')) {
-            setupChapter7Quiz();
-        } else if (path.includes('chapter8.html')) {
-            setupChapter8Quiz();
-        }
-    });
-    // =================================================================================
-    // END OF SCRIPT
-    // =================================================================================
-</script>
-
+            <div class="nav-link nav-link-center">
+                <strong>📖 Current Chapter</strong><br>
+                <span>Chapter 5</span>
+            </div>
+            <div class="nav-link nav-link-right">
+                <strong>Next →</strong><br>
+                <a href="chapter6.html">Chapter 6</a>
+            </div>
+        </nav>
+    </footer>
+</body>
 
 </html>
