@@ -7,14 +7,13 @@
     <title>Chapter 1: Introduction to the Internet and the World Wide Web</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // Function to run the HTML code
+        // Function to run the HTML code inside output iframe
         function runCode() {
             var htmlCode = document.getElementById('htmlCode').value;
             var iframe = document.getElementById('output');
             var iframeDoc = iframe.contentWindow.document;
             iframeDoc.open();
 
-            // Write the HTML code to the iframe
             iframeDoc.write(`
                 <!DOCTYPE html>
                 <html lang="en">
@@ -48,7 +47,7 @@
             const end = textarea.selectionEnd;
             textarea.value = textarea.value.substring(0, start) + textToInsert + textarea.value.substring(end);
             textarea.focus();
-            runCode(); // Auto-refresh previewer
+            runCode();
         }
 
         // Generic Quiz Grading Function
@@ -111,6 +110,8 @@
             <p>After watching the video, explain in your own words the difference between the Internet and the Web.</p>
         </section>
         <hr>
+
+        
 
         <section id="section2">
             <h2>2. The Need for Web Standards</h2>
