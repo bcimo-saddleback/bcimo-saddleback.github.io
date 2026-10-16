@@ -1,199 +1,172 @@
-<!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 	<title>Chapter 3: Working with Text and Links - Section 3</title>
 	<link rel="stylesheet" href="style.css">
+			
+	</style>
 	<script>
 		// Function to run the HTML code
 		function runCode() {
 			var htmlCode = document.getElementById('htmlCode').value;
+
 			var iframe = document.getElementById('output');
 			var iframeDoc = iframe.contentWindow.document;
 			iframeDoc.open();
+
+			// Write the HTML code to the iframe
 			iframeDoc.write(`
-				<!DOCTYPE html>
-				<html lang="en">
-				<head>
-					<meta charset="UTF-8">
-					<title>Live Preview</title>
-				</head>
-				<body>
-					${htmlCode}
-				</body>
-				</html>
+				${htmlCode}
 			`);
+
 			iframeDoc.close();
-		}
-
-		// Unified Self-Contained Client Grading Logic
-		function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
-			const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
-			const displayBox = document.getElementById(targetFeedbackId);
-
-			if (!checkedOption) {
-				displayBox.className = "feedback-area feedback-warning";
-				displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
-				return;
-			}
-
-			if (checkedOption.value === targetKey) {
-				displayBox.className = "feedback-area feedback-success";
-				displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
-			} else {
-				displayBox.className = "feedback-area feedback-error";
-				displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
-			}
 		}
 	</script>
 </head>
 
-<body>
-	<a href="#main-content" class="skip-link">Skip to main content</a>
+<body lang=EN-US link=blue vlink="#96607D" style='word-wrap:break-word'>
 
-	<main class="container" id="main-content">
-		<header class="header-centered">
-			<h1>Chapter 3: Working with Text and Links</h1>
-			<h2>Section 3: Other Types of Links</h2>
-		</header>
+	<div class="container">
 
-		<section id="email-links">
-			<h3>Linking to an Email Address</h3>
-			<p>You can create a link that opens the user’s default email client by using the <code>mailto:</code> protocol in the <code>href</code> attribute.</p>
+		<h1>Chapter 3: Working with Text and Links</h1>
+			<a href="chapter3-2.html">Chapter 3.2</a><br>
+			<a href="index.html">Home</a>
+		<div class=MsoNormal align=center style='text-align:center'>
 
-			<pre><code>&lt;a href="mailto:example@example.com"&gt;Send an Email&lt;/a&gt;</code></pre>
+			<hr size=0 width="100%" align=center>q
+			<span>Chapter 3.3</span>
+		</div>
 
-			<p>When the user clicks this link, it will open their default email application with the specified email address pre-filled.</p>
-		</section>
+		<h2>Section 3: Other Types of Links</h2>
 
-		<section id="phone-links">
-			<h3>Linking to a Phone Number</h3>
-			<p>To create a link that allows users to call a phone number directly from a webpage (especially on mobile devices), you can use the <code>tel:</code> protocol.</p>
+		<h3>Linking to an Email Address</h3>
 
-			<pre><code>&lt;a href="tel:+1234567890"&gt;Call Us&lt;/a&gt;</code></pre>
+		<p>You can create a link that opens the user’s default email client by using
+			the <code>>mailto:</code>
+			protocol in the <code>href</code>
+			attribute.</p>
 
-			<p>This will prompt the user to dial the specified number when clicked. It's important to include the country code (e.g., +1 for the United States) to ensure the number is dialed correctly, especially for international users.</p>
-		</section>
+		<pre><code>&lt;a href=&quot;mailto:example@example.com&quot;&gt;Send an Email&lt;/a&gt;</code></pre>
 
-		<section id="file-download-links">
-			<h3>File Download Links</h3>
-			<p>You can link to files (like PDFs, images, or Word documents) so that users can download them. This is done in the same way as a regular link.</p>
+		<p>When the user clicks this link, it will open their default email application
+			with the specified email address pre-filled.</p>
 
-			<pre><code>&lt;a href="files/example.pdf" download&gt;Download PDF&lt;/a&gt;</code></pre>
+		<h3>Linking to a Phone Number</h3>
 
-			<p>The <code>download</code> attribute tells the browser to download the file instead of opening it in the browser.</p>
-		</section>
+		<p>To create a link that allows users to call a phone number directly from a
+			webpage (especially on mobile devices), you can use the <code>tel:</code> protocol.</p>
 
-		<section id="your-turn-3-3">
-			<h3>Your Turn to Code</h3>
-			<ol class="ordered-list">
-				<li>Write some HTML that opens a file called “sample_submission.docx” for download.</li>
-				<li>Create a link that will send an email to yourself.</li>
-			</ol>
-		</section>
+		<pre><code>&lt;a href=&quot;tel:+1234567890&quot;&gt;Call Us&lt;/a&gt;</code></pre>
 
-		<section id="coderunner" class="coderunner-box">
-			<h2>Code Runner Sandbox Workspace</h2>
-			<div class="form-group">
-				<label for="htmlCode" class="form-label">Write HTML Code Here:</label>
+		<p>This will prompt the user to dial the specified number when clicked. It's
+			important to include the country code (e.g., +1 for the United States) to
+			ensure the number is dialed correctly, especially for international users.</p>
+
+		<h3>File Download Links</h3>
+
+		<p>You can link to files (like PDFs, images, or Word documents) so that users
+			can download them. This is done in the same way as a regular link.</p>
+
+		<pre><code>&lt;a href=&quot;files/example.pdf&quot; download&gt;Download PDF&lt;/a&gt;</code></pre>
+
+		<p>The <code>download</code>
+			attribute tells the browser to download the file instead of opening it in the
+			browser.</p>
+
+		<h3>Your Turn to code</h3>
+
+		<p style='margin-left:.5in;text-indent:-.25in'>1.&nbsp;&nbsp;&nbsp;&nbsp;
+			Write some HTML that opens a file called “sample_submission.docx”. There is a file with that name on this website that will download.</p>
+
+		<p style='margin-left:.5in;text-indent:-.25in'>2.&nbsp;&nbsp;&nbsp;&nbsp;
+			Create a link that will send an email to yourself.</p>
+
+		<section id="coderunner">
+			<p>
+				<!-- Textarea for the user to input HTML -->
 				<textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
-			</div>
 
-			<button type="button" onclick="runCode()" class="action-button">Run Code</button>
+				<!-- Run code button -->
+				<button onclick="runCode()">Run Code</button>
 
-			<div class="form-group">
-				<label for="output" class="form-label">Live Output Window:</label>
-				<iframe id="output" src="about:blank" title="HTML Code Output Preview"></iframe>
-			</div>
+				<!-- Output iframe where the HTML is rendered -->
+				<iframe id="output" src="about:blank"></iframe>
+			</p>
 		</section>
 
-		<section id="quiz-container-chapter3-3">
-			<div class="quiz-panel-wrapper">
-				<h2>Chapter 3.3 Quiz</h2>
-				
-				<form id="quizFormChapter3_3_1" onsubmit="event.preventDefault();">
-					<fieldset class="quiz-fieldset">
-						<legend class="quiz-legend">1. Which protocol is used to create a link that opens the user's default email client?</legend>
-						<ul class="quiz-options-list">
-							<li>
-								<input type="radio" name="q1_chapter3_3" id="q1_opt_a" value="A">
-								<label for="q1_opt_a">a) mailto:</label>
-							</li>
-							<li>
-								<input type="radio" name="q1_chapter3_3" id="q1_opt_b" value="B">
-								<label for="q1_opt_b">b) tel:</label>
-							</li>
-							<li>
-								<input type="radio" name="q1_chapter3_3" id="q1_opt_c" value="C">
-								<label for="q1_opt_c">c) download:</label>
-							</li>
-						</ul>
-						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter3_3', 'A', 'q1_feedback_3_3_1', 'Correct! The mailto: protocol opens the default email client.', 'Incorrect. Review the Linking to an Email Address section.')">Submit Answer</button>
-					</fieldset>
-				</form>
-				<div id="q1_feedback_3_3_1" class="feedback-area" role="status" aria-live="polite"></div>
-				
-				<hr class="quiz-divider">
+		<div class=MsoNormal align=center style='text-align:center'>
 
-				<form id="quizFormChapter3_3_2" onsubmit="event.preventDefault();">
-					<fieldset class="quiz-fieldset">
-						<legend class="quiz-legend">2. What attribute forces the browser to download a linked file instead of displaying it?</legend>
-						<ul class="quiz-options-list">
-							<li>
-								<input type="radio" name="q2_chapter3_3" id="q2_opt_a" value="A">
-								<label for="q2_opt_a">a) download</label>
-							</li>
-							<li>
-								<input type="radio" name="q2_chapter3_3" id="q2_opt_b" value="B">
-								<label for="q2_opt_b">b) file-type</label>
-							</li>
-							<li>
-								<input type="radio" name="q2_chapter3_3" id="q2_opt_c" value="C">
-								<label for="q2_opt_c">c) href-download</label>
-							</li>
-						</ul>
-						<button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter3_3', 'A', 'q2_feedback_3_3_2', 'Perfect! The download attribute triggers a file download.', 'Incorrect. Review the File Download Links section.')">Submit Answer</button>
-					</fieldset>
-				</form>
-				<div id="q2_feedback_3_3_2" class="feedback-area" role="status" aria-live="polite"></div>
-			</div>
-		</section>
+			<hr size=0 width="100%" align=center>
 
-		<hr>
+		</div>
 
-		<section id="chapter-summary">
-			<h2>Review and Summary</h2>
-			<p>In this chapter, we have covered the following key concepts:</p>
+		<!-- COMBINED ETHICAL SPOTLIGHT SIDEBAR -->
+        <aside class="ethical-spotlight" aria-labelledby="spotlight-title-ch1">
+            <div class="spotlight-header">
+                <span class="spotlight-badge" aria-hidden="true">⚖️ ETHICAL SPOTLIGHT</span>
+                <h2 id="spotlight-title-ch1">Public Infrastructure vs. Private Enclosure: The Web's Architectural Dilemma</h2>
+            </div>
 
-			<ul class="disc-list">
-				<li>How to format text in HTML using headings, paragraphs, bold, italics, and lists.</li>
-				<li>How to create hyperlinks with the <code>&lt;a&gt;</code> tag, both to external websites and within the same page.</li>
-				<li>How to handle different types of links, such as email links, phone number links, and download links.</li>
-			</ul>
+            <p class="spotlight-intro">
+                The architecture of the World Wide Web sits at a profound philosophical crossroads between a public utility serving basic human rights and a private commodity optimized for commercial monetization.
+            </p>
 
-			<p>Remember that text formatting and links are foundational to building usable and accessible websites. Practice these techniques regularly to become comfortable with them.</p>
-		</section>
-	</main>
+            <div class="spotlight-card">
+                <h3>Public Utility vs. Private Commodity</h3>
+                <p><strong>The Ethical Quandary:</strong> Is internet access a fundamental human right or a private commercial luxury? When Internet Service Providers (ISPs) throttle traffic, charge premium fees, or withhold fiber infrastructure from low-income neighborhoods, who bears moral responsibility for the resulting digital exclusion?</p>
+                <div class="philosophical-box">
+                    <p><strong>Philosophical Framework:</strong> <em>Rawlsian Distributive Justice (The Veil of Ignorance)</em></p>
+                    <p>Developed by philosopher John Rawls, this framework dictates that society's foundational baseline infrastructure must be designed as if the architects did not know their own socio-economic standing, guaranteeing that structural rules and access pathways inherently benefit the least advantaged members of society.</p>
+                </div>
+                <p>Tim Berners-Lee originally envisioned an open, permissionless, and decentralized web where any individual could publish knowledge directly. Today, a handful of corporate tech giants control web search, traffic routing, identity authentication, and cloud hosting. Do web developers have a moral obligation to build for the open web rather than contributing to proprietary walled gardens? What position do you think Tim Berners-Lee would support?</p>
+                Find out more about the Veil of Ignorance here: <a href="https://polsci.institute/political-theory-concepts-debates/rawls-justice-as-fairness-distributive-justice/" target="_blank" rel="noopener">https://polsci.institute/political-theory-concepts-debates/rawls-justice-as-fairness-distributive-justice/</a> 
+                <br>and here: <a href="https://www.philosophyprofessor.com/thought-experiments/veil-of-ignorance/" target="_blank" rel="noopener">https://www.philosophyprofessor.com/thought-experiments/veil-of-ignorance/</a>.
+            </div>
+            <div class="spotlight-reflection">
+                <h3>Thought Experiment for Developers:</h3>
+                <p>When you build a website, are you contributing to a shared public commons or reinforcing a closed corporate ecosystem? How can developers balance commercial client demands with the ethical duty to support an open, accessible internet?</p>
+            </div>
+        </aside>
+        <hr>
 
-	<footer>
-		<nav class="nav-container" aria-label="Chapter Navigation">
-			<div class="nav-link">
-				<strong>← Previous</strong><br>
-				<a href="chapter3-2.html">Chapter 3.2</a><br>
-				<a href="index.html">Home</a>
-			</div>
-			<div class="nav-link nav-link-center">
-				<strong>📖 Current Chapter</strong><br>
-				<span>Chapter 3.3</span>
-			</div>
-			<div class="nav-link nav-link-right">
-				<strong>Next →</strong><br>
-				<a href="chapter4-1.html">Chapter 4.1</a>
-			</div>
-		</nav>
-	</footer>
+		<h2>Review and Summary</h2>
+
+		<p>In this chapter, we have covered the following key concepts:</p>
+
+		<ul type=disc>
+			<li class=MsoNormal>How to format text in HTML using headings, paragraphs,
+				bold, italics, and lists.</li>
+			<li class=MsoNormal>How to create hyperlinks with the <code>&lt;a&gt;</code> tag,
+				both to external websites and within the same page.</li>
+			<li class=MsoNormal>How to handle different types of links, such as email
+				links, phone number links, and download links.</li>
+		</ul>
+
+		<p>Remember that text formatting and links are foundational to building usable
+			and accessible websites. Practice these techniques regularly to become
+			comfortable with them.</p>
+
+		<p class=MsoNormal>&nbsp;</p>
+
+	</div>
+
+<footer>
+	<div class="nav-container">
+		<div class="nav-link">
+			<strong>← Previous</strong>
+			<a href="chapter3-2.html">Chapter 3.2</a>
+			<a href="index.html">Home</a>
+		</div>
+		<div class="nav-link">
+			<strong>📖 Current Chapter</strong>
+			<a href="index.html">Chapter 3.3</a>
+		</div>
+		<div class="nav-link">
+			<strong>Next →</strong>
+			<a href="chapter4-1.html">Chapter 4</a>
+		</div>
+	</div>
+</footer>
 </body>
 
 </html>
