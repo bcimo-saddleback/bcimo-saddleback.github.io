@@ -7,27 +7,6 @@
     <title>Chapter 5: Publishing Your Website</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // Function to run the HTML code
-        function runCode() {
-            var htmlCode = document.getElementById('htmlCode').value;
-            var iframe = document.getElementById('output');
-            var iframeDoc = iframe.contentWindow.document;
-            iframeDoc.open();
-            iframeDoc.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Live Preview</title>
-                </head>
-                <body>
-                    ${htmlCode}
-                </body>
-                </html>
-            `);
-            iframeDoc.close();
-        }
-
         // Unified Self-Contained Client Grading Logic
         function evaluateInteractiveQuiz(inputName, targetKey, targetFeedbackId, textSuccess, textFailure) {
             const checkedOption = document.querySelector(`input[name="${inputName}"]:checked`);
@@ -35,16 +14,16 @@
 
             if (!checkedOption) {
                 displayBox.className = "feedback-area feedback-warning";
-                displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
+                displayBox.innerHTML = '<strong><span aria-hidden="true">⚠️</span> Please make a selection before submitting.</strong>';
                 return;
             }
 
             if (checkedOption.value === targetKey) {
                 displayBox.className = "feedback-area feedback-success";
-                displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
+                displayBox.innerHTML = `<strong><span aria-hidden="true">🎉</span> ${textSuccess}</strong>`;
             } else {
                 displayBox.className = "feedback-area feedback-error";
-                displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
+                displayBox.innerHTML = `<strong><span aria-hidden="true">❌</span> ${textFailure}</strong>`;
             }
         }
     </script>
@@ -53,219 +32,327 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <main class="container" id="main-content">
+    <main class="container" id="main-content" tabindex="-1">
         <header class="header-centered">
             <h1>Chapter 5: Publishing Your Website</h1>
             <h2>Introduction</h2>
         </header>
 
-        <p>Publishing your website allows you to share your work with the world. In this chapter, you will learn about traditional and modern methods of website publishing, including FTP, cloud hosting services, and GitHub Pages. You will also get hands-on experience by publishing a simple website using GitHub Pages and verifying its functionality.</p>
+        <p>Publishing your website allows you to share your work with the world. In this chapter, you will learn about traditional and modern methods of website publishing, including <abbr title="File Transfer Protocol">FTP</abbr>, cloud hosting services, and GitHub Pages. You will also learn how to organize project files cleanly and get hands-on experience publishing a live website using GitHub Pages.</p>
+
+        <hr aria-hidden="true">
 
         <h2>Overview of FTP and Secure FTP (SFTP)</h2>
         <h3>What is FTP?</h3>
-        <p>File Transfer Protocol (FTP) is a standard network protocol used to transfer files from a local computer to a web server. It has been a fundamental tool for website publishing since the early days of the internet. However, FTP lacks security features, making it vulnerable to unauthorized access.</p>
+        <p>File Transfer Protocol (FTP) is a standard network protocol used to transfer files from a local computer to a web server. It has been a fundamental tool for website publishing since the early days of the internet. However, standard FTP sends data and passwords unencrypted, making it vulnerable to unauthorized interception.</p>
 
         <h3>Secure FTP (SFTP)</h3>
-        <p>SFTP (Secure File Transfer Protocol) is a more secure version of FTP that encrypts file transfers using Secure Shell (SSH). This prevents unauthorized interception of data, making SFTP the preferred choice for transferring website files securely.</p>
+        <p><abbr title="Secure File Transfer Protocol">SFTP</abbr> (Secure File Transfer Protocol) is a secure alternative to FTP that encrypts file transfers using <abbr title="Secure Shell">SSH</abbr> (Secure Shell). This protects login credentials and website files in transit, making SFTP the preferred choice when uploading files manually to a web host.</p>
 
         <h3>Using FTP/SFTP to Upload a Website</h3>
         <p>To upload a website using FTP or SFTP, follow these steps:</p>
         <ol class="ordered-list">
-            <li><strong>Choose an FTP Client:</strong> Software like FileZilla or Cyberduck can connect to your web server.</li>
-            <li><strong>Connect to Your Web Host:</strong> Enter your hosting provider&rsquo;s FTP/SFTP credentials.</li>
-            <li><strong>Upload Your Files:</strong> Drag and drop your website files into the public directory (usually named <code>public_html</code> or <code>www</code>).</li>
-            <li><strong>Verify Your Website:</strong> Open a browser and enter your domain name to check if your site is live.</li>
+            <li><strong>Choose an SFTP Client:</strong> Applications such as FileZilla or Cyberduck connect your computer to a remote web server.</li>
+            <li><strong>Connect to Your Web Host:</strong> Enter your hosting provider&rsquo;s server address, port, and SFTP credentials.</li>
+            <li><strong>Upload Your Files:</strong> Drag and drop your website files into the server&rsquo;s public directory (commonly named <code>public_html</code> or <code>www</code>).</li>
+            <li><strong>Verify Your Website:</strong> Open a web browser and visit your domain name to confirm that your pages load properly.</li>
         </ol>
 
+        <hr aria-hidden="true">
+
         <h2>Modern Methods for Publishing a Website</h2>
-        <p>While FTP/SFTP remains relevant, modern web development offers more streamlined and automated publishing methods:</p>
+        <p>While SFTP remains useful for traditional hosting, modern web development offers faster, version-controlled deployment workflows:</p>
 
         <h3>1. Cloud Hosting Services</h3>
-        <p>Cloud hosting services like AWS, Google Cloud, and Azure simplify website deployment by offering automated tools, content delivery networks (CDNs), and scalable storage solutions. Many services integrate with Git for easy updates.</p>
+        <p>Cloud platforms such as <abbr title="Amazon Web Services">AWS</abbr>, Google Cloud, and Microsoft Azure offer automated deployments, <abbr title="Content Delivery Networks">CDNs</abbr> (Content Delivery Networks) for fast global delivery, and scalable storage. Many integrate directly with Git repositories.</p>
 
         <h3>2. Static Site Hosting</h3>
-        <p>Platforms like GitHub Pages allow developers to push updates to a Git repository, automatically deploying the latest version of a website.</p>
+        <p>Platforms such as GitHub Pages, Netlify, and Vercel connect to a Git repository and automatically publish the latest version of your HTML, CSS, and JavaScript files whenever you save updates.</p>
 
         <h3>3. CMS-Based Hosting</h3>
-        <p>For websites built with WordPress, Wix, or Squarespace, hosting and deployment are integrated within the platform, eliminating the need for manual file transfers.</p>
+        <p>For websites built with a <abbr title="Content Management System">CMS</abbr> (Content Management System) like WordPress, Wix, or Squarespace, hosting and publishing are built directly into the platform.</p>
 
         <h3>What is Git?</h3>
-        <p>Git is a distributed version control system (VCS) that helps developers track changes to files and collaborate on projects. It was created by Linus Torvalds in 2005 and is widely used in software development, including web development. Git allows multiple people to work on the same project simultaneously without overwriting each other's work, and it keeps a history of all changes made to the project over time.</p>
+        <p>Git is a distributed <abbr title="Version Control System">VCS</abbr> (Version Control System) created by Linus Torvalds in 2005 that helps developers track changes to files and collaborate on projects. Git keeps a complete history of edits so multiple contributors can work on the same codebase without overwriting each other&rsquo;s work.</p>
+
+        <hr aria-hidden="true">
 
         <h2>Organizing Your Website</h2>
-        <p>A well-organized website is essential for easy navigation, maintainability, and scalability. Here are some key principles for structuring your website files effectively:</p>
+        <p>A clean, predictable folder structure keeps your links working when you move files from your computer to a live server and prepares your project for external CSS stylesheets in Chapter 6.</p>
 
         <h3>1. Use a Clear Folder Structure</h3>
         <ul class="disc-list">
-            <li>Store HTML files in the root directory (e.g., <code>index.html</code>).</li>
-            <li>Keep styles in a <code>css/</code> folder.</li>
+            <li>Store your main homepage in the root folder as <code>index.html</code> (web servers automatically look for <code>index.html</code> as the default landing page).</li>
+            <li>Keep stylesheets in a <code>css/</code> folder (for example, <code>css/style.css</code>).</li>
             <li>Store JavaScript files in a <code>js/</code> folder.</li>
             <li>Place images and media files in an <code>images/</code> folder.</li>
         </ul>
 
-        <h3>2. Follow Naming Conventions</h3>
+        <h3>2. Follow Strict Naming Conventions</h3>
         <ul class="disc-list">
-            <li>Use lowercase letters and hyphens instead of spaces (e.g., <code>about-us.html</code>).</li>
-            <li>Keep file and folder names descriptive and meaningful.</li>
+            <li>Use all lowercase letters and hyphens instead of spaces (for example, <code>about-us.html</code> rather than <code>About Us.html</code>).</li>
+            <li>Keep file and folder names short, descriptive, and consistent.</li>
         </ul>
 
         <h3>3. Use External Stylesheets and Scripts</h3>
         <ul class="disc-list">
-            <li>Avoid inline CSS and JavaScript; instead, link to external files.</li>
-            <li>This improves readability and makes maintenance easier.</li>
+            <li>Keep CSS and JavaScript in external files linked from your HTML rather than repeating inline styles on every page.</li>
+            <li>This separation makes multi-page websites far easier to read and maintain.</li>
         </ul>
 
         <h3>4. Organize Content Logically</h3>
         <ul class="disc-list">
-            <li>Use a consistent navigation structure across pages.</li>
-            <li>Group related files together to improve clarity.</li>
+            <li>Provide a consistent navigation menu across every page on your site.</li>
+            <li>Group related assets together so relative file paths stay simple.</li>
         </ul>
 
-        <p>By following these practices, you ensure that your website is structured efficiently, making it easier to update and expand over time.</p>
+        <div class="concept-note">
+            <p><strong>Important Deployment Tip — Case Sensitivity on Web Servers:</strong> Windows and macOS often ignore capitalization when opening local files, so <code>Images/Logo.png</code> might still load on your laptop. However, GitHub Pages and most web servers run on Linux, which is strictly <strong>case-sensitive</strong>—meaning <code>Logo.png</code> and <code>logo.png</code> are treated as two different files and mismatched capitalization will cause a <code>404 Not Found</code> error.</p>
+        </div>
+
+        <hr aria-hidden="true">
 
         <h2>Introduction to GitHub Pages for Free Hosting</h2>
-        <p>Check out this video for a 30-second summary of how to publish your website using GitHub:</p>
+        <p>Check out this video for a 30-second summary of how to publish your website using GitHub Pages:</p>
 
         <iframe src="https://www.youtube.com/embed/WqOXxoGSpbs"
             title="Video summary: Host a website using GitHub Pages"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
 
-        <p>GitHub Pages is a free service offered by GitHub that allows you to host static websites directly from a GitHub repository. It is particularly useful for personal projects, portfolios, documentation, and blogs. The service supports HTML, CSS, and JavaScript, and can also integrate with Jekyll, a static site generator, to simplify the process of creating and maintaining a website.</p>
+        <p>GitHub Pages is a free hosting service offered by GitHub that publishes static websites directly from a GitHub repository. It supports HTML, CSS, and JavaScript, making it ideal for student portfolios, documentation, and personal websites.</p>
+
+        <div class="table-wrapper">
+            <table class="css-table">
+                <caption>How GitHub Repository Names Determine Your Live <abbr title="Uniform Resource Locator">URL</abbr></caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Site Type</th>
+                        <th scope="col">Repository Name Format</th>
+                        <th scope="col">Resulting Live GitHub Pages URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Personal / Root Site</strong> (one per account)</td>
+                        <td><code>&lt;your-username&gt;.github.io</code></td>
+                        <td><code>https://&lt;your-username&gt;.github.io/</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Project Site</strong> (unlimited per account)</td>
+                        <td>Any project name (e.g., <code>my-website</code>)</td>
+                        <td><code>https://&lt;your-username&gt;.github.io/my-website/</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h3>Step-by-Step Guide to Publishing a Web Page</h3>
 
-        <h3>Step 1: Create a GitHub Account</h3>
-        <p>Before you can publish a web page, you need a GitHub account. If you don't have one, go to <a href="https://github.com/" target="_blank" rel="noopener">GitHub's website (opens in new tab)</a> and sign up for a free account. Follow the instructions to complete the registration process.</p>
+        <h4>Step 1: Create a GitHub Account</h4>
+        <p>Before you can publish a web page, you need a free GitHub account. Visit <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub&rsquo;s official website (opens in new tab)</a> and complete the sign-up instructions.</p>
 
-        <h3>Step 2: Create a New Repository</h3>
-        <p>Once you have a GitHub account, you need to create a new repository to host your web page. Follow these steps:</p>
+        <h4>Step 2: Create a New Repository</h4>
+        <p>Once signed in, create a repository to store your website files:</p>
         <ol class="ordered-list">
-            <li>Log in to your GitHub account.</li>
-            <li>Click on the "+" icon in the upper-right corner and select "New repository."</li>
-            <li>Enter a repository name. For a personal website, it is recommended to name it <code>&lt;your-username&gt;.github.io</code>.</li>
-            <li>Add a description if desired.</li>
-            <li>Choose the repository visibility: public or private. Public repositories are accessible to everyone, while private ones are restricted to you and collaborators.</li>
-            <li>Initialize the repository with a README file if you wish.</li>
-            <li>Click "Create repository."</li>
+            <li>Click the <strong>+</strong> icon in the upper-right corner of GitHub and select <strong>New repository</strong>.</li>
+            <li>Enter a repository name—either <code>&lt;your-username&gt;.github.io</code> for your main site or a project name such as <code>my-website</code>.</li>
+            <li>Add an optional description and set visibility to <strong>Public</strong> (required for free GitHub Pages hosting).</li>
+            <li>Optionally check <strong>Add a README file</strong>, then click <strong>Create repository</strong>.</li>
         </ol>
 
-        <h3>Step 3: Add Your Web Page Files</h3>
-        <p>With your repository created, you need to add the files that make up your web page. You can do this in several ways:</p>
+        <h4>Step 3: Add Your Web Page Files</h4>
+        <p>Upload your site files to the repository root:</p>
         <ul class="disc-list">
-            <li><strong>Directly on GitHub:</strong> Navigate to your repository, click "Add file," and select "Upload files." Drag and drop your HTML, CSS, and JavaScript files into the upload area.</li>
+            <li><strong>Directly in the Browser:</strong> Open your repository, click <strong>Add file</strong>, and choose <strong>Upload files</strong>. Drag and drop your <code>index.html</code> file (along with any <code>css/</code> or <code>images/</code> folders) and click <strong>Commit changes</strong>.</li>
         </ul>
 
-        <h3>Step 4: Enable GitHub Pages</h3>
-        <p>To publish your web page, you need to enable GitHub Pages for your repository:</p>
+        <h4>Step 4: Enable GitHub Pages</h4>
+        <p>Turn on hosting in your repository settings:</p>
         <ol class="ordered-list">
-            <li>Go to your repository on GitHub.</li>
-            <li>Click on "Settings."</li>
-            <li>Scroll down to the "Pages" section.</li>
-            <li>Under "Source," select the branch you want to use for GitHub Pages, typically "main" or "master."</li>
-            <li>If your files are in a specific folder, select it under the "Folder" dropdown.</li>
-            <li>Click "Save."</li>
+            <li>Open your repository on GitHub and click the <strong>Settings</strong> tab.</li>
+            <li>In the left sidebar, select <strong>Pages</strong>.</li>
+            <li>Under <strong>Build and deployment &gt; Source</strong>, choose <strong>Deploy from a branch</strong>.</li>
+            <li>Select your <code>main</code> branch and the <code>/ (root)</code> folder, then click <strong>Save</strong>.</li>
         </ol>
-        <p>GitHub will now build your site and provide a URL where it can be accessed, typically <code>https://&lt;your-username&gt;.github.io/&lt;repository-name&gt;/</code>.</p>
+        <p>After a minute or two, refresh the Pages settings screen to see your live link at the top of the page.</p>
 
-        <h3>Step 5: Customize Your Web Page</h3>
-        <p>Once your web page is live, you can customize it further:</p>
+        <h4>Step 5: Customize and Update Your Web Page</h4>
+        <p>Once your website is live, you can continue improving it:</p>
         <ul class="disc-list">
-            <li><strong>Themes:</strong> If you are using Jekyll, you can apply themes to your site. Navigate to the "Settings" tab, scroll to the "Pages" section, and select a theme from the "Theme Chooser."</li>
-            <li><strong>Custom Domain:</strong> You can use a custom domain by adding a CNAME file to your repository with your domain name and configuring your DNS settings to point to GitHub's servers.</li>
+            <li>Upload updated HTML, CSS, or image files whenever you make changes—GitHub Pages automatically rebuilds the live site.</li>
+            <li>Optionally connect a custom domain name under the Pages settings panel.</li>
         </ul>
+
+        <hr aria-hidden="true">
 
         <h2>Your Turn: Publish a Simple Website Using GitHub Pages</h2>
-        <p>Follow these steps to complete your hands-on learning task:</p>
+        <p>Follow these steps to complete your hands-on deployment activity:</p>
 
         <h3>Step 1: Create and Upload Your Website</h3>
         <ol class="ordered-list">
-            <li>Open VS Code, create a file named <code>index.html</code>, and insert the following:</li>
+            <li>Open VS Code, create a new file named <code>index.html</code> (all lowercase), and paste the following HTML5 starter template:</li>
         </ol>
 
         <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;My Github Web Page&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My GitHub Web Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
     &lt;h1&gt;Hello!&lt;/h1&gt;
-    &lt;p&gt;Welcome to my website.&lt;/p&gt;
-  &lt;/body&gt;
+    &lt;p&gt;Welcome to my live website hosted on GitHub Pages.&lt;/p&gt;
+&lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
         <ol start="2" class="ordered-list">
-            <li>Save the file and upload it to your GitHub repository following the earlier steps.</li>
+            <li>Save the file and upload it to a new GitHub repository named <code>my-website</code>, then enable GitHub Pages on the <code>main</code> branch.</li>
         </ol>
 
         <h3>Step 2: Verify Your Website</h3>
         <ol class="ordered-list">
-            <li>Wait a few minutes for GitHub Pages to process the deployment.</li>
-            <li>Open a browser and visit <code>https://yourusername.github.io/my-website/</code>.</li>
-            <li>Ensure your webpage displays correctly.</li>
+            <li>Wait 1 to 2 minutes for GitHub Pages to finish building your deployment.</li>
+            <li>Open a browser and visit <code>https://&lt;your-username&gt;.github.io/my-website/</code> (replacing <code>&lt;your-username&gt;</code> with your GitHub username).</li>
+            <li>Confirm that your heading and welcome paragraph appear properly.</li>
         </ol>
 
-        <p>If you need more help, check out this video for a guided tutorial on how to publish your website using GitHub Pages:</p>
+        <p>If you would like a walkthrough, watch this guided tutorial on publishing with GitHub Pages:</p>
         <iframe src="https://www.youtube.com/embed/b2r9Cdvssi0"
             title="Video tutorial: Getting started with GitHub Pages for beginners"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
 
+        <hr aria-hidden="true">
+
         <h2>Conclusion</h2>
-        <p>In this chapter, you learned various methods of publishing a website, including FTP, cloud hosting, and GitHub Pages. Additionally, you learned how to properly organize a website for maintainability. Finally, you completed a hands-on activity by publishing a simple website on GitHub Pages. This experience prepares you for deploying more complex web projects in the future.</p>
+        <p>In this chapter, you explored how websites move from a local computer to the public web using SFTP, cloud platforms, and GitHub Pages. You also learned how clean folder structures and lowercase naming conventions prevent broken links, preparing you to add external CSS stylesheets in Chapter 6.</p>
 
         <h3>Learn More</h3>
-        <p>If you are interested in learning more about Git, check out <a href="https://www.geeksforgeeks.org/what-is-git/" target="_blank" rel="noopener">GeeksforGeeks Git Guide (opens in new tab)</a>. Learn more about how to use <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">GitHub Pages Documentation (opens in new tab)</a>.</p>
+        <p>Explore additional version-control and hosting guides through the <a href="https://www.geeksforgeeks.org/what-is-git/" target="_blank" rel="noopener noreferrer">GeeksforGeeks Introduction to Git Guide (opens in new tab)</a> and the official <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener noreferrer">GitHub Pages Documentation (opens in new tab)</a>.</p>
 
-        <section id="quiz-container-chapter5">
+        <section id="quiz-container-chapter5" aria-labelledby="quiz-heading-ch5">
             <div class="quiz-panel-wrapper">
-                <h2>Chapter 5 Quiz</h2>
+                <h2 id="quiz-heading-ch5">Chapter 5 Assessment Questions</h2>
 
                 <form id="quizFormChapter5_1" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
-                        <legend class="quiz-legend">1. Which protocol is generally preferred for transferring website files due to encryption?</legend>
+                        <legend class="quiz-legend">1. Which protocol is preferred over standard FTP for transferring website files because it encrypts data using SSH?</legend>
                         <ul class="quiz-options-list">
                             <li>
                                 <input type="radio" name="q1_chapter5" id="q1_opt_a" value="A">
-                                <label for="q1_opt_a">a) SFTP (Secure FTP)</label>
+                                <label for="q1_opt_a">a) SFTP (Secure File Transfer Protocol)</label>
                             </li>
                             <li>
                                 <input type="radio" name="q1_chapter5" id="q1_opt_b" value="B">
-                                <label for="q1_opt_b">b) FTP</label>
+                                <label for="q1_opt_b">b) Standard FTP</label>
                             </li>
                             <li>
                                 <input type="radio" name="q1_chapter5" id="q1_opt_c" value="C">
-                                <label for="q1_opt_c">c) HTTP</label>
+                                <label for="q1_opt_c">c) Unencrypted HTTP</label>
                             </li>
                         </ul>
-                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter5', 'A', 'q1_feedback_5_1', 'Correct! SFTP uses SSH encryption to secure file transfers.', 'Incorrect. SFTP encrypts file transfers using SSH, making it the preferred choice for security.')">Submit Answer</button>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter5', 'A', 'q1_feedback_5_1', 'Correct! SFTP uses SSH encryption to protect file transfers and credentials.', 'Incorrect. SFTP encrypts file transfers using SSH, making it the preferred choice for security.')">Submit Answer</button>
                     </fieldset>
                 </form>
                 <div id="q1_feedback_5_1" class="feedback-area" role="status" aria-live="polite"></div>
 
-                <hr class="quiz-divider">
+                <hr class="quiz-divider" aria-hidden="true">
 
                 <form id="quizFormChapter5_2" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
-                        <legend class="quiz-legend">2. What is the primary benefit of using a modern cloud hosting service (like GitHub Pages)?</legend>
+                        <legend class="quiz-legend">2. What is a primary advantage of modern static hosting platforms such as GitHub Pages?</legend>
                         <ul class="quiz-options-list">
                             <li>
                                 <input type="radio" name="q2_chapter5" id="q2_opt_a" value="A">
-                                <label for="q2_opt_a">a) It eliminates the need for a domain name.</label>
+                                <label for="q2_opt_a">a) They prevent browsers from caching images.</label>
                             </li>
                             <li>
                                 <input type="radio" name="q2_chapter5" id="q2_opt_b" value="B">
-                                <label for="q2_opt_b">b) It automates deployment directly from a Git repository.</label>
+                                <label for="q2_opt_b">b) They automate website deployment directly from a Git repository.</label>
                             </li>
                             <li>
                                 <input type="radio" name="q2_chapter5" id="q2_opt_c" value="C">
-                                <label for="q2_opt_c">c) It only supports static HTML files.</label>
+                                <label for="q2_opt_c">c) They require manually dragging files over FTP for every single edit.</label>
                             </li>
                         </ul>
-                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter5', 'B', 'q2_feedback_5_2', 'Correct! Modern platforms integrate with Git for easy, automated updates.', 'Incorrect. Modern cloud hosting automates deployment from a Git repository.')">Submit Answer</button>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter5', 'B', 'q2_feedback_5_2', 'Correct! GitHub Pages automatically rebuilds and publishes updates from your repository.', 'Incorrect. Modern static hosting automates deployment directly from a Git repository.')">Submit Answer</button>
                     </fieldset>
                 </form>
                 <div id="q2_feedback_5_2" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter5_3" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">3. What filename should you give your website&rsquo;s main landing page in the root directory so web servers load it automatically?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q3_chapter5" id="q3_opt_a" value="A">
+                                <label for="q3_opt_a">a) home-page.html</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3_chapter5" id="q3_opt_b" value="B">
+                                <label for="q3_opt_b">b) index.html</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3_chapter5" id="q3_opt_c" value="C">
+                                <label for="q3_opt_c">c) Main Page.html</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q3_chapter5', 'B', 'q3_feedback_5_3', 'Spot on! Web servers automatically serve lowercase index.html as the default homepage.', 'Incorrect. Web servers look for lowercase index.html as the default root page.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q3_feedback_5_3" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter5_4" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">4. If your GitHub username is <code>alexdev</code> and you enable GitHub Pages on a project repository named <code>my-website</code>, what will your live URL be?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q4_chapter5" id="q4_opt_a" value="A">
+                                <label for="q4_opt_a">a) https://alexdev.github.io/my-website/</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4_chapter5" id="q4_opt_b" value="B">
+                                <label for="q4_opt_b">b) https://my-website.github.com/alexdev/</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4_chapter5" id="q4_opt_c" value="C">
+                                <label for="q4_opt_c">c) https://github.com/alexdev/settings/pages</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q4_chapter5', 'A', 'q4_feedback_5_4', 'Exactly right! Project repositories publish to https://<username>.github.io/<repository-name>/.', 'Incorrect. Project repositories publish to https://alexdev.github.io/my-website/.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q4_feedback_5_4" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter5_5" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">5. Why should you use all-lowercase filenames with hyphens (such as <code>about-us.html</code>) when publishing to GitHub Pages?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q5_chapter5" id="q5_opt_a" value="A">
+                                <label for="q5_opt_a">a) HTML5 refuses to open files containing capital letters on any device.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q5_chapter5" id="q5_opt_b" value="B">
+                                <label for="q5_opt_b">b) Web servers are case-sensitive, so mismatched capitalization or spaces can cause broken links and 404 errors.</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q5_chapter5" id="q5_opt_c" value="C">
+                                <label for="q5_opt_c">c) Lowercase filenames automatically encrypt your website with SFTP.</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q5_chapter5', 'B', 'q5_feedback_5_5', 'Great job! Linux web servers treat uppercase and lowercase letters as distinct paths, so consistent lowercase naming prevents 404 errors.', 'Incorrect. Review the Organizing Your Website section on naming conventions and case sensitivity.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q5_feedback_5_5" class="feedback-area" role="status" aria-live="polite"></div>
             </div>
         </section>
     </main>
@@ -274,16 +361,16 @@
         <nav class="nav-container" aria-label="Chapter Navigation">
             <div class="nav-link">
                 <strong>← Previous</strong><br>
-                <a href="chapter4-2.html">Chapter 4.2</a><br>
-                <a href="index.html">Home</a>
+                <a href="chapter4-2.html">Chapter 4.2: Previous Lesson</a><br>
+                <a href="index.html">Course Home</a>
             </div>
             <div class="nav-link nav-link-center">
-                <strong>📖 Current Chapter</strong><br>
+                <strong><span aria-hidden="true">📖</span> Current Chapter</strong><br>
                 <span>Chapter 5</span>
             </div>
             <div class="nav-link nav-link-right">
                 <strong>Next →</strong><br>
-                <a href="chapter6.html">Chapter 6</a>
+                <a href="chapter6.html">Chapter 6: Web Design Basics</a>
             </div>
         </nav>
     </footer>
