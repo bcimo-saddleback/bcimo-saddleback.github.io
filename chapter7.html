@@ -7,10 +7,11 @@
     <title>Chapter 7: CSS Techniques</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // Function to run the HTML code
+        // Function to run the HTML and CSS code inside the live sandbox
         function runCode() {
             var htmlCode = document.getElementById('htmlCode').value;
             var iframe = document.getElementById('output');
+            var statusBanner = document.getElementById('runnerStatus');
             var iframeDoc = iframe.contentWindow.document;
             iframeDoc.open();
             iframeDoc.write(`
@@ -18,6 +19,7 @@
                 <html lang="en">
                 <head>
                     <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Live Preview</title>
                 </head>
                 <body>
@@ -26,6 +28,10 @@
                 </html>
             `);
             iframeDoc.close();
+
+            if (statusBanner) {
+                statusBanner.textContent = "Live output window updated with your HTML and CSS.";
+            }
         }
 
         // Unified Self-Contained Client Grading Logic
@@ -35,16 +41,16 @@
 
             if (!checkedOption) {
                 displayBox.className = "feedback-area feedback-warning";
-                displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
+                displayBox.innerHTML = '<strong><span aria-hidden="true">⚠️</span> Please make a selection before submitting.</strong>';
                 return;
             }
 
             if (checkedOption.value === targetKey) {
                 displayBox.className = "feedback-area feedback-success";
-                displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
+                displayBox.innerHTML = `<strong><span aria-hidden="true">🎉</span> ${textSuccess}</strong>`;
             } else {
                 displayBox.className = "feedback-area feedback-error";
-                displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
+                displayBox.innerHTML = `<strong><span aria-hidden="true">❌</span> ${textFailure}</strong>`;
             }
         }
     </script>
@@ -53,23 +59,29 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <main class="container" id="main-content">
+    <main class="container" id="main-content" tabindex="-1">
         <header class="header-centered">
             <h1>Chapter 7: CSS Techniques</h1>
             <h2>Introduction</h2>
         </header>
 
-        <p>In web design, CSS (Cascading Style Sheets) is the key tool for styling and enhancing the presentation of a webpage. While the basics of CSS allow you to control simple styling such as colors, fonts, and spacing, advanced CSS techniques take your designs to the next level. These techniques allow you to create complex layouts, animations, and responsive designs that can adapt to different devices. In this chapter, you&rsquo;ll explore advanced CSS concepts and methods, including Flexbox, Grid Layout, CSS animations, and responsive design principles.</p>
+        <p>In Chapter 6, you learned how <abbr title="Cascading Style Sheets">CSS</abbr> selectors, the Box Model, typography, and media queries style individual elements. In this chapter, you will build on those fundamentals to arrange multi-column layouts and add accessible motion using <strong>Flexbox</strong>, <strong>CSS Grid</strong>, <strong>responsive layout patterns</strong>, and <strong>CSS transitions and animations</strong>.</p>
 
-        <hr>
+        <hr aria-hidden="true">
 
-        <h2>Part 1 - Flexbox For Layout</h2>
-        <p>A crucial aspect of CSS is its ability to manage the layout of web pages. Among the various layout techniques available, Flexbox (Flexible Box Layout) stands out as a modern and efficient method for designing responsive web layouts. Flexbox provides a more streamlined and intuitive approach to arranging elements within a container, offering flexibility and control over the alignment, direction, and order of items.</p>
+        <h2>Part 1: Flexbox for One-Dimensional Layout</h2>
+        <p>Among modern layout tools, <strong>Flexbox</strong> (Flexible Box Layout) stands out as an efficient method for arranging items in a single row or a single column. Turning a parent element into a flex container gives you direct control over alignment, spacing, wrapping, and direction.</p>
 
-        <h3>Flexbox Basics</h3>
-        <p>The main concept behind Flexbox is that it works by defining a container as a flex container and then arranging the items inside the container with various properties. Here's how Flexbox works in action.</p>
+        <h3>How Flexbox Works</h3>
+        <ol class="ordered-list">
+            <li><strong>The Flex Container (<code>display: flex;</code>)</strong>: Applying <code>display: flex;</code> to a parent element turns all of its direct children into <strong>flex items</strong>.</li>
+            <li><strong>Main Axis and Cross Axis</strong>: By default, flex items sit side by side along the horizontal <strong>main axis</strong>, while the vertical direction acts as the <strong>cross axis</strong>.</li>
+            <li><strong><code>justify-content</code></strong>: Aligns and distributes items along the main axis (for example, <code>space-between</code> or <code>center</code>).</li>
+            <li><strong><code>align-items</code></strong>: Aligns items along the cross axis (for example, <code>center</code> or <code>stretch</code>).</li>
+            <li><strong><code>gap</code> and <code>flex-wrap</code></strong>: <code>gap</code> adds consistent spacing between flex items, and <code>flex-wrap: wrap;</code> lets items wrap onto a new row instead of overflowing narrow screens.</li>
+        </ol>
 
-        <h3>Example: A Simple Flexbox Layout</h3>
+        <h3>Example: A Responsive Flexbox Card Row</h3>
         <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
@@ -77,94 +89,223 @@
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
     &lt;title&gt;Flexbox Layout&lt;/title&gt;
     &lt;style&gt;
-    .container {
-        display: flex; /* Define container as a flex container */
-        justify-content: space-between; /* Distribute items with space between */
-        align-items: center; /* Align items vertically in center */
-        height: 100vh;
-    }
-    .item {
-        width: 30%;
-        padding: 20px;
-        background-color: #f3f3f3;
-        text-align: center;
-    }
+        * {
+            box-sizing: border-box;
+        }
+        .flex-row {
+            display: flex;                  /* Turn container into a flex container */
+            justify-content: space-between; /* Distribute items across the main axis */
+            align-items: center;            /* Align items along the cross axis */
+            gap: 16px;                      /* Clean spacing between items */
+            min-height: 220px;
+            padding: 16px;
+            background-color: #f1f5f9;
+        }
+        .flex-item {
+            flex: 1;                        /* Share available row width equally */
+            padding: 20px;
+            background-color: #ffffff;
+            color: #111827;
+            border: 2px solid #1e40af;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        /* Stack items vertically on mobile viewports (768px and below) */
+        @media (max-width: 768px) {
+            .flex-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
     &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;div class="container"&gt;
-        &lt;div class="item"&gt;Item 1&lt;/div&gt;
-        &lt;div class="item"&gt;Item 2&lt;/div&gt;
-        &lt;div class="item"&gt;Item 3&lt;/div&gt;
+    &lt;div class="flex-row"&gt;
+        &lt;div class="flex-item"&gt;Item 1&lt;/div&gt;
+        &lt;div class="flex-item"&gt;Item 2&lt;/div&gt;
+        &lt;div class="flex-item"&gt;Item 3&lt;/div&gt;
     &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-        <h3>Key Properties in Flexbox:</h3>
+        <h3>Key Flexbox Properties Summary</h3>
         <ul class="disc-list">
-            <li><code>display: flex;</code> turns the container into a flex container.</li>
-            <li><code>justify-content: space-between;</code> distributes items with equal space between them.</li>
-            <li><code>align-items: center;</code> aligns items vertically along the center of the container.</li>
-            <li><code>width: 30%;</code> controls the width of each item inside the flex container.</li>
+            <li><code>display: flex;</code> activates Flexbox on the parent container.</li>
+            <li><code>justify-content: space-between;</code> distributes items evenly across the main axis.</li>
+            <li><code>align-items: center;</code> centers items vertically along the cross axis.</li>
+            <li><code>gap: 16px;</code> creates uniform space between flex items without extra margin rules.</li>
+            <li><code>flex-direction: column;</code> switches the main axis from horizontal to vertical—ideal inside a <code>@media (max-width: 768px)</code> query for mobile devices.</li>
         </ul>
 
-        <p>Flexbox allows for dynamic adjustments to the layout depending on the size of the content and the screen size. This makes it ideal for responsive design.</p>
+        <p>Here is a quick video introducing how Flexbox containers and items work together:</p>
+        <iframe src="https://www.youtube.com/embed/Y8zMYaD1bz0?list=PL4cUxeGkcC9i3FXJSUfmsNOx8E7u6UuhG"
+            title="Video tutorial: CSS Flexbox Tutorial #1 - Introduction"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
 
-        <p>Here's a quick video to help explain Flexbox:</p>
-        
-        <iframe width="1127" height="634" src="https://www.youtube.com/embed/Y8zMYaD1bz0?list=PL4cUxeGkcC9i3FXJSUfmsNOx8E7u6UuhG" title="CSS Flexbox Tutorial #1 - Introduction" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <hr aria-hidden="true">
 
-        <hr>
+        <h2>Part 2: Introduction to CSS Grid Layout</h2>
+        <p>While Flexbox excels at arranging items along <strong>one dimension</strong> (a row or a column), <strong>CSS Grid</strong> is built for <strong>two-dimensional layouts</strong>—controlling both columns and rows at the same time.</p>
 
-        <h2>How Flexbox Works</h2>
+        <div class="table-wrapper">
+            <table class="css-table">
+                <caption>Choosing Between Flexbox and CSS Grid</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Layout System</th>
+                        <th scope="col">Dimensions</th>
+                        <th scope="col">Best Used For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Flexbox</strong> (<code>display: flex</code>)</td>
+                        <td>One-dimensional (row <em>or</em> column)</td>
+                        <td>Navigation bars, button groups, centering content, and single-row card strips.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSS Grid</strong> (<code>display: grid</code>)</td>
+                        <td>Two-dimensional (rows <em>and</em> columns)</td>
+                        <td>Full-page layouts, photo galleries, dashboards, and multi-row card grids.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Example: A Responsive Three-Column Grid</h3>
+        <pre><code>.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal-width fractional columns */
+    gap: 16px;
+}
+
+.grid-card {
+    background-color: #f8fafc;
+    color: #111827;
+    border: 2px solid #1e3a8a;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+/* Collapse to a single column on screens 768px wide or smaller */
+@media (max-width: 768px) {
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+}</code></pre>
+
+        <ul class="disc-list">
+            <li><code>display: grid;</code> turns a parent element into a grid container.</li>
+            <li><code>grid-template-columns: repeat(3, 1fr);</code> defines three columns that each take up one equal fraction (<code>1fr</code>) of the available space.</li>
+            <li><code>gap: 16px;</code> sets consistent spacing between both rows and columns.</li>
+        </ul>
+
+        <hr aria-hidden="true">
+
+        <h2>Part 3: CSS Transitions, Animations, and Accessible Motion</h2>
+        <p>Subtle motion can provide helpful visual feedback when learners or visitors interact with buttons, links, and cards.</p>
+
+        <h3>Transitions: Smooth Changes on Hover and Focus</h3>
+        <p>CSS <strong>transitions</strong> smoothly animate property changes over a set duration—most commonly when a user hovers over or focuses on an interactive element.</p>
+
+        <pre><code>.interactive-box {
+    width: 220px;
+    padding: 20px;
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.interactive-box:hover,
+.interactive-box:focus-visible {
+    background-color: #14532d;
+    transform: scale(1.05);
+}</code></pre>
+
+        <h3>Animations: Multi-Step Sequences with <code>@keyframes</code></h3>
+        <p>CSS <strong>animations</strong> use a <code>@keyframes</code> rule to define intermediate checkpoints from <code>0%</code> (start) to <code>100%</code> (end), allowing elements to animate automatically without requiring a hover trigger.</p>
+
+        <pre><code>.animate-badge {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #14532d;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 6px;
+    animation: slide-shift 3s ease-in-out infinite;
+}
+
+@keyframes slide-shift {
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(40px); }
+    100% { transform: translateX(0); }
+}</code></pre>
+
+        <div class="concept-note">
+            <p><strong>Accessibility Best Practice — Respecting <code>prefers-reduced-motion</code>:</strong> Continuous or large-scale motion can trigger dizziness and discomfort for people with vestibular sensitivities (a core principle of <abbr title="Web Content Accessibility Guidelines">WCAG</abbr> Level AAA). Always include a <code>prefers-reduced-motion</code> media query to turn off non-essential animations when a user enables "Reduce Motion" in their device settings:</p>
+        </div>
+
+        <pre><code>@media (prefers-reduced-motion: reduce) {
+    .animate-badge {
+        animation: none;
+    }
+    .interactive-box {
+        transition: none;
+    }
+}</code></pre>
+
+        <hr aria-hidden="true">
+
+        <h2>Hands-On Practice: You Try It!</h2>
         <ol class="ordered-list">
-            <li><strong>The Container (display: flex)</strong>: When you apply <code>display: flex</code> to a parent container, all direct children become flex items.</li>
-            <li><strong>Main Axis and Cross Axis</strong>: The main axis is horizontal by default; the cross axis is vertical.</li>
-            <li><strong>justify-content Property</strong>: Controls alignment along the main axis.</li>
-            <li><strong>align-items Property</strong>: Controls alignment along the cross axis.</li>
+            <li>Copy the sample Flexbox and hover transition code below into the Code Runner and click <strong>Run Code</strong>.</li>
+            <li>Hover over each card in the Live Output Window to see the smooth CSS transition in action.</li>
+            <li>Try changing <code>justify-content: space-between;</code> to <code>justify-content: center;</code> or switching <code>display: flex;</code> to <code>display: grid; grid-template-columns: repeat(3, 1fr);</code>.</li>
         </ol>
 
-        <hr>
+        <pre><code>&lt;style&gt;
+    .demo-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 16px;
+        background-color: #f1f5f9;
+        font-family: Arial, sans-serif;
+    }
+    .demo-card {
+        flex: 1;
+        padding: 16px;
+        background-color: #1e3a8a;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+    .demo-card:hover {
+        background-color: #14532d;
+    }
+&lt;/style&gt;
 
-        <h2>CSS Animations and Transitions</h2>
-        <h3>Animations: Bringing Your Page to Life</h3>
-        <p>CSS animations allow you to animate changes in your web page elements over time. You can animate properties like colors, sizes, and positions, creating engaging and interactive user experiences.</p>
+&lt;div class="demo-row"&gt;
+    &lt;div class="demo-card"&gt;Flex Card 1&lt;/div&gt;
+    &lt;div class="demo-card"&gt;Flex Card 2&lt;/div&gt;
+    &lt;div class="demo-card"&gt;Flex Card 3&lt;/div&gt;
+&lt;/div&gt;</code></pre>
 
-        <pre><code>.animate-me {
-  width: 100px;
-  height: 100px;
-  background-color: #ff6347;
-  animation: move 3s infinite;
-}
-
-@keyframes move {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(200px); }
-  100% { transform: translateX(0); }
-}</code></pre>
-
-        <h3>Transitions: Smooth Changes on Hover</h3>
-        <p>CSS transitions allow you to smoothly change properties over a specified duration. They are often used for hover effects, such as changing colors or resizing elements.</p>
-
-        <pre><code>.box {
-  width: 200px;
-  height: 200px;
-  background-color: #4CAF50;
-  transition: transform 0.5s ease-in-out;
-}
-
-.box:hover {
-  transform: scale(1.2);
-}</code></pre>
-
-        <section id="coderunner" class="coderunner-box">
-            <h2>Code Runner Sandbox Workspace</h2>
+        <section id="coderunner" class="coderunner-box" aria-labelledby="coderunner-heading">
+            <h2 id="coderunner-heading">Code Runner Sandbox Workspace</h2>
             <div class="form-group">
                 <label for="htmlCode" class="form-label">Enter HTML Code Here:</label>
-                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+                <textarea id="htmlCode" placeholder="Write or paste HTML and CSS here..."></textarea>
             </div>
 
             <button type="button" class="action-button" onclick="runCode()">Run Code</button>
+            <div id="runnerStatus" class="sr-only" role="status" aria-live="polite"></div>
 
             <div class="form-group">
                 <label for="output" class="form-label">Live Output Window:</label>
@@ -172,9 +313,15 @@
             </div>
         </section>
 
-        <section id="quiz-container-chapter7">
+        <hr aria-hidden="true">
+
+        <h2>Conclusion</h2>
+        <p>In this chapter, you expanded your CSS toolkit from styling individual boxes to building adaptive page layouts. You learned how <strong>Flexbox</strong> aligns items along a single axis, how <strong>CSS Grid</strong> organizes two-dimensional columns and rows, and how <code>@media</code> breakpoints adapt both systems to smaller screens.</p>
+        <p>You also saw how CSS <strong>transitions</strong> and <strong><code>@keyframes</code> animations</strong> add interactive polish—and how pairing them with <code>@media (prefers-reduced-motion: reduce)</code> ensures your designs remain comfortable and accessible for every visitor.</p>
+
+        <section id="quiz-container-chapter7" aria-labelledby="quiz-heading-ch7">
             <div class="quiz-panel-wrapper">
-                <h2>Chapter 7 Quiz</h2>
+                <h2 id="quiz-heading-ch7">Chapter 7 Assessment Questions</h2>
 
                 <form id="quizFormChapter7_1" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
@@ -193,12 +340,12 @@
                                 <label for="q1_ch7_opt_c">c) flex-direction: column;</label>
                             </li>
                         </ul>
-                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter7', 'B', 'q1_feedback_7_1', 'Correct! justify-content handles main-axis alignment.', 'Incorrect. Review Flexbox Key Properties.')">Submit Answer</button>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter7', 'B', 'q1_feedback_7_1', 'Correct! justify-content handles main-axis alignment.', 'Incorrect. Review the Key Flexbox Properties Summary.')">Submit Answer</button>
                     </fieldset>
                 </form>
                 <div id="q1_feedback_7_1" class="feedback-area" role="status" aria-live="polite"></div>
 
-                <hr class="quiz-divider">
+                <hr class="quiz-divider" aria-hidden="true">
 
                 <form id="quizFormChapter7_2" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
@@ -222,7 +369,7 @@
                 </form>
                 <div id="q2_feedback_7_2" class="feedback-area" role="status" aria-live="polite"></div>
 
-                <hr class="quiz-divider">
+                <hr class="quiz-divider" aria-hidden="true">
 
                 <form id="quizFormChapter7_3" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
@@ -234,17 +381,65 @@
                             </li>
                             <li>
                                 <input type="radio" name="q3_chapter7" id="q3_ch7_opt_b" value="B">
-                                <label for="q3_ch7_opt_b">b) It centers items vertically along the cross-axis.</label>
+                                <label for="q3_ch7_opt_b">b) It centers items vertically along the cross axis.</label>
                             </li>
                             <li>
                                 <input type="radio" name="q3_chapter7" id="q3_ch7_opt_c" value="C">
                                 <label for="q3_ch7_opt_c">c) It reverses the display order of items.</label>
                             </li>
                         </ul>
-                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q3_chapter7', 'B', 'q3_feedback_7_3', 'Perfect! align-items controls cross-axis (vertical) alignment.', 'Incorrect. Review Flexbox Alignment Properties.')">Submit Answer</button>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q3_chapter7', 'B', 'q3_feedback_7_3', 'Perfect! align-items controls cross-axis (vertical) alignment.', 'Incorrect. Review How Flexbox Works.')">Submit Answer</button>
                     </fieldset>
                 </form>
                 <div id="q3_feedback_7_3" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter7_4" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">4. Inside a mobile <code>@media</code> query, which declaration stacks a horizontal Flexbox row into a vertical column?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q4_chapter7" id="q4_ch7_opt_a" value="A">
+                                <label for="q4_ch7_opt_a">a) flex-direction: column;</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4_chapter7" id="q4_ch7_opt_b" value="B">
+                                <label for="q4_ch7_opt_b">b) justify-content: center;</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4_chapter7" id="q4_ch7_opt_c" value="C">
+                                <label for="q4_ch7_opt_c">c) display: inline;</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q4_chapter7', 'A', 'q4_feedback_7_4', 'Correct! Changing flex-direction to column stacks flex items vertically on narrow screens.', 'Incorrect. Review the Responsive Flexbox Card Row example.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q4_feedback_7_4" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter7_5" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">5. Which CSS Grid property creates three equal-width columns using fractional units?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q5_chapter7" id="q5_ch7_opt_a" value="A">
+                                <label for="q5_ch7_opt_a">a) flex-wrap: wrap;</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q5_chapter7" id="q5_ch7_opt_b" value="B">
+                                <label for="q5_ch7_opt_b">b) grid-template-columns: repeat(3, 1fr);</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q5_chapter7" id="q5_ch7_opt_c" value="C">
+                                <label for="q5_ch7_opt_c">c) align-items: stretch;</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q5_chapter7', 'B', 'q5_feedback_7_5', 'Great job! grid-template-columns: repeat(3, 1fr); defines three equal fractional columns.', 'Incorrect. Review Part 2: Introduction to CSS Grid Layout.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q5_feedback_7_5" class="feedback-area" role="status" aria-live="polite"></div>
             </div>
         </section>
     </main>
@@ -253,16 +448,16 @@
         <nav class="nav-container" aria-label="Chapter Navigation">
             <div class="nav-link">
                 <strong>← Previous</strong><br>
-                <a href="chapter6.html">Chapter 6</a><br>
-                <a href="index.html">Home</a>
+                <a href="chapter6.html">Chapter 6: Web Design Basics</a><br>
+                <a href="index.html">Course Home</a>
             </div>
             <div class="nav-link nav-link-center">
-                <strong>📖 Current Chapter</strong><br>
+                <strong><span aria-hidden="true">📖</span> Current Chapter</strong><br>
                 <span>Chapter 7</span>
             </div>
             <div class="nav-link nav-link-right">
                 <strong>Next →</strong><br>
-                <a href="chapter8.html">Chapter 8</a>
+                <a href="chapter8.html">Chapter 8: Next Lesson</a>
             </div>
         </nav>
     </footer>
