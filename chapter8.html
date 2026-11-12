@@ -7,10 +7,11 @@
     <title>Chapter 8: Best Practices for Web Development</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // Function to run the HTML code
+        // Function to run the HTML code inside the live sandbox
         function runCode() {
             var htmlCode = document.getElementById('htmlCode').value;
             var iframe = document.getElementById('output');
+            var statusBanner = document.getElementById('runnerStatus');
             var iframeDoc = iframe.contentWindow.document;
             iframeDoc.open();
             iframeDoc.write(`
@@ -18,6 +19,7 @@
                 <html lang="en">
                 <head>
                     <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Live Preview</title>
                 </head>
                 <body>
@@ -26,6 +28,10 @@
                 </html>
             `);
             iframeDoc.close();
+
+            if (statusBanner) {
+                statusBanner.textContent = "Live output window updated with your HTML and CSS.";
+            }
         }
 
         // Unified Self-Contained Client Grading Logic
@@ -35,16 +41,16 @@
 
             if (!checkedOption) {
                 displayBox.className = "feedback-area feedback-warning";
-                displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
+                displayBox.innerHTML = '<strong><span aria-hidden="true">⚠️</span> Please make a selection before submitting.</strong>';
                 return;
             }
 
             if (checkedOption.value === targetKey) {
                 displayBox.className = "feedback-area feedback-success";
-                displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
+                displayBox.innerHTML = `<strong><span aria-hidden="true">🎉</span> ${textSuccess}</strong>`;
             } else {
                 displayBox.className = "feedback-area feedback-error";
-                displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
+                displayBox.innerHTML = `<strong><span aria-hidden="true">❌</span> ${textFailure}</strong>`;
             }
         }
     </script>
@@ -53,37 +59,40 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <main class="container" id="main-content">
+    <main class="container" id="main-content" tabindex="-1">
         <header class="header-centered">
             <h1>Chapter 8: Best Practices for Web Development</h1>
             <h2>Introduction</h2>
         </header>
 
-        <p>In this chapter, we will focus on essential best practices for web development with an emphasis on clean, well-structured HTML. Additionally, we&rsquo;ll touch on performance optimization, security considerations, and the importance of keeping up with web development trends. By following these guidelines, you'll develop websites that are easy to maintain, perform well, and are secure.</p>
+        <p>In this final chapter, we bring together essential best practices for professional web development with an emphasis on clean, well-structured <abbr title="HyperText Markup Language">HTML</abbr>. We will also cover performance optimization, foundational security and accessibility habits, and reliable resources for keeping up with modern web standards.</p>
+
+        <hr aria-hidden="true">
 
         <h2>Writing Clean, Well-Structured HTML</h2>
-        <p>Writing clean and well-organized HTML is crucial for creating maintainable websites. It's important to structure your code in a way that&rsquo;s easy to read and understand, which will save time in the long run when working with others or revisiting your code.</p>
+        <p>Writing clean, organized HTML is crucial for building websites that are easy to debug, collaborate on, and maintain over time.</p>
 
-        <h3>Key Practices for Clean HTML:</h3>
+        <h3>Key Practices for Clean HTML</h3>
         <ul class="disc-list">
-            <li><strong>Indentation</strong>: Always use consistent indentation for nested elements to make code readable.</li>
-            <li><strong>Consistent Tag Closure</strong>: Ensure all HTML tags are properly closed to avoid rendering errors.</li>
-            <li><strong>Use Meaningful Names</strong>: For class names and IDs, use names that are descriptive and identify their purpose.</li>
-            <li><strong>Commenting Your Code</strong>: Use comments to describe sections of your HTML, especially in larger projects.</li>
+            <li><strong>Consistent Indentation</strong>: Indent nested child elements consistently (2 or 4 spaces) so document hierarchy is immediately clear.</li>
+            <li><strong>Proper Tag Closure &amp; Validation</strong>: Close all non-void HTML tags properly and check your pages with the <abbr title="World Wide Web Consortium">W3C</abbr> Markup Validation Service to catch syntax errors early.</li>
+            <li><strong>Meaningful Class and <abbr title="Identifier">ID</abbr> Names</strong>: Choose descriptive names based on purpose (such as <code>.site-nav</code> or <code>.course-card</code>) rather than temporary visual traits like <code>.blue-text</code>.</li>
+            <li><strong>Helpful Comments</strong>: Use concise HTML comments (<code>&lt;!-- Main Navigation --&gt;</code>) to label major page sections in larger templates.</li>
         </ul>
 
-        <h3>Example of Clean, Well-Formatted HTML:</h3>
+        <h3>Example of Clean, Well-Formatted HTML</h3>
         <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Best Practices Example&lt;/title&gt;
+  &lt;link rel="stylesheet" href="css/style.css"&gt;
 &lt;/head&gt;
 &lt;body&gt;
   &lt;header&gt;
     &lt;h1&gt;Welcome to Our Website&lt;/h1&gt;
-    &lt;nav&gt;
+    &lt;nav aria-label="Primary Navigation"&gt;
       &lt;ul&gt;
         &lt;li&gt;&lt;a href="#home"&gt;Home&lt;/a&gt;&lt;/li&gt;
         &lt;li&gt;&lt;a href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;
@@ -105,37 +114,65 @@
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-        <hr>
+        <hr aria-hidden="true">
 
         <h2>Basic Website Optimization</h2>
-        <p>Website optimization involves several strategies to improve the speed, accessibility, and search engine ranking of your site.</p>
+        <p>Website optimization improves loading speed, usability, and <abbr title="Search Engine Optimization">SEO</abbr> (Search Engine Optimization) across all devices:</p>
 
         <ol class="ordered-list">
-            <li><strong>HTML Code Minification</strong>: Removing unnecessary spaces, comments, and redundant code to reduce file size.</li>
-            <li><strong>Use Semantic HTML</strong>: Using meaningful tags like <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, and <code>&lt;article&gt;</code> to aid screen readers and SEO.</li>
-            <li><strong>Optimize Images</strong>: Compressing image files and defining dimensions to prevent layout shifts.</li>
-            <li><strong>Use External Stylesheets and Scripts</strong>: Linking external CSS and JS files to keep HTML clean.</li>
+            <li><strong>Code Minification</strong>: Removing unnecessary whitespace, comments, and line breaks in production <abbr title="Cascading Style Sheets">CSS</abbr> and <abbr title="JavaScript">JS</abbr> files to shrink download sizes.</li>
+            <li><strong>Semantic HTML</strong>: Using meaningful landmarks such as <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, and <code>&lt;footer&gt;</code> so screen readers and search engines understand page structure.</li>
+            <li><strong>Optimize Images</strong>: Compressing image file sizes, providing descriptive <code>alt</code> attributes, and setting explicit <code>width</code> and <code>height</code> attributes to prevent layout shifts while loading.</li>
+            <li><strong>External Stylesheets and Scripts</strong>: Linking separate <code>.css</code> and <code>.js</code> files so browsers can cache them across multiple pages.</li>
         </ol>
 
-        <hr>
+        <hr aria-hidden="true">
 
-        <h2>Ongoing Learning and Keeping Up with Web Trends</h2>
-        <p>Web development is a constantly evolving field. To stay ahead of the curve, you need to continuously learn about new technologies, tools, and best practices.</p>
+        <h2>Essential Web Security and Accessibility Habits</h2>
+        <p>Even static HTML and CSS websites benefit from strong security and accessibility fundamentals from day one:</p>
 
-        <h3>Communities &amp; Resources to Follow:</h3>
         <ul class="disc-list">
-            <li><strong>CSS-Tricks</strong>: <a href="https://css-tricks.com/" target="_blank" rel="noopener">Visit CSS-Tricks (opens in new tab)</a></li>
-            <li><strong>Smashing Magazine</strong>: <a href="https://www.smashingmagazine.com/" target="_blank" rel="noopener">Visit Smashing Magazine (opens in new tab)</a></li>
+            <li><strong>Serve Sites Over <abbr title="Hypertext Transfer Protocol Secure">HTTPS</abbr></strong>: Always host your pages using HTTPS (enabled automatically on GitHub Pages) so traffic between your visitors and the server is encrypted.</li>
+            <li><strong>Protect External Links</strong>: Whenever you open an external link in a new tab with <code>target="_blank"</code>, include <code>rel="noopener noreferrer"</code> to prevent the opened page from accessing your site&rsquo;s window object.</li>
+            <li><strong>Never Expose Sensitive Secrets</strong>: Public repositories and client-side HTML/CSS/JS files are visible to anyone—never place passwords, private tokens, or confidential data in your code.</li>
+            <li><strong>Pre-Launch <abbr title="Web Content Accessibility Guidelines">WCAG</abbr> Check</strong>: Before publishing, verify that every image has accurate <code>alt</code> text, every form input has a paired <code>&lt;label&gt;</code>, text contrast is high, and the entire page is navigable using only the keyboard.</li>
         </ul>
 
-        <section id="coderunner" class="coderunner-box">
-            <h2>Code Runner Sandbox Workspace</h2>
+        <hr aria-hidden="true">
+
+        <h2>Ongoing Learning and Keeping Up with Web Trends</h2>
+        <p>Web standards evolve continuously. Bookmarking trusted, up-to-date references makes it easy to look up syntax and learn modern techniques as you build new projects:</p>
+
+        <ul class="disc-list">
+            <li><strong><abbr title="Mozilla Developer Network">MDN</abbr> Web Docs</strong>: <a href="https://developer.mozilla.org/" target="_blank" rel="noopener noreferrer">Explore MDN Web Docs HTML &amp; CSS Reference (opens in new tab)</a></li>
+            <li><strong>CSS-Tricks</strong>: <a href="https://css-tricks.com/" target="_blank" rel="noopener noreferrer">Visit CSS-Tricks Guides &amp; Almanac (opens in new tab)</a></li>
+            <li><strong>Smashing Magazine</strong>: <a href="https://www.smashingmagazine.com/" target="_blank" rel="noopener noreferrer">Visit Smashing Magazine Web Design Articles (opens in new tab)</a></li>
+        </ul>
+
+        <hr aria-hidden="true">
+
+        <h2>Hands-On Practice: You Try It!</h2>
+        <ol class="ordered-list">
+            <li>Copy the unformatted HTML snippet below into the Code Runner and click <strong>Run Code</strong>.</li>
+            <li>Refactor the code using today&rsquo;s best practices: fix the indentation, replace generic <code>&lt;div&gt;</code> wrappers with semantic tags (<code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>), add a descriptive <code>alt</code> attribute to the image, and add <code>rel="noopener noreferrer"</code> to the external link.</li>
+        </ol>
+
+        <pre><code>&lt;div class="top"&gt;&lt;h1&gt;My Portfolio&lt;/h1&gt;&lt;/div&gt;
+&lt;div class="content"&gt;
+&lt;p&gt;Check out my work on &lt;a href="https://github.com" target="_blank"&gt;GitHub (opens in new tab)&lt;/a&gt;.&lt;/p&gt;
+&lt;img src="project.jpg"&gt;
+&lt;/div&gt;
+&lt;div class="bottom"&gt;&lt;p&gt;2026 Student Portfolio&lt;/p&gt;&lt;/div&gt;</code></pre>
+
+        <section id="coderunner" class="coderunner-box" aria-labelledby="coderunner-heading">
+            <h2 id="coderunner-heading">Code Runner Sandbox Workspace</h2>
             <div class="form-group">
                 <label for="htmlCode" class="form-label">Enter HTML Code Here:</label>
-                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+                <textarea id="htmlCode" placeholder="Paste and refactor the HTML snippet here..."></textarea>
             </div>
 
             <button type="button" class="action-button" onclick="runCode()">Run Code</button>
+            <div id="runnerStatus" class="sr-only" role="status" aria-live="polite"></div>
 
             <div class="form-group">
                 <label for="output" class="form-label">Live Output Window:</label>
@@ -143,25 +180,30 @@
             </div>
         </section>
 
-        <section id="quiz-container-chapter8">
+        <hr aria-hidden="true">
+
+        <h2>Conclusion</h2>
+        <p>Congratulations on completing the course! By combining clean semantic HTML, maintainable external CSS, responsive Flexbox and Grid layouts, and core security and WCAG accessibility practices, you now have the foundation needed to build fast, inclusive, and professional websites.</p>
+
+        <section id="quiz-container-chapter8" aria-labelledby="quiz-heading-ch8">
             <div class="quiz-panel-wrapper">
-                <h2>Chapter 8 Quiz</h2>
+                <h2 id="quiz-heading-ch8">Chapter 8 Assessment Questions</h2>
 
                 <form id="quizFormChapter8_1" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
-                        <legend class="quiz-legend">1. Why is consistent indentation and proper tag closure crucial when writing HTML?</legend>
+                        <legend class="quiz-legend">1. Why are consistent indentation and proper tag closure crucial when writing HTML?</legend>
                         <ul class="quiz-options-list">
                             <li>
                                 <input type="radio" name="q1_chapter8" id="q1_ch8_opt_a" value="A">
-                                <label for="q1_ch8_opt_a">a) It automatically reduces server hosting costs.</label>
+                                <label for="q1_ch8_opt_a">a) They automatically reduce server hosting costs.</label>
                             </li>
                             <li>
                                 <input type="radio" name="q1_chapter8" id="q1_ch8_opt_b" value="B">
-                                <label for="q1_ch8_opt_b">b) It ensures code is readable, maintainable, and prevents rendering errors.</label>
+                                <label for="q1_ch8_opt_b">b) They ensure code is readable, maintainable, and prevents rendering errors.</label>
                             </li>
                             <li>
                                 <input type="radio" name="q1_chapter8" id="q1_ch8_opt_c" value="C">
-                                <label for="q1_ch8_opt_c">c) It replaces the need to write external CSS files.</label>
+                                <label for="q1_ch8_opt_c">c) They replace the need to write external CSS files.</label>
                             </li>
                         </ul>
                         <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q1_chapter8', 'B', 'q1_feedback_8_1', 'Correct! Clean code structure avoids syntax errors and eases maintenance.', 'Incorrect. Clean code improves readability and prevents rendering bugs.')">Submit Answer</button>
@@ -169,11 +211,11 @@
                 </form>
                 <div id="q1_feedback_8_1" class="feedback-area" role="status" aria-live="polite"></div>
 
-                <hr class="quiz-divider">
+                <hr class="quiz-divider" aria-hidden="true">
 
                 <form id="quizFormChapter8_2" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
-                        <legend class="quiz-legend">2. What optimization practice involves removing extra white space, comments, and line breaks to shrink file size?</legend>
+                        <legend class="quiz-legend">2. What optimization practice involves removing extra whitespace, comments, and line breaks to shrink file size?</legend>
                         <ul class="quiz-options-list">
                             <li>
                                 <input type="radio" name="q2_chapter8" id="q2_ch8_opt_a" value="A">
@@ -188,12 +230,12 @@
                                 <label for="q2_ch8_opt_c">c) Transpilation</label>
                             </li>
                         </ul>
-                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter8', 'A', 'q2_feedback_8_2', 'Spot on! Minification trims code size to speed up download times.', 'Incorrect. Review the Website Optimization section.')">Submit Answer</button>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter8', 'A', 'q2_feedback_8_2', 'Spot on! Minification trims code size to speed up download times.', 'Incorrect. Review the Basic Website Optimization section.')">Submit Answer</button>
                     </fieldset>
                 </form>
                 <div id="q2_feedback_8_2" class="feedback-area" role="status" aria-live="polite"></div>
 
-                <hr class="quiz-divider">
+                <hr class="quiz-divider" aria-hidden="true">
 
                 <form id="quizFormChapter8_3" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
@@ -216,6 +258,54 @@
                     </fieldset>
                 </form>
                 <div id="q3_feedback_8_3" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter8_4" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">4. Which attribute pair should you add to an external link that uses <code>target="_blank"</code> to improve security?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q4_chapter8" id="q4_ch8_opt_a" value="A">
+                                <label for="q4_ch8_opt_a">a) rel="noopener noreferrer"</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4_chapter8" id="q4_ch8_opt_b" value="B">
+                                <label for="q4_ch8_opt_b">b) rel="stylesheet"</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4_chapter8" id="q4_ch8_opt_c" value="C">
+                                <label for="q4_ch8_opt_c">c) alt="external link"</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q4_chapter8', 'A', 'q4_feedback_8_4', 'Correct! Adding rel="noopener noreferrer" protects your page when opening external links in new tabs.', 'Incorrect. Review the Essential Web Security and Accessibility Habits section.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q4_feedback_8_4" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter8_5" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">5. Which pair of attributes on an <code>&lt;img&gt;</code> tag helps prevent layout shifts while a webpage loads?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q5_chapter8" id="q5_ch8_opt_a" value="A">
+                                <label for="q5_ch8_opt_a">a) href and target</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q5_chapter8" id="q5_ch8_opt_b" value="B">
+                                <label for="q5_ch8_opt_b">b) width and height</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q5_chapter8" id="q5_ch8_opt_c" value="C">
+                                <label for="q5_ch8_opt_c">c) action and method</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q5_chapter8', 'B', 'q5_feedback_8_5', 'Great job! Defining width and height reserves space for the image before it finishes downloading.', 'Incorrect. Review step 3 of Basic Website Optimization.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q5_feedback_8_5" class="feedback-area" role="status" aria-live="polite"></div>
             </div>
         </section>
     </main>
@@ -224,11 +314,11 @@
         <nav class="nav-container" aria-label="Chapter Navigation">
             <div class="nav-link">
                 <strong>← Previous</strong><br>
-                <a href="chapter7.html">Chapter 7</a><br>
-                <a href="index.html">Home</a>
+                <a href="chapter7.html">Chapter 7: CSS Techniques</a><br>
+                <a href="index.html">Course Home</a>
             </div>
             <div class="nav-link nav-link-center">
-                <strong>📖 Current Chapter</strong><br>
+                <strong><span aria-hidden="true">📖</span> Current Chapter</strong><br>
                 <span>Chapter 8</span>
             </div>
             <div class="nav-link nav-link-right">
