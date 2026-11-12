@@ -7,10 +7,11 @@
     <title>Chapter 6: Web Design Basics</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // Function to run the HTML code
+        // Function to run the HTML code inside the live sandbox
         function runCode() {
             var htmlCode = document.getElementById('htmlCode').value;
             var iframe = document.getElementById('output');
+            var statusBanner = document.getElementById('runnerStatus');
             var iframeDoc = iframe.contentWindow.document;
             iframeDoc.open();
             iframeDoc.write(`
@@ -18,6 +19,7 @@
                 <html lang="en">
                 <head>
                     <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Live Preview</title>
                 </head>
                 <body>
@@ -26,6 +28,10 @@
                 </html>
             `);
             iframeDoc.close();
+
+            if (statusBanner) {
+                statusBanner.textContent = "Live output window updated with your HTML and CSS.";
+            }
         }
 
         // Unified Self-Contained Client Grading Logic
@@ -35,16 +41,16 @@
 
             if (!checkedOption) {
                 displayBox.className = "feedback-area feedback-warning";
-                displayBox.innerHTML = "<strong>⚠️ Please make a selection before submitting.</strong>";
+                displayBox.innerHTML = '<strong><span aria-hidden="true">⚠️</span> Please make a selection before submitting.</strong>';
                 return;
             }
 
             if (checkedOption.value === targetKey) {
                 displayBox.className = "feedback-area feedback-success";
-                displayBox.innerHTML = `<strong>🎉 ${textSuccess}</strong>`;
+                displayBox.innerHTML = `<strong><span aria-hidden="true">🎉</span> ${textSuccess}</strong>`;
             } else {
                 displayBox.className = "feedback-area feedback-error";
-                displayBox.innerHTML = `<strong>❌ ${textFailure}</strong>`;
+                displayBox.innerHTML = `<strong><span aria-hidden="true">❌</span> ${textFailure}</strong>`;
             }
         }
     </script>
@@ -53,22 +59,22 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <main class="container" id="main-content">
+    <main class="container" id="main-content" tabindex="-1">
         <header class="header-centered">
             <h1>Chapter 6: Web Design Basics</h1>
             <h2>Introduction</h2>
         </header>
 
-        <p>Web design involves creating visually appealing and functional web pages. A fundamental part of web design includes structuring elements, styling them, and ensuring a cohesive layout. In this chapter, you will gain a basic understanding of CSS (Cascading Style Sheets).</p>
+        <p>Web design involves creating visually appealing and functional web pages. A fundamental part of web design includes structuring elements, styling them, and ensuring a cohesive layout. In this chapter, you will gain a foundational understanding of <abbr title="Cascading Style Sheets">CSS</abbr> (Cascading Style Sheets)—from basic syntax and selectors to the Box Model, typography, and responsive design.</p>
 
         <h2>Understanding HTML and CSS</h2>
-        <p>HTML (HyperText Markup Language) is used to structure web pages, while CSS (Cascading Style Sheets) is used to style them. CSS allows for adding colors, spacing, and positioning elements to create an engaging user experience.</p>
+        <p><abbr title="HyperText Markup Language">HTML</abbr> (HyperText Markup Language) is used to structure web pages, while CSS (Cascading Style Sheets) is used to style them. CSS allows for adding colors, spacing, and positioning elements to create an engaging user experience.</p>
 
         <h3>Basic CSS Syntax</h3>
         <p>CSS consists of <strong>selectors</strong> and <strong>declarations</strong>. Here's an example:</p>
 
         <pre><code>h1 {
-  color: blue; /* Property: color, Value: blue */
+  color: #1e3a8a; /* Property: color, Value: #1e3a8a */
   font-size: 24px; /* Property: font-size, Value: 24px */
 }</code></pre>
 
@@ -80,24 +86,31 @@
             </li>
             <li><strong>Declarations</strong>:
                 <ul>
-                    <li><code>color: blue;</code> &mdash; This changes the text color of <code>&lt;h1&gt;</code> elements to blue.</li>
+                    <li><code>color: #1e3a8a;</code> &mdash; This changes the text color of <code>&lt;h1&gt;</code> elements to a high-contrast deep blue.</li>
                     <li><code>font-size: 24px;</code> &mdash; This changes the font size of <code>&lt;h1&gt;</code> elements to 24 pixels.</li>
                 </ul>
             </li>
         </ul>
 
-        <h3>Summary:</h3>
+        <h3>Summary of CSS Rule Structure:</h3>
         <ul class="disc-list">
             <li>The <strong>selector</strong> identifies which HTML element to style.</li>
             <li>The <strong>declaration</strong> defines what style to apply, with each declaration made up of a <strong>property</strong> and its <strong>value</strong>.</li>
         </ul>
 
-        <hr>
+        <hr aria-hidden="true">
 
-        <h2>Adding CSS to HTML</h2>
-        <p>To add CSS directly to an HTML document, you can use the <code>&lt;style&gt;</code> tag within the <code>&lt;head&gt;</code> section of the document. Anything you write inside the <code>&lt;style&gt;</code> tag will be applied as CSS styles to the HTML content on that page.</p>
+        <h2>Three Ways to Add CSS to HTML</h2>
+        <p>There are three ways to apply CSS to an HTML document: <strong>inline</strong>, <strong>internal</strong>, and <strong>external</strong>. Knowing when to use each keeps your projects organized and easy to maintain.</p>
 
-        <h3>Example:</h3>
+        <h3>1. Inline CSS (<code>style</code> Attribute)</h3>
+        <p>Inline CSS applies styles directly to a single HTML element using the <code>style</code> attribute. While useful for quick one-off tests, it mixes content with presentation and is avoided in larger projects.</p>
+
+        <pre><code>&lt;p style="color: #14532d; font-size: 18px;"&gt;This paragraph uses inline CSS.&lt;/p&gt;</code></pre>
+
+        <h3>2. Internal CSS (<code>&lt;style&gt;</code> Tag)</h3>
+        <p>To add CSS to a single HTML document, you can use the <code>&lt;style&gt;</code> tag within the <code>&lt;head&gt;</code> section of the document. Anything you write inside the <code>&lt;style&gt;</code> tag will be applied as CSS styles to the HTML content on that page.</p>
+
         <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
@@ -108,12 +121,12 @@
     &lt;style&gt;
         /* CSS styles go here */
         h1 {
-            color: blue;
+            color: #1e3a8a;
             font-size: 24px;
         }
 
         p {
-            color: green;
+            color: #14532d;
             font-size: 16px;
         }
     &lt;/style&gt;
@@ -124,53 +137,219 @@
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-        <h3>Key Points:</h3>
         <ol class="ordered-list">
             <li><strong><code>&lt;style&gt;</code> tag</strong>:
                 <ul>
-                    <li>It's used to contain CSS code.</li>
-                    <li>It's placed inside the <code>&lt;head&gt;</code> section of the HTML document.</li>
-                    <li>CSS code inside the <code>&lt;style&gt;</code> tag applies to the entire HTML document.</li>
+                    <li>It is placed inside the <code>&lt;head&gt;</code> section of the HTML document.</li>
+                    <li>CSS code inside the <code>&lt;style&gt;</code> tag applies to that entire HTML document.</li>
                 </ul>
             </li>
-            <li><strong>Inside the <code>&lt;style&gt;</code> tag</strong>:
+            <li><strong>When to use internal CSS</strong>:
                 <ul>
-                    <li>You write your regular CSS rules (selectors and declarations) like you normally would in an external stylesheet.</li>
+                    <li>It works well for single-page experiments or quick prototypes before moving styles into an external stylesheet.</li>
                 </ul>
             </li>
         </ol>
 
-        <h3>Why Use the <code>&lt;style&gt;</code> Tag?</h3>
+        <h3>3. External CSS (<code>&lt;link&gt;</code> Tag)</h3>
+        <p>External CSS involves linking an HTML document to a separate <code>.css</code> file. This method is the most efficient for multi-page projects, as it allows for a clean separation of content and design and lets you update styles across an entire site by editing a single file.</p>
+        <p>To use external CSS, create a separate CSS file (such as <code>style.css</code>) and link it to your HTML document using the <code>&lt;link&gt;</code> tag in the <code>&lt;head&gt;</code> section:</p>
+
+        <pre><code>&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;</code></pre>
+
         <ul class="disc-list">
-            <li>It&rsquo;s a good way to include CSS when working on a small project or when you want to quickly test styles.</li>
-            <li>For larger projects or when you want to keep the CSS separate, it&rsquo;s better to use an external CSS file linked with the <code>&lt;link&gt;</code> tag.</li>
+            <li><strong>Consistency</strong>: Linking all pages to a single CSS file ensures that changes to the design are applied universally across your website.</li>
+            <li><strong>Efficiency</strong>: External CSS reduces redundancy and file size in HTML documents, as styles are defined once in a separate file rather than repeated within each page.</li>
         </ul>
 
-        <h2>External CSS</h2>
-        <p>External CSS involves linking an HTML document to an external .css file. This method is the most efficient for larger projects, as it allows for a clean separation of content and design. It also makes it easier to maintain and update styles across multiple web pages by editing a single CSS file.</p>
-        <p>To use external CSS, you create a separate CSS file (e.g., <code>style.css</code>) and link it to your HTML document using the <code>&lt;link&gt;</code> tag in the <code>&lt;head&gt;</code> section.</p>
+        <hr aria-hidden="true">
 
-        <h3>Advantages of Using External CSS</h3>
-        <ul class="disc-list">
-            <li><strong>Consistency</strong>: External CSS allows for consistent styling across multiple web pages. By linking all pages to a single CSS file, you ensure that changes to the design are applied universally.</li>
-            <li><strong>Efficiency</strong>: External CSS reduces redundancy and file size in HTML documents, as styles are defined once in a separate file rather than repeated within each HTML document.</li>
-        </ul>
+        <h2>Targeting Elements: Selectors, Classes, and IDs</h2>
+        <p>Styling every <code>&lt;p&gt;</code> or <code>&lt;div&gt;</code> identically is rarely enough for a real webpage. CSS provides specific selectors so you can target reusable groups of elements or a single unique element.</p>
 
-        <h3>You Try It!</h3>
+        <div class="table-wrapper">
+            <table class="css-table">
+                <caption>Comparison of Core CSS Selector Types</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Selector Type</th>
+                        <th scope="col">CSS Syntax</th>
+                        <th scope="col">HTML Attribute</th>
+                        <th scope="col">When to Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Element (Tag)</strong></td>
+                        <td><code>p { ... }</code></td>
+                        <td><code>&lt;p&gt;</code></td>
+                        <td>Sets default styling for every instance of an HTML tag.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Class</strong></td>
+                        <td><code>.card { ... }</code></td>
+                        <td><code>class="card"</code></td>
+                        <td>Applies reusable styles to multiple elements across a page.</td>
+                    </tr>
+                    <tr>
+                        <td><strong><abbr title="Identifier">ID</abbr></strong></td>
+                        <td><code>#main-banner { ... }</code></td>
+                        <td><code>id="main-banner"</code></td>
+                        <td>Targets one unique element that appears only once per page.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <pre><code>/* 1. Element selector: styles ALL paragraphs */
+p {
+    color: #111827;
+}
+
+/* 2. Class selector: reusable style for multiple elements */
+.highlight-box {
+    background-color: #f1f5f9;
+    padding: 16px;
+}
+
+/* 3. ID selector: unique style for one specific element */
+#site-title {
+    color: #0f172a;
+    font-size: 32px;
+}</code></pre>
+
+        <h3>The Cascade and Specificity</h3>
+        <p>The "C" in CSS stands for <strong>Cascading</strong>. When multiple rules target the same element, the browser resolves conflicts using <strong>specificity</strong> (how targeted a selector is) and source order:</p>
         <ol class="ordered-list">
-            <li>Run the external CSS sample HTML code below in the code runner.</li>
-            <li>What does the page look like? Why do you think it looks like that?</li>
-            <li>Copy the HTML with the inline CSS and run it in the code runner.</li>
+            <li><strong>Inline styles</strong> (<code>style="..."</code>) override internal and external rules.</li>
+            <li><strong>ID selectors</strong> (<code>#id</code>) override class and element selectors.</li>
+            <li><strong>Class selectors</strong> (<code>.class</code>) override element selectors.</li>
+            <li><strong>Element selectors</strong> (<code>h1</code>, <code>p</code>) have the lowest specificity; if two equal rules conflict, the rule written <strong>last</strong> wins.</li>
         </ol>
 
-        <section id="coderunner" class="coderunner-box">
-            <h2>Code Runner Sandbox Workspace</h2>
+        <hr aria-hidden="true">
+
+        <h2>The CSS Box Model</h2>
+        <p>In CSS, every HTML element is rendered as a rectangular box. Understanding the <strong>Box Model</strong> is essential for controlling spacing, borders, and page layouts (including Flexbox in Chapter 7).</p>
+
+        <dl class="description-list">
+            <dt>1. Content</dt>
+            <dd>The inner area where text, images, or child elements appear, controlled by <code>width</code> and <code>height</code>.</dd>
+
+            <dt>2. Padding</dt>
+            <dd>Transparent space <em>inside</em> the element, between the content and the border.</dd>
+
+            <dt>3. Border</dt>
+            <dd>A visible or invisible line wrapping around the padding and content.</dd>
+
+            <dt>4. Margin</dt>
+            <dd>Transparent space <em>outside</em> the border that pushes neighboring elements away.</dd>
+        </dl>
+
+        <pre><code>.card {
+    width: 300px;
+    padding: 20px;              /* Inner breathing room */
+    border: 2px solid #1e40af;  /* Visible frame */
+    margin: 16px;               /* Outer space separating cards */
+    box-sizing: border-box;     /* Keeps total width at 300px including padding &amp; border */
+}</code></pre>
+
+        <div class="concept-note">
+            <p><strong>Best Practice — Always Use <code>box-sizing: border-box;</code>:</strong> By default, CSS adds padding and borders <em>on top of</em> an element's declared <code>width</code>. Adding <code>* { box-sizing: border-box; }</code> at the top of your stylesheet (just like our course <code>style.css</code> does) ensures that a <code>300px</code> box stays exactly <code>300px</code> wide.</p>
+        </div>
+
+        <hr aria-hidden="true">
+
+        <h2>Core Typography and Color Properties</h2>
+        <p>Readable typography and high-contrast color palettes make webpages clear, accessible, and easy to scan.</p>
+
+        <ul class="disc-list">
+            <li><code>font-family</code>: Specifies the typeface, usually listing fallback fonts (for example, <code>Arial, Helvetica, sans-serif</code>).</li>
+            <li><code>font-weight</code>: Controls text thickness, such as <code>normal</code> (400) or <code>bold</code> (700).</li>
+            <li><code>line-height</code>: Controls vertical spacing between lines of text; a value of <code>1.5</code> or <code>1.6</code> improves readability.</li>
+            <li><code>text-align</code>: Aligns text horizontally (<code>left</code>, <code>center</code>, or <code>right</code>).</li>
+            <li><code>background-color</code>: Sets the surface fill color behind an element's content and padding.</li>
+            <li><strong>Hexadecimal (Hex) Colors</strong>: Six-digit codes like <code>#111827</code> (near-black) or <code>#f1f5f9</code> (soft slate) give exact control over color contrast.</li>
+        </ul>
+
+        <pre><code>body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #111827;
+    background-color: #ffffff;
+}
+
+.banner {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    text-align: center;
+    padding: 24px;
+}</code></pre>
+
+        <hr aria-hidden="true">
+
+        <h2>Introduction to Responsive Design and Media Queries</h2>
+        <p>Visitors view websites on everything from small smartphones to wide desktop monitors. <strong>Responsive web design</strong> ensures your layout adapts smoothly to any screen width.</p>
+        <p>First, always include the viewport <code>&lt;meta&gt;</code> tag in your HTML <code>&lt;head&gt;</code> so mobile browsers scale the page accurately. Second, use a CSS <strong><code>@media</code> query</strong> to adjust styles when the viewport meets a specific width condition:</p>
+
+        <pre><code>/* Default style for desktop screens */
+.box {
+    width: 50%;
+    padding: 24px;
+    background-color: #f1f5f9;
+}
+
+/* Adjusts automatically on screens 768px wide or smaller */
+@media (max-width: 768px) {
+    .box {
+        width: 100%;
+        padding: 16px;
+    }
+}</code></pre>
+
+        <hr aria-hidden="true">
+
+        <h2>Hands-On Practice: You Try It!</h2>
+        <ol class="ordered-list">
+            <li>Copy the sample HTML and CSS below into the Code Runner and click <strong>Run Code</strong>.</li>
+            <li>Experiment by changing the <code>.card</code> class's <code>padding</code>, <code>margin</code>, or <code>background-color</code>.</li>
+            <li>Observe how the second paragraph uses <strong>inline CSS</strong> (<code>style="..."</code>) to override the styles inherited from its parent <code>.card</code> container.</li>
+        </ol>
+
+        <pre><code>&lt;style&gt;
+    .card {
+        background-color: #f8fafc;
+        border: 2px solid #1e40af;
+        padding: 20px;
+        margin: 16px 0;
+        font-family: Arial, sans-serif;
+        color: #111827;
+    }
+    #special-heading {
+        color: #0f172a;
+    }
+&lt;/style&gt;
+
+&lt;div class="card"&gt;
+    &lt;h2 id="special-heading"&gt;Box Model &amp; Class Demo&lt;/h2&gt;
+    &lt;p&gt;This paragraph is styled by the reusable .card class.&lt;/p&gt;
+    &lt;p style="color: #14532d; font-weight: bold;"&gt;This paragraph uses inline CSS!&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+
+        <section id="coderunner" class="coderunner-box" aria-labelledby="coderunner-heading">
+            <h2 id="coderunner-heading">Code Runner Sandbox Workspace</h2>
             <div class="form-group">
                 <label for="htmlCode" class="form-label">Enter HTML Code Here:</label>
-                <textarea id="htmlCode" placeholder="Write HTML here..."></textarea>
+                <textarea id="htmlCode" placeholder="Write or paste HTML and CSS here..."></textarea>
             </div>
 
             <button type="button" class="action-button" onclick="runCode()">Run Code</button>
+            <div id="runnerStatus" class="sr-only" role="status" aria-live="polite"></div>
 
             <div class="form-group">
                 <label for="output" class="form-label">Live Output Window:</label>
@@ -178,18 +357,19 @@
             </div>
         </section>
 
-        <hr>
+        <hr aria-hidden="true">
 
+        <h2>Seeing CSS in Action</h2>
         <p>Here's a quick video about CSS:</p>
-        <iframe src="https://www.youtube.com/embed/OEV8gMkCHXQ" 
+        <iframe src="https://www.youtube.com/embed/OEV8gMkCHXQ"
             title="Video tutorial: CSS in 100 Seconds"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video-iframe"></iframe>
 
-        <p>One of the most fascinating ways to see the power of CSS in action is through a site called <a href="https://csszengarden.com/" target="_blank" rel="noopener">CSS Zen Garden (opens in new tab)</a>. This site serves as a demonstration of what can be accomplished visually through CSS-based design. The HTML of the page remains the same, but the CSS can be changed to produce dramatically different results. This showcases the separation of content (HTML) from presentation (CSS), a core principle in modern web design.</p>
+        <p>One of the most fascinating ways to see the power of CSS in action is through a site called <a href="https://csszengarden.com/" target="_blank" rel="noopener noreferrer">CSS Zen Garden (opens in new tab)</a>. This site serves as a demonstration of what can be accomplished visually through CSS-based design. The HTML of the page remains the same, but the CSS can be changed to produce dramatically different results. This showcases the separation of content (HTML) from presentation (CSS), a core principle in modern web design.</p>
 
         <h3>Introduction to CSS Zen Garden</h3>
-        <p>CSS Zen Garden is an online resource that allows designers to submit their own CSS designs to transform a single HTML file. The purpose of this site is to highlight the capabilities of CSS in creating visually appealing web pages without altering the HTML structure. By visiting <a href="https://csszengarden.com/" target="_blank" rel="noopener">CSS Zen Garden (opens in new tab)</a>, you can explore a variety of designs, each demonstrating unique styles and layouts, all applied to the same HTML content.</p>
+        <p>CSS Zen Garden is an online resource that allows designers to submit their own CSS designs to transform a single HTML file. The purpose of this site is to highlight the capabilities of CSS in creating visually appealing web pages without altering the HTML structure. By visiting <a href="https://csszengarden.com/" target="_blank" rel="noopener noreferrer">CSS Zen Garden (opens in new tab)</a>, you can explore a variety of designs, each demonstrating unique styles and layouts, all applied to the same HTML content.</p>
 
         <h3>How to Use CSS Zen Garden</h3>
         <ol class="ordered-list">
@@ -199,7 +379,7 @@
             <li><strong>Examine the CSS:</strong> For each design, you can also view the CSS file. This is where all the styling magic happens. By examining these files, you can learn how different CSS properties and techniques are used to achieve various visual effects.</li>
         </ol>
 
-        <hr>
+        <hr aria-hidden="true">
 
         <!-- ETHICAL SPOTLIGHT SIDEBAR: CHAPTER 6 -->
         <aside class="ethical-spotlight" aria-labelledby="spotlight-title-ch6">
@@ -216,9 +396,9 @@
                 <h3>The Ethical Quandary: Visual Coercion in Consent Banners</h3>
                 <p><strong>The Scenario:</strong> Consider a modern cookie consent banner: the "Accept All Cookies" option is styled as a large, vibrant, high-contrast primary button that instantly draws the eye. In stark contrast, the "Reject All" option is rendered as a tiny, low-contrast text link hidden at the bottom of the dialog or buried beneath multiple sub-menus.</p>
                 <p><strong>The Question:</strong> Is using deceptive visual hierarchy and deliberate visual friction an acceptable optimization strategy to maximize data collection, or is it an unethical breach of user trust?</p>
-                
+
                 <div class="philosophical-box">
-                    <p><strong>Philosophical Framework:</strong> <em>Kantian Deontology & Rational Agency (Immanuel Kant)</em></p>
+                    <p><strong>Philosophical Framework:</strong> <em>Kantian Deontology &amp; Rational Agency (Immanuel Kant)</em></p>
                     <p>Immanuel Kant argued in his <em>Groundwork of the Metaphysics of Morals</em> that rational human beings must always be treated as <strong>ends in themselves</strong>, never merely as a <strong>means to an end</strong>. Deceiving users through biased visual layouts manipulates their cognitive vulnerabilities, degrading their rational agency and reducing human beings to revenue metrics or data-harvesting assets.</p>
                 </div>
             </div>
@@ -227,21 +407,23 @@
                 <h3>Thought Experiment for Web Designers:</h3>
                 <p>When you build a user interface, does your visual hierarchy empower visitors to make clear, autonomous decisions, or does it exploit visual friction to trick them into surrender? If a conversion goal requires deceiving the user to succeed, is that a triumph of visual design or a failure of moral integrity?</p>
             </div>
-            <p>Find more about Immanuel Kant's philosophy here: <a href="https://www.youtube.com/watch?v=nsgAsw4XGvU" target="_blank" rel="noopener">https://www.youtube.com/watch?v=nsgAsw4XGvU</a>
-            <br>
-                Rational Agency here: <a href="https://methods.sagepub.com/hnbk/edvol/the-sage-handbook-of-the-philosophy-of-social-sciences/chpt/rational-agency#_" target="_blank" rel="noopener">https://methods.sagepub.com/hnbk/edvol/the-sage-handbook-of-the-philosophy-of-social-sciences/chpt/rational-agency#_</a>.
+            <p>
+                Explore further philosophical background:
+                <a href="https://www.youtube.com/watch?v=nsgAsw4XGvU" target="_blank" rel="noopener noreferrer">Overview of Immanuel Kant's Moral Philosophy on YouTube (opens in new tab)</a>
+                and
+                <a href="https://methods.sagepub.com/hnbk/edvol/the-sage-handbook-of-the-philosophy-of-social-sciences/chpt/rational-agency#_" target="_blank" rel="noopener noreferrer">Rational Agency in The SAGE Handbook of the Philosophy of Social Sciences (opens in new tab)</a>.
             </p>
         </aside>
 
-        <hr>
+        <hr aria-hidden="true">
 
         <h2>Conclusion</h2>
-        <p>In this chapter, we&rsquo;ve explored the fundamentals of web design, focusing on the essential roles of HTML and CSS. HTML is the backbone of web structure, allowing us to define the content and layout of web pages. CSS, on the other hand, is the tool that allows us to style and enhance these elements, ensuring that they are visually appealing and user-friendly.</p>
-        <p>We&rsquo;ve learned how to structure and apply CSS in different ways, whether through internal styles within a <code>&lt;style&gt;</code> tag or by linking to external CSS files. Each method offers its own benefits, with external CSS being ideal for larger projects due to its ability to maintain consistency and efficiency across multiple pages.</p>
+        <p>In this chapter, we&rsquo;ve explored the fundamentals of web design, focusing on the essential roles of HTML and CSS. HTML is the backbone of web structure, allowing us to define the content of web pages, while CSS controls visual presentation through selectors, the Box Model, typography, color, and responsive media queries.</p>
+        <p>We&rsquo;ve learned how to apply CSS inline, internally within a <code>&lt;style&gt;</code> tag, or by linking to external CSS files—with external CSS serving as the best choice for multi-page projects due to its consistency and maintainability.</p>
 
-        <section id="quiz-container-chapter6">
+        <section id="quiz-container-chapter6" aria-labelledby="quiz-heading-ch6">
             <div class="quiz-panel-wrapper">
-                <h2>Chapter Assessment Questions</h2>
+                <h2 id="quiz-heading-ch6">Chapter Assessment Questions</h2>
 
                 <form id="quizFormChapter6_1" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
@@ -265,7 +447,7 @@
                 </form>
                 <div id="q1_feedback_6_1" class="feedback-area" role="status" aria-live="polite"></div>
 
-                <hr class="quiz-divider">
+                <hr class="quiz-divider" aria-hidden="true">
 
                 <form id="quizFormChapter6_2" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
@@ -284,12 +466,12 @@
                                 <label for="q2_ch6_opt_c">c) &lt;style href="style.css"&gt;</label>
                             </li>
                         </ul>
-                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter6', 'B', 'q2_feedback_6_2', 'Correct! The &lt;link&gt; element placed in the &lt;head&gt; connects external CSS.', 'Incorrect. Review the External CSS section.')">Submit Answer</button>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q2_chapter6', 'B', 'q2_feedback_6_2', 'Correct! The &lt;link&gt; element placed in the &lt;head&gt; connects external CSS.', 'Incorrect. Review the Three Ways to Add CSS to HTML section.')">Submit Answer</button>
                     </fieldset>
                 </form>
                 <div id="q2_feedback_6_2" class="feedback-area" role="status" aria-live="polite"></div>
 
-                <hr class="quiz-divider">
+                <hr class="quiz-divider" aria-hidden="true">
 
                 <form id="quizFormChapter6_3" onsubmit="event.preventDefault();">
                     <fieldset class="quiz-fieldset">
@@ -312,6 +494,54 @@
                     </fieldset>
                 </form>
                 <div id="q3_feedback_6_3" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter6_4" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">4. Which CSS selector targets all elements with <code>class="card"</code>?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q4_chapter6" id="q4_ch6_opt_a" value="A">
+                                <label for="q4_ch6_opt_a">a) #card</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4_chapter6" id="q4_ch6_opt_b" value="B">
+                                <label for="q4_ch6_opt_b">b) .card</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4_chapter6" id="q4_ch6_opt_c" value="C">
+                                <label for="q4_ch6_opt_c">c) card</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q4_chapter6', 'B', 'q4_feedback_6_4', 'Correct! A leading period (.) selects elements by their class name.', 'Incorrect. A hash (#) selects an ID, while a period (.) selects a class.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q4_feedback_6_4" class="feedback-area" role="status" aria-live="polite"></div>
+
+                <hr class="quiz-divider" aria-hidden="true">
+
+                <form id="quizFormChapter6_5" onsubmit="event.preventDefault();">
+                    <fieldset class="quiz-fieldset">
+                        <legend class="quiz-legend">5. In the CSS Box Model, which property adds space <em>inside</em> an element's border around its content?</legend>
+                        <ul class="quiz-options-list">
+                            <li>
+                                <input type="radio" name="q5_chapter6" id="q5_ch6_opt_a" value="A">
+                                <label for="q5_ch6_opt_a">a) margin</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q5_chapter6" id="q5_ch6_opt_b" value="B">
+                                <label for="q5_ch6_opt_b">b) padding</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q5_chapter6" id="q5_ch6_opt_c" value="C">
+                                <label for="q5_ch6_opt_c">c) box-sizing</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="action-button" onclick="evaluateInteractiveQuiz('q5_chapter6', 'B', 'q5_feedback_6_5', 'Right on! Padding creates inner space inside the border, while margin creates outer space.', 'Incorrect. Margin pushes neighboring boxes away outside the border; padding adds space inside.')">Submit Answer</button>
+                    </fieldset>
+                </form>
+                <div id="q5_feedback_6_5" class="feedback-area" role="status" aria-live="polite"></div>
             </div>
         </section>
     </main>
@@ -320,16 +550,16 @@
         <nav class="nav-container" aria-label="Chapter Navigation">
             <div class="nav-link">
                 <strong>← Previous</strong><br>
-                <a href="chapter5.html">Chapter 5</a><br>
-                <a href="index.html">Home</a>
+                <a href="chapter5.html">Chapter 5: Previous Lesson</a><br>
+                <a href="index.html">Course Home</a>
             </div>
             <div class="nav-link nav-link-center">
-                <strong>📖 Current Chapter</strong><br>
+                <strong><span aria-hidden="true">📖</span> Current Chapter</strong><br>
                 <span>Chapter 6</span>
             </div>
             <div class="nav-link nav-link-right">
                 <strong>Next →</strong><br>
-                <a href="chapter7.html">Chapter 7</a>
+                <a href="chapter7.html">Chapter 7: CSS Techniques</a>
             </div>
         </nav>
     </footer>
